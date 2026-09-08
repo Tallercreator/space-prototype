@@ -1,0 +1,29 @@
+/* Порядок слоёв и импортов — как в fixtures/consumer-contract кита. */
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "@otp/space-ui-kit/tokens.css" layer(theme);
+@import "@otp/space-ui-kit/fonts.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "@otp/space-ui-kit/theme.css";
+@import "@otp/space-ui-kit/styles.css";
+
+/* Tailwind сканирует только код прототипа — утилиты кита уже в styles.css. */
+@source "./**/*.tsx";
+
+/* В ките нет preflight: базовый фон и шрифт страницы задаём сами. */
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+body {
+  font-family: var(--font-primary, "Onest Variable", system-ui, sans-serif);
+}
+
+/* Ширина колонки прототипа — макетное значение, у кита нет токена ширины контейнера. */
+.shell {
+  width: 100%;
+  max-width: 640px;
+}
