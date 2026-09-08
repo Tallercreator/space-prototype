@@ -23,7 +23,7 @@ const shQuiet = (cmd) => execSync(cmd, { cwd: projectRoot, stdio: ["ignore", "pi
 
 sh("npm run build");
 sh(
-  `npx gh-pages --dist dist --branch gh-pages --nojekyll --no-history ` +
+  `npx gh-pages --dist dist --branch gh-pages --nojekyll --dotfiles --no-history ` +
     `--repo https://github.com/${repo}.git --message "deploy ${new Date().toISOString()}"`,
 );
 
