@@ -73,7 +73,7 @@
 
 /* ---------- доход ---------- */
 .offer-salary__tiles {
-  grid-template-columns: minmax(0, 1fr) 137px 141px;
+  grid-template-columns: minmax(0, 1fr) 137px;
 }
 .offer-salary__main {
   min-height: 100px;

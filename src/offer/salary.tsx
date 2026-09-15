@@ -44,12 +44,6 @@ export function Salary() {
             {salary.bonus.caption}
           </Typography.Caption.OneR>
         </div>
-        <div className="flex flex-col justify-between gap-spacing-xl rounded-radius-md bg-colorfull-surface-secondary-standard-purple-normal p-spacing-lg">
-          <Typography.Body.OneM as="div">{salary.newcomer.value}</Typography.Body.OneM>
-          <Typography.Caption.OneR as="div" color="tertiary">
-            {salary.newcomer.caption}
-          </Typography.Caption.OneR>
-        </div>
       </div>
       <div className="grid gap-spacing-md pl-spacing-lg">
         <Typography.Body.ThreeR as="div" color="tertiary">
