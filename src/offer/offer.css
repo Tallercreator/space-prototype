@@ -151,14 +151,33 @@
 .offer-culture__card--small {
   min-height: 129px;
 }
+/* Градиенты — по gradientTransform из Figma (188-42370): позиции стопов пересчитаны в проценты высоты карточки. */
 .offer-culture__card--lime {
-  background: linear-gradient(180deg, var(--ui-vibrant-adaptive-sl-40-150) 0%, var(--ui-base-surface-secondary-standard-lime-normal) 100%);
+  background:
+    linear-gradient(180deg, var(--ui-vibrant-adaptive-sl-40-150) -7%, rgba(240, 251, 223, 0) 56%),
+    var(--ui-base-surface-secondary-standard-lime-normal);
 }
 .offer-culture__card--purple {
-  background: linear-gradient(180deg, var(--ui-base-surface-tertiary-neutral-normal) 0%, var(--ui-vibrant-adaptive-vl-20-100, #e8deff) 60%);
+  background:
+    linear-gradient(180deg, #e8deff 30%, rgba(249, 249, 250, 0.28) 91%),
+    var(--ui-colorfull-surface-secondary-standard-purple-normal);
+}
+/* Размытая фиолетовая полоса из макета (Rectangle 7 в карточке «ОТП Коины»). */
+.offer-culture__card--purple::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 155px;
+  top: -60px;
+  width: 49px;
+  height: 400px;
+  background: var(--ui-colorfull-surface-secondary-standard-purple-pressed, #d5c2ff);
+  opacity: 0.6;
+  filter: blur(24px);
+  pointer-events: none;
 }
 .offer-culture__card--blue {
-  background: linear-gradient(180deg, #edf6fd 0%, var(--ui-vibrant-adaptive-sk-30-150) 100%);
+  background: linear-gradient(180deg, var(--ui-vibrant-adaptive-sk-30-150) -39%, rgba(237, 246, 253, 0.22) 117%);
 }
 .offer-culture__deco {
   position: absolute;
