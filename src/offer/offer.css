@@ -281,20 +281,26 @@
   width: 100%;
 }
 
-/* ---------- форма даты выхода ---------- */
-.offer-when__fields {
-  max-width: 440px;
+/* ---------- экран «оффер принят» (217-96246) ---------- */
+.offer-content--centered {
+  min-height: min(880px, calc(100vh - 2 * var(--ui-spacing-xxxl)));
+  align-content: center;
+  justify-items: center;
 }
-.offer-when__range {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.offer-accepted__heart {
+  width: 72px;
+  height: 72px;
 }
-.offer-when__range--muted {
-  opacity: 0.4;
+.offer-accepted__title {
+  max-width: 560px;
 }
-.offer-sent {
-  max-width: 520px;
-  justify-self: center;
-  width: 100%;
+.offer-star {
+  width: 49px;
+  height: 48px;
+  transition: background-color 0.15s ease;
+}
+.offer-accepted__comment {
+  width: min(343px, 100%);
 }
 
 /* ---------- PDF (сценарий Б) ---------- */

@@ -5,7 +5,7 @@ import { Link } from "@otp/space-ui-kit/link";
 import { UprightArrowLine16Icon } from "@otp/space-ui-kit/icons/upright-arrow-line-16";
 import { Typography } from "@otp/space-ui-kit/typography";
 
-import { DEMO, fmtDay, fmtRange, legal } from "./data";
+import { DEMO, fmtDay, legal } from "./data";
 import type { OfferActions, OfferState } from "./state";
 
 /** Панель показывается, когда баннер прокручен: наверху страницы она не перекрывает условия. */
@@ -22,13 +22,6 @@ function useScrolledPast(threshold: number): boolean {
     };
   }, [threshold]);
   return past;
-}
-
-function wishText(state: OfferState): string {
-  if (state.wish === undefined) return "Дату выхода ты обсудишь с рекрутером напрямую.";
-  if (state.wish === null) return "Дату выхода ты обсудишь с рекрутером напрямую.";
-  if (state.wish.asap) return "Ты готов выйти как можно раньше — рекрутер предложит ближайшую дату.";
-  return `Пожелание по дате выхода отправлено: ${fmtRange(state.wish.from, state.wish.to)}. Рекрутер подтвердит точную дату.`;
 }
 
 /** Липкая панель действий под оффером: кнопки по сценарию, ссылка на PDF и юридическая строка. */
@@ -65,19 +58,6 @@ export function Actions({
     case "no":
       hint = "Ты отклонил предложение. Если передумаешь — рекрутер сможет отправить новый оффер.";
       buttons = null;
-      break;
-    case "ok":
-      hint = wishText(state);
-      buttons = (
-        <>
-          <Button variant="secondary" tone="neutral" size="large" onClick={actions.editWish}>
-            Изменить пожелание
-          </Button>
-          <Button tone="neutral" size="large" disabled>
-            Данные для парковки
-          </Button>
-        </>
-      );
       break;
     case "dated":
       hint = `Нужно до ${fmtDay(DEMO.parkingDue)} — за 2 рабочих дня до выхода`;

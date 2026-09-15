@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { DEMO } from "./data";
 import type { OfferKind } from "./data";
 
 /**
@@ -12,21 +11,17 @@ export type Scenario =
   | "last" // последний день ответа
   | "gone" // срок истёк
   | "no" // кандидат отклонил
-  | "ok" // принял, пожелание по дате отправлено, ждём рекрутера
+  | "ok" // принял — экран «оффер принят» с оценкой
   | "dated" // дата выхода подтверждена — открыта парковка
   | "pdf" // сценарий Б: PDF-оффер на всю высоту
   | "pdf2" // сценарий Б, V2: PDF в области со своим скроллом
   | "pdferr"; // сценарий Б: PDF не сконвертировался
 
-export type View = "offer" | "when" | "sent";
-
-export type Wish = { asap: true } | { asap: false; from: Date; to: Date } | null;
+export type View = "offer" | "accepted";
 
 export type OfferState = {
   scenario: Scenario;
   view: View;
-  /** Пожелание по дате выхода; undefined — кандидат пропустил шаг. */
-  wish: Wish | undefined;
   /** Закрытый сценарий, который запросили без кода, — страница покажет ввод кода. */
   lockedRequest: Scenario | null;
 };
@@ -34,7 +29,7 @@ export type OfferState = {
 export const SCENARIOS: Array<{ id: Scenario; label: string; group: "А" | "Б" }> = [
   { id: "due", label: "Оффер — активен", group: "А" },
   { id: "last", label: "Оффер — последний день", group: "А" },
-  { id: "ok", label: "Принят → ждём дату выхода", group: "А" },
+  { id: "ok", label: "Оффер принят", group: "А" },
   { id: "dated", label: "Дата подтверждена → парковка", group: "А" },
   { id: "gone", label: "Срок истёк", group: "А" },
   { id: "no", label: "Отклонён", group: "А" },
@@ -70,9 +65,9 @@ export function isLocked(scenario: Scenario): boolean {
   return LOCKED.has(scenario) && !isUnlocked();
 }
 
-/** Стартовое пожелание для сценария «принят»: как будто кандидат уже отправил период. */
-function initialWish(scenario: Scenario): Wish | undefined {
-  return scenario === "ok" || scenario === "dated" ? { asap: false, from: DEMO.wishFrom, to: DEMO.wishTo } : undefined;
+/** Сценарий «принят» открывается сразу экраном подтверждения. */
+function initialView(scenario: Scenario): View {
+  return scenario === "ok" ? "accepted" : "offer";
 }
 
 export function scenarioFromHash(): Scenario {
@@ -91,8 +86,8 @@ export function isAccepted(scenario: Scenario): boolean {
 export function useOfferState() {
   const fromHash = (): OfferState => {
     const requested = scenarioFromHash();
-    if (isLocked(requested)) return { scenario: "due", view: "offer", wish: undefined, lockedRequest: requested };
-    return { scenario: requested, view: "offer", wish: initialWish(requested), lockedRequest: null };
+    if (isLocked(requested)) return { scenario: "due", view: "offer", lockedRequest: requested };
+    return { scenario: requested, view: initialView(requested), lockedRequest: null };
   };
   const [state, setState] = React.useState<OfferState>(fromHash);
 
@@ -112,14 +107,14 @@ export function useOfferState() {
           return;
         }
         history.replaceState(null, "", scenario === "due" ? window.location.pathname : `#${scenario}`);
-        setState({ scenario, view: "offer", wish: initialWish(scenario), lockedRequest: null });
+        setState({ scenario, view: initialView(scenario), lockedRequest: null });
         scrollTop();
       },
       /** Код верный: запоминаем на сессию и открываем запрошенный сценарий. */
       unlockAndOpen(scenario: Scenario) {
         unlock();
         history.replaceState(null, "", `#${scenario}`);
-        setState({ scenario, view: "offer", wish: initialWish(scenario), lockedRequest: null });
+        setState({ scenario, view: initialView(scenario), lockedRequest: null });
         scrollTop();
       },
       cancelLocked() {
@@ -127,27 +122,11 @@ export function useOfferState() {
         if (isLocked(scenarioFromHash())) history.replaceState(null, "", window.location.pathname);
       },
       accept() {
-        setState((s) => ({ ...s, view: "when" }));
+        setState((s) => ({ ...s, scenario: "ok", view: "accepted" }));
         scrollTop();
       },
       decline() {
         setState((s) => ({ ...s, scenario: "no", view: "offer" }));
-        scrollTop();
-      },
-      sendWish(wish: Wish) {
-        setState((s) => ({ ...s, scenario: "ok", view: "sent", wish }));
-        scrollTop();
-      },
-      skipWish() {
-        setState((s) => ({ ...s, scenario: "ok", view: "sent", wish: undefined }));
-        scrollTop();
-      },
-      editWish() {
-        setState((s) => ({ ...s, view: "when" }));
-        scrollTop();
-      },
-      backToOffer() {
-        setState((s) => ({ ...s, view: "offer" }));
         scrollTop();
       },
     }),

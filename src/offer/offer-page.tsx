@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { AcceptedView } from "./accepted-view";
 import { Actions } from "./actions";
 import { Banner } from "./banner";
 import { Benefits } from "./benefits";
@@ -10,10 +11,8 @@ import { DeclinePopup, ParkingPopup } from "./decline-popup";
 import { PdfView } from "./pdf-view";
 import { Salary } from "./salary";
 import { ScenarioPanel } from "./scenario-panel";
-import { SentView } from "./sent-view";
 import { Sidebar } from "./sidebar";
 import { StatusMessage } from "./status";
-import { WhenForm } from "./when-form";
 import { offerKind, useOfferState } from "./state";
 
 /** Страница оффера кандидата: баннер, сайдбар с шагами и контент по сценарию. */
@@ -24,10 +23,8 @@ export function OfferPage() {
   const kind = offerKind(state.scenario);
 
   let content: React.ReactNode;
-  if (state.view === "when") {
-    content = <WhenForm actions={actions} />;
-  } else if (state.view === "sent") {
-    content = <SentView state={state} actions={actions} />;
+  if (state.view === "accepted") {
+    content = <AcceptedView />;
   } else {
     content = (
       <>
@@ -55,7 +52,7 @@ export function OfferPage() {
         <Banner kind={kind} />
         <div className="offer-columns grid items-start gap-spacing-md">
           <Sidebar state={state} />
-          <main className="offer-content grid gap-spacing-exxxs rounded-radius-lg bg-base-surface-primary-block-normal">{content}</main>
+          <main className={`offer-content grid gap-spacing-exxxs rounded-radius-lg bg-base-surface-primary-block-normal ${state.view === "accepted" ? "offer-content--centered" : ""}`}>{content}</main>
         </div>
       </div>
       <DeclinePopup

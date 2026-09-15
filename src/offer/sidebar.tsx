@@ -4,7 +4,6 @@ import { Typography } from "@otp/space-ui-kit/typography";
 
 import { DEMO, fmtDay, mentor, recruiter } from "./data";
 import type { OfferState } from "./state";
-import { isAccepted } from "./state";
 
 type StepItem = { n: number; title: string; caption?: string; active: boolean };
 
@@ -24,17 +23,8 @@ function buildSteps(state: OfferState): { of: string; items: StepItem[] } {
       ],
     };
   }
-  if (isAccepted(scenario) || view !== "offer") {
-    const waiting = scenario === "ok" && view !== "when";
-    return {
-      of: "Шаг 3 из 4",
-      items: [
-        ...base.map((s) => ({ ...s, active: false })),
-        { n: 3, title: "Дата выхода", caption: waiting ? "Ждём подтверждения рекрутера" : "Пожелание по периоду", active: true },
-        { n: 4, title: "Парковка", caption: "После подтверждения даты", active: false },
-      ],
-    };
-  }
+  // «Оффер принят» (217-96246): шаги остаются «2 из 2»
+  void view;
   return { of: "Шаг 2 из 2", items: base };
 }
 
