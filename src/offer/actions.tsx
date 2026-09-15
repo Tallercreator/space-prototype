@@ -8,20 +8,29 @@ import { Typography } from "@otp/space-ui-kit/typography";
 import { DEMO, fmtDay, legal } from "./data";
 import type { OfferActions, OfferState } from "./state";
 
-/** Панель показывается, когда баннер прокручен: наверху страницы она не перекрывает условия. */
-function useScrolledPast(threshold: number): boolean {
-  const [past, setPast] = React.useState(() => window.scrollY > threshold);
+/**
+ * Состояние панели (Figma «Buttons»): `scroll` — прилипла к низу окна (белая
+ * подложка на всю ширину карточки, поля 24/40), `default` — стоит в потоке в
+ * конце контента (без полей). Наверху страницы, пока виден баннер, панель скрыта.
+ */
+function usePanelState(ref: React.RefObject<HTMLDivElement | null>, threshold: number): { visible: boolean; stuck: boolean } {
+  const [state, setState] = React.useState({ visible: false, stuck: false });
   React.useEffect(() => {
-    const onScroll = () => setPast(window.scrollY > threshold);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+    const update = () => {
+      const el = ref.current;
+      const visible = window.scrollY > threshold;
+      const stuck = el ? el.getBoundingClientRect().bottom >= window.innerHeight - 1 : false;
+      setState((s) => (s.visible === visible && s.stuck === stuck ? s : { visible, stuck }));
     };
-  }, [threshold]);
-  return past;
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [ref, threshold]);
+  return state;
 }
 
 /** Липкая панель действий под оффером: кнопки по сценарию, ссылка на PDF и юридическая строка. */
@@ -37,7 +46,8 @@ export function Actions({
   onParking: () => void;
 }) {
   const { scenario } = state;
-  const scrolled = useScrolledPast(240);
+  const ref = React.useRef<HTMLDivElement>(null);
+  const { visible, stuck } = usePanelState(ref, 240);
   let hint: string | null = null;
   let buttons: React.ReactNode;
 
@@ -86,14 +96,17 @@ export function Actions({
   }
 
   return (
-    <div className={`offer-actions grid gap-spacing-xl bg-base-surface-primary-block-normal ${scrolled ? "" : "offer-actions--hidden"}`}>
+    <div
+      ref={ref}
+      className={`offer-actions grid gap-spacing-xl bg-base-surface-primary-block-normal ${stuck ? "offer-actions--stuck" : ""} ${visible ? "" : "offer-actions--hidden"}`}
+    >
       {hint ? (
         <Typography.Body.ThreeR as="p" color="tertiary" className="m-0">
           {hint}
         </Typography.Body.ThreeR>
       ) : null}
       {buttons ? <div className="offer-actions__buttons grid gap-spacing-lg">{buttons}</div> : null}
-      <div className="grid justify-items-start gap-spacing-md">
+      <div className="flex flex-wrap items-center justify-between gap-spacing-md">
         <Typography.Body.ThreeR as="p" color="disabled" className="m-0">
           {legal}
         </Typography.Body.ThreeR>

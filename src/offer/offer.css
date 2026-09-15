@@ -268,17 +268,19 @@
   object-fit: contain;
 }
 
-/* ---------- действия ---------- */
-/* Липкая панель на всю ширину карточки контента (Figma 205-96208): поля 24/40, без рамки и тени. */
+/* ---------- действия (Figma «Buttons», 221-103427) ---------- */
+/* В потоке (Default): без полей, ширина контента. Прилипла (Scroll): на всю ширину карточки, поля 24/40. */
 .offer-actions {
   position: sticky;
   bottom: 0;
+  transition: opacity 0.2s ease;
+}
+.offer-actions--stuck {
   margin: 0 calc(-1 * var(--ui-spacing-exxxs)) calc(-1 * var(--ui-spacing-exxxs));
   padding: var(--ui-spacing-xxxl) var(--ui-spacing-exxxs);
   border-radius: 0 0 var(--ui-radius-lg) var(--ui-radius-lg);
-  transition: opacity 0.2s ease;
 }
-/* Пока страница не прокручена (виден баннер), липкая панель не перекрывает условия — как во фрейме «скролл» макета. */
+/* Пока страница не прокручена (виден баннер), панель не перекрывает условия — как во фрейме «скролл» макета. */
 .offer-actions--hidden {
   opacity: 0;
   pointer-events: none;
@@ -416,7 +418,7 @@
   .offer-conditions__label {
     flex-basis: auto;
   }
-  .offer-actions {
+  .offer-actions--stuck {
     margin: 0 calc(-1 * var(--ui-spacing-xl)) calc(-1 * var(--ui-spacing-xl));
     padding: var(--ui-spacing-xl);
   }
