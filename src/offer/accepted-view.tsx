@@ -22,7 +22,7 @@ export function AcceptedView() {
   const [sent, setSent] = React.useState(false);
   const [needRating, setNeedRating] = React.useState(false);
   const shown = hover || rating;
-  const valueLabel = shown ? STAR_LABELS[shown - 1] : needRating ? "Выбери оценку" : "\u00a0";
+  const valueLabel = shown ? STAR_LABELS[shown - 1] : needRating ? "Поставь оценку — это обязательно" : "\u00a0";
 
   return (
     <section className="offer-accepted grid justify-items-center gap-spacing-exxxs" aria-labelledby="accepted-title">
@@ -58,7 +58,7 @@ export function AcceptedView() {
 
           <div className="grid gap-spacing-xxxl">
             <div className="grid gap-spacing-md">
-              <div className="flex gap-spacing-xs" role="radiogroup" aria-label="Оценка от 1 до 5" onMouseLeave={() => setHover(0)}>
+              <div className="flex gap-spacing-xs" role="radiogroup" aria-label="Оценка от 1 до 5" aria-required="true" aria-invalid={needRating && !rating} aria-describedby="feedback-value" onMouseLeave={() => setHover(0)}>
                 {STARS.map((n) => (
                   <button
                     key={n}
@@ -81,7 +81,7 @@ export function AcceptedView() {
                   </button>
                 ))}
               </div>
-              <Typography.Body.ThreeR color="tertiary" className="offer-feedback__value" aria-live="polite">
+              <Typography.Body.ThreeR color="tertiary" className="offer-feedback__value" id="feedback-value" aria-live="polite">
                 {shown ? STAR_LABELS[shown - 1] : " "}
               </Typography.Body.ThreeR>
             </div>
