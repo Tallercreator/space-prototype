@@ -14,19 +14,21 @@ export function Banner({ kind }: { kind: OfferKind }) {
 
   React.useEffect(() => () => stopRef.current(), []);
 
-  /** Клик по баннеру — залп конфетти в брендовых цветах из точки клика. */
+  /**
+   * Клик только по баннеру, а конфетти сыплется по всему окну: канвас
+   * зафиксирован на весь viewport, точка залпа — координаты клика в окне.
+   */
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
     const canvas = canvasRef.current;
     if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const rect = canvas.getBoundingClientRect();
     stopRef.current();
-    stopRef.current = burst(canvas, e.clientX - rect.left, e.clientY - rect.top, brandColors(canvas));
+    stopRef.current = burst(canvas, e.clientX, e.clientY, brandColors(canvas));
   };
 
   return (
     <section className="offer-banner" aria-label="Приглашение в команду" onClick={onClick}>
       <img className="offer-banner__bg" src={asset("banner-bg")} alt="" />
-      <canvas ref={canvasRef} className="offer-banner__confetti" aria-hidden="true" />
+      <canvas ref={canvasRef} className="offer-confetti-layer" aria-hidden="true" />
       <img className="offer-banner__logo" src={asset("otp-logo", "svg")} alt="ОТП Банк" />
       <div className="offer-banner__toast rounded-radius-sm bg-base-surface-primary-block-normal px-spacing-md py-spacing-xs">
         <Typography.Body.ThreeM>Все будет ОТП</Typography.Body.ThreeM>

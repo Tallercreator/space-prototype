@@ -1,6 +1,6 @@
 /**
  * Конфетти без зависимостей: частицы вылетают из точки клика и падают под
- * гравитацией внутри канваса, который лежит поверх баннера. Цвета — четыре
+ * гравитацией внутри канваса, который зафиксирован на весь экран. Цвета — четыре
  * брендовых токена Universal/Brand: lime, orange, purple, blue-light.
  */
 
@@ -76,7 +76,7 @@ export function burst(canvas: HTMLCanvasElement, x: number, y: number, colors: s
       p.y += p.vy * dt;
       p.angle += p.spin * dt;
       if (p.y > rect.height + 20) p.life = 0;
-      else if (p.y > rect.height * 0.75) p.life -= 0.02 * dt;
+      else if (p.y > rect.height * 0.85) p.life -= 0.03 * dt;
       if (p.life <= 0) continue;
       alive++;
       ctx.save();
