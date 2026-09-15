@@ -106,21 +106,21 @@ export function Actions({
   }
 
   return (
-    <div className={`offer-actions grid gap-spacing-xxxl bg-base-surface-primary-block-normal ${scrolled ? "" : "offer-actions--hidden"}`}>
-      <div className="grid justify-items-center gap-spacing-xxxl">
-        {hint ? (
-          <Typography.Body.ThreeR as="p" color="tertiary" className="m-0 text-center">
-            {hint}
-          </Typography.Body.ThreeR>
-        ) : null}
-        {buttons ? <div className="offer-actions__buttons grid w-full gap-spacing-lg">{buttons}</div> : null}
-        <Link href="#pdf-download" size="large" color="black" rightIcon={<UprightArrowLine16Icon aria-hidden="true" />} onClick={(e) => e.preventDefault()}>
-          Скачать PDF-версию оффера
+    <div className={`offer-actions grid gap-spacing-xl bg-base-surface-primary-block-normal ${scrolled ? "" : "offer-actions--hidden"}`}>
+      {hint ? (
+        <Typography.Body.ThreeR as="p" color="tertiary" className="m-0">
+          {hint}
+        </Typography.Body.ThreeR>
+      ) : null}
+      {buttons ? <div className="offer-actions__buttons grid gap-spacing-lg">{buttons}</div> : null}
+      <div className="grid justify-items-start gap-spacing-md">
+        <Typography.Body.ThreeR as="p" color="disabled" className="m-0">
+          {legal}
+        </Typography.Body.ThreeR>
+        <Link href="#pdf-download" size="medium" color="black" rightIcon={<UprightArrowLine16Icon aria-hidden="true" />} onClick={(e) => e.preventDefault()}>
+          PDF-версия оффера
         </Link>
       </div>
-      <Typography.Body.TwoR as="p" color="disabled" className="m-0 text-center">
-        {legal}
-      </Typography.Body.TwoR>
     </div>
   );
 }

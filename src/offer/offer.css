@@ -241,12 +241,13 @@
 }
 
 /* ---------- действия ---------- */
+/* Липкая панель на всю ширину карточки контента (Figma 205-96208): поля 24/40, без рамки и тени. */
 .offer-actions {
   position: sticky;
   bottom: 0;
-  margin-bottom: calc(-1 * var(--ui-spacing-exxxs));
-  padding-bottom: var(--ui-spacing-exxxs);
-  padding-top: var(--ui-spacing-xl);
+  margin: 0 calc(-1 * var(--ui-spacing-exxxs)) calc(-1 * var(--ui-spacing-exxxs));
+  padding: var(--ui-spacing-xxxl) var(--ui-spacing-exxxs);
+  border-radius: 0 0 var(--ui-radius-lg) var(--ui-radius-lg);
   transition: opacity 0.2s ease;
 }
 /* Пока страница не прокручена (виден баннер), липкая панель не перекрывает условия — как во фрейме «скролл» макета. */
@@ -414,8 +415,8 @@
     flex-basis: auto;
   }
   .offer-actions {
-    margin-bottom: calc(-1 * var(--ui-spacing-xl));
-    padding-bottom: var(--ui-spacing-xl);
+    margin: 0 calc(-1 * var(--ui-spacing-xl)) calc(-1 * var(--ui-spacing-xl));
+    padding: var(--ui-spacing-xl);
   }
   .offer-culture__card--tall {
     min-height: 200px;
