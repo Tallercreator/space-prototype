@@ -10,7 +10,7 @@ function Part({ value, caption, note }: { value: string; caption: string; note?:
         {caption}
       </Typography.Caption.TwoR>
       {note ? (
-        <Typography.Caption.TwoR color="limeAverage" className="whitespace-nowrap">
+        <Typography.Caption.TwoR color="limeBright" className="whitespace-nowrap">
           {note}
         </Typography.Caption.TwoR>
       ) : null}
