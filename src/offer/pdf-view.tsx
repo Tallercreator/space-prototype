@@ -7,7 +7,7 @@ import { asset } from "./data";
  * Сценарий Б: оффер конфиденциальной позиции — PDF, отрисованный сервером в
  * картинку, показывается «уже открытым» на всю ширину контента (Figma 188-90576).
  */
-export function PdfView({ failed }: { failed: boolean }) {
+export function PdfView({ failed, inner = false }: { failed: boolean; inner?: boolean }) {
   if (failed) {
     return (
       <section
@@ -24,9 +24,14 @@ export function PdfView({ failed }: { failed: boolean }) {
       </section>
     );
   }
-  return (
-    <section aria-label="Предложение о работе">
-      <img className="offer-pdf__page" src={asset("pdf-page")} alt="Предложение о работе — страница 1 из 1" />
-    </section>
-  );
+  const img = <img className="offer-pdf__page" src={asset("pdf-page")} alt="Предложение о работе — страница 1 из 1" />;
+  if (inner) {
+    // V2: документ в области фиксированной высоты со своим скроллом
+    return (
+      <section aria-label="Предложение о работе" className="offer-pdf__scroller rounded-radius-md border border-base-border-standard-neutral-normal" tabIndex={0}>
+        {img}
+      </section>
+    );
+  }
+  return <section aria-label="Предложение о работе">{img}</section>;
 }

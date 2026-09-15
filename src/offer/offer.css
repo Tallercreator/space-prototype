@@ -305,6 +305,18 @@
   height: auto;
   aspect-ratio: 687 / 900;
 }
+/* V2: область под документ — высота по окну, скролл внутри, полоса прокрутки всегда видна. */
+.offer-pdf__scroller {
+  height: min(760px, calc(100vh - 280px));
+  min-height: 420px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+.offer-pdf__scroller .offer-pdf__page {
+  aspect-ratio: auto;
+}
 .offer-pdf__error {
   min-height: 320px;
   align-content: center;

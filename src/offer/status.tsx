@@ -23,6 +23,7 @@ function statusFor(scenario: Scenario): { tone: Tone; icon: "clock" | "check" | 
     case "dated":
       return { tone: "lime", icon: "check", title: `Дата выхода: ${fmtWeekdayDay(DEMO.startDate)}`, text: "Рекрутер подтвердил дату из твоего пожелания. Осталось заполнить данные для парковки." };
     case "pdf":
+    case "pdf2":
     case "pdferr":
       return { tone: "orange", icon: "clock", title: `Ответь до ${fmtDay(DEMO.deadline)}`, text: `Осталось ${left} ${daysWord(left)}. Условия — в документе ниже, они зафиксированы и не изменятся` };
     default:

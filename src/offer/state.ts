@@ -14,7 +14,8 @@ export type Scenario =
   | "no" // кандидат отклонил
   | "ok" // принял, пожелание по дате отправлено, ждём рекрутера
   | "dated" // дата выхода подтверждена — открыта парковка
-  | "pdf" // сценарий Б: PDF-оффер
+  | "pdf" // сценарий Б: PDF-оффер на всю высоту
+  | "pdf2" // сценарий Б, V2: PDF в области со своим скроллом
   | "pdferr"; // сценарий Б: PDF не сконвертировался
 
 export type View = "offer" | "when" | "sent";
@@ -36,6 +37,7 @@ export const SCENARIOS: Array<{ id: Scenario; label: string; group: "А" | "Б" 
   { id: "gone", label: "Срок истёк", group: "А" },
   { id: "no", label: "Отклонён", group: "А" },
   { id: "pdf", label: "Оффер как PDF", group: "Б" },
+  { id: "pdf2", label: "PDF, V2 — скролл внутри", group: "Б" },
   { id: "pdferr", label: "PDF не сконвертировался", group: "Б" },
 ];
 
@@ -52,7 +54,7 @@ export function scenarioFromHash(): Scenario {
 }
 
 export function offerKind(scenario: Scenario): OfferKind {
-  return scenario === "pdf" || scenario === "pdferr" ? "pdf" : "structured";
+  return scenario === "pdf" || scenario === "pdf2" || scenario === "pdferr" ? "pdf" : "structured";
 }
 
 export function isAccepted(scenario: Scenario): boolean {

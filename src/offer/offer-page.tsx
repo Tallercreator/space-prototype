@@ -33,7 +33,7 @@ export function OfferPage() {
         <StatusMessage scenario={state.scenario} />
         <div className="grid gap-spacing-esm">
           {kind === "pdf" ? (
-            <PdfView failed={state.scenario === "pdferr"} />
+            <PdfView failed={state.scenario === "pdferr"} inner={state.scenario === "pdf2"} />
           ) : (
             <div className="grid gap-spacing-exxs">
               <Salary />
