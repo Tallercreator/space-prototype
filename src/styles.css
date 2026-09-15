@@ -7,6 +7,8 @@
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 @import "@otp/space-ui-kit/theme.css";
 @import "@otp/space-ui-kit/styles.css";
+/* Макетные размеры оффера — см. комментарий в файле. */
+@import "./offer/offer.css";
 
 /* Tailwind сканирует только код прототипа — утилиты кита уже в styles.css. */
 @source "./**/*.tsx";
@@ -22,8 +24,3 @@ body {
   font-family: var(--font-primary, "Onest Variable", system-ui, sans-serif);
 }
 
-/* Ширина колонки прототипа — макетное значение, у кита нет токена ширины контейнера. */
-.shell {
-  width: 100%;
-  max-width: 640px;
-}

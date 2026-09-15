@@ -1,0 +1,421 @@
+/*
+ * Макетные размеры прототипа «Цифровой оффер» (Figma 188-21317, фрейм 1920).
+ * У кита нет токенов ширин колонок и позиций декора — они живут здесь;
+ * цвета, отступы, радиусы и типографика — токен-утилитами в TSX.
+ */
+
+.offer-page {
+  padding: var(--ui-spacing-xxxl);
+}
+/* В ките нет preflight: макетные блоки прототипа считаем по border-box. */
+.offer-page [class^="offer-"],
+.offer-page [class*=" offer-"] {
+  box-sizing: border-box;
+}
+.offer-shell {
+  width: 100%;
+  max-width: 1130px;
+}
+
+/* ---------- баннер ---------- */
+.offer-banner {
+  position: relative;
+  aspect-ratio: 1130 / 460;
+  min-height: 300px;
+  overflow: hidden;
+  border-radius: var(--ui-radius-xl);
+}
+.offer-banner__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.offer-banner__logo {
+  position: absolute;
+  top: 48px;
+  left: 48px;
+  width: 77px;
+  height: 16px;
+}
+.offer-banner__toast {
+  position: absolute;
+  top: 48px;
+  right: 48px;
+}
+.offer-banner__text {
+  position: absolute;
+  top: 106px;
+  left: 50%;
+  width: min(600px, calc(100% - 48px));
+  transform: translateX(-50%);
+}
+
+/* ---------- колонки ---------- */
+.offer-columns {
+  grid-template-columns: 357px minmax(0, 1fr);
+}
+.offer-sidebar {
+  position: sticky;
+  top: var(--ui-spacing-xxxl);
+  min-height: min(880px, calc(100vh - 2 * var(--ui-spacing-xxxl)));
+}
+.offer-content {
+  padding: var(--ui-spacing-exxxs);
+  min-width: 0;
+}
+
+/* статус-сообщение: высота 56 */
+.offer-status {
+  min-height: 56px;
+}
+
+/* ---------- доход ---------- */
+.offer-salary__tiles {
+  grid-template-columns: minmax(0, 1fr) 137px 141px;
+}
+.offer-salary__main {
+  min-height: 100px;
+}
+.offer-salary__main-caption {
+  max-width: 220px;
+}
+.offer-salary__money {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 138px;
+  height: 138px;
+  pointer-events: none;
+}
+.offer-salary__caption {
+  display: block;
+  max-width: 66px;
+}
+.offer-pill {
+  line-height: 1;
+}
+
+/* ---------- условия ---------- */
+.offer-conditions__label {
+  flex: 0 0 257px;
+}
+.offer-conditions__icon {
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+}
+
+/* ---------- льготы ---------- */
+.offer-benefits {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--ui-spacing-xl);
+  row-gap: var(--ui-spacing-xxxl);
+}
+.offer-benefits__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- культура ---------- */
+.offer-culture__heart {
+  width: 16px;
+  height: 16px;
+  color: var(--ui-base-surface-primary-lime-active);
+}
+.offer-culture__row3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.offer-culture__row2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.offer-culture__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  isolation: isolate;
+}
+.offer-culture__card--tall {
+  min-height: 280px;
+}
+.offer-culture__card--wide {
+  min-height: 78px;
+  padding-right: 80px;
+}
+.offer-culture__card--small {
+  min-height: 129px;
+}
+.offer-culture__card--lime {
+  background: linear-gradient(180deg, var(--ui-vibrant-adaptive-sl-40-150) 0%, var(--ui-base-surface-secondary-standard-lime-normal) 100%);
+}
+.offer-culture__card--purple {
+  background: linear-gradient(180deg, var(--ui-base-surface-tertiary-neutral-normal) 0%, var(--ui-vibrant-adaptive-vl-20-100, #e8deff) 60%);
+}
+.offer-culture__card--blue {
+  background: linear-gradient(180deg, #edf6fd 0%, var(--ui-vibrant-adaptive-sk-30-150) 100%);
+}
+.offer-culture__deco {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+.offer-culture__clock-big {
+  left: 267px;
+  top: 17px;
+  width: 146px;
+  height: 146px;
+}
+.offer-culture__clock-small {
+  left: 46px;
+  top: 38px;
+  width: 109px;
+  height: 109px;
+}
+.offer-culture__star-1 {
+  left: 14px;
+  top: 32px;
+  width: 41px;
+  height: 41px;
+}
+.offer-culture__star-2 {
+  left: 163px;
+  top: 93px;
+  width: 63px;
+  height: 63px;
+}
+.offer-culture__confetti {
+  left: -42px;
+  top: -52px;
+  width: 317px;
+  height: 317px;
+}
+.offer-culture__coin {
+  left: 71px;
+  top: 53px;
+  width: 102px;
+  height: 109px;
+  object-fit: contain;
+}
+.offer-culture__cards-left {
+  left: -13px;
+  top: 66px;
+  width: 80px;
+  height: 80px;
+}
+.offer-culture__cards-right {
+  left: 155px;
+  top: 66px;
+  width: 80px;
+  height: 80px;
+}
+.offer-culture__safe {
+  left: 74px;
+  top: 70px;
+  width: 74px;
+  height: 74px;
+}
+.offer-culture__wide-img {
+  right: 24px;
+  top: 12px;
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+.offer-culture__wide-img--academy {
+  top: 10px;
+  width: 56px;
+  height: 56px;
+}
+.offer-culture__small-img {
+  left: 12px;
+  top: 10px;
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ---------- действия ---------- */
+.offer-actions {
+  position: sticky;
+  bottom: 0;
+  margin-bottom: calc(-1 * var(--ui-spacing-exxxs));
+  padding-bottom: var(--ui-spacing-exxxs);
+  padding-top: var(--ui-spacing-xl);
+  transition: opacity 0.2s ease;
+}
+/* Пока страница не прокручена (виден баннер), липкая панель не перекрывает условия — как во фрейме «скролл» макета. */
+.offer-actions--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.offer-actions__buttons {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.offer-actions__buttons > * {
+  width: 100%;
+}
+
+/* ---------- форма даты выхода ---------- */
+.offer-when__fields {
+  max-width: 440px;
+}
+.offer-when__range {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.offer-when__range--muted {
+  opacity: 0.4;
+}
+.offer-sent {
+  max-width: 520px;
+  justify-self: center;
+  width: 100%;
+}
+
+/* ---------- PDF ---------- */
+.offer-pdf__feed,
+.offer-pdf__slider {
+  height: 520px;
+}
+.offer-pdf__page {
+  width: min(560px, 100%);
+  box-shadow: var(--ui-special-effects-shadow-md, 0 1px 4px rgba(0, 0, 0, 0.14));
+  user-select: none;
+}
+.offer-pdf__lime {
+  border-radius: var(--ui-radius-xs) var(--ui-radius-xs) 0 0;
+}
+.offer-pdf__watermark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%) rotate(-28deg);
+  font-size: 22px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--ui-universal-alpha-black-5);
+  pointer-events: none;
+}
+.offer-pdf__num {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+}
+.offer-pdf__line {
+  display: block;
+  height: 7px;
+  width: 100%;
+}
+.offer-pdf__line--t {
+  width: 80%;
+}
+.offer-pdf__line--s {
+  width: 60%;
+}
+.offer-pdf__counter {
+  justify-self: center;
+  background: var(--ui-universal-alpha-black-75);
+}
+.offer-pdf__track {
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+.offer-pdf__slide {
+  flex: 0 0 100%;
+}
+.offer-pdf__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.offer-pdf__nav--prev {
+  left: 12px;
+}
+.offer-pdf__nav--next {
+  right: 12px;
+}
+.offer-pdf__counter--slider {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .offer-pdf__track {
+    transition: none;
+  }
+}
+
+/* ---------- панель сценариев ---------- */
+.offer-scenarios {
+  right: var(--ui-spacing-xl);
+  bottom: var(--ui-spacing-xl);
+  z-index: 40;
+}
+.offer-scenarios__panel {
+  width: 320px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+}
+
+/* ---------- адаптив ---------- */
+@media (max-width: 1023px) {
+  .offer-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .offer-sidebar {
+    position: static;
+    min-height: 0;
+  }
+}
+@media (max-width: 767px) {
+  .offer-page {
+    padding: var(--ui-spacing-md);
+  }
+  .offer-content,
+  .offer-sidebar {
+    padding: var(--ui-spacing-xl);
+  }
+  .offer-banner {
+    aspect-ratio: auto;
+    min-height: 360px;
+  }
+  .offer-banner__logo {
+    top: 20px;
+    left: 20px;
+  }
+  .offer-banner__toast {
+    top: 16px;
+    right: 16px;
+  }
+  .offer-banner__text {
+    top: 64px;
+  }
+  .offer-salary__tiles,
+  .offer-culture__row3,
+  .offer-culture__row2,
+  .offer-actions__buttons,
+  .offer-when__range {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .offer-benefits {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .offer-conditions__row {
+    flex-direction: column;
+    gap: var(--ui-spacing-xs);
+  }
+  .offer-conditions__label {
+    flex-basis: auto;
+  }
+  .offer-actions {
+    margin-bottom: calc(-1 * var(--ui-spacing-xl));
+    padding-bottom: var(--ui-spacing-xl);
+  }
+  .offer-culture__card--tall {
+    min-height: 200px;
+  }
+}
