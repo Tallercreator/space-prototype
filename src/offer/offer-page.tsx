@@ -40,7 +40,7 @@ export function OfferPage() {
               <Conditions />
             </div>
           )}
-          <Benefits />
+          {kind === "pdf" ? null : <Benefits />}
           <Culture />
         </div>
         <Actions state={state} actions={actions} onDecline={() => setDeclineOpen(true)} onParking={() => setParkingOpen(true)} />
