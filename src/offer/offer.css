@@ -300,11 +300,16 @@
   transition: background-color 0.15s ease;
 }
 .offer-feedback {
-  width: min(520px, 100%);
+  width: min(408px, 100%);
 }
-.offer-feedback__scale {
-  width: 261px;
-  max-width: 100%;
+.offer-feedback--sent {
+  width: min(370px, 100%);
+}
+.offer-feedback__comment {
+  width: min(343px, 100%);
+}
+.offer-feedback__value {
+  min-height: 18px;
 }
 
 /* ---------- PDF (сценарий Б) ---------- */

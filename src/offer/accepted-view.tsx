@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import { Button } from "@otp/space-ui-kit/button";
-import { CheckLine16Icon } from "@otp/space-ui-kit/icons/check-line-16";
 import { StarFill16Icon } from "@otp/space-ui-kit/icons/star-fill-16";
 import { TextAreaGroup, TextAreaGroupControl, TextAreaGroupLabel } from "@otp/space-ui-kit/textarea";
 import { Typography } from "@otp/space-ui-kit/typography";
@@ -12,20 +11,21 @@ const STARS = [1, 2, 3, 4, 5];
 const STAR_LABELS = ["Совсем неудобно", "Неудобно", "Нормально", "Удобно", "Очень удобно"];
 
 /**
- * Экран после «Принять оффер» (Figma 217-96246 / 217-101827).
- * Подтверждение — по центру; оценка — отдельной карточкой ниже: вопрос,
- * шкала звёзд с подписями крайних значений, комментарий появляется после выбора
- * оценки, кнопка — в карточке справа. Всё необязательно, после отправки — «Спасибо».
+ * Экран после «Принять оффер» (Figma 217-101766, после отправки — 221-103690):
+ * подтверждение по центру, ниже карточка оценки 408px — вопрос, пояснение,
+ * звёзды с подписью выбранного значения, textarea «Поделись мнением», кнопка.
  */
 export function AcceptedView() {
   const [rating, setRating] = React.useState(0);
   const [hover, setHover] = React.useState(0);
   const [comment, setComment] = React.useState("");
   const [sent, setSent] = React.useState(false);
+  const [needRating, setNeedRating] = React.useState(false);
   const shown = hover || rating;
+  const valueLabel = shown ? STAR_LABELS[shown - 1] : needRating ? "Выбери оценку" : "\u00a0";
 
   return (
-    <section className="offer-accepted grid justify-items-center gap-spacing-exxs" aria-labelledby="accepted-title">
+    <section className="offer-accepted grid justify-items-center gap-spacing-exxxs" aria-labelledby="accepted-title">
       <div className="grid justify-items-center gap-spacing-lg text-center">
         <div className="grid justify-items-center gap-spacing-xxxl">
           <img className="offer-accepted__heart" src={asset("heart")} alt="" />
@@ -34,34 +34,29 @@ export function AcceptedView() {
             <br />с тобой для обсуждения даты выхода!
           </Typography.Heading.TwoM>
         </div>
-        <Typography.Body.TwoM as="p" color="secondary" className="m-0">
+        <Typography.Body.TwoR as="p" color="secondary" className="m-0">
           Мы очень рады, что ты принял решение
           <br />и уже очень ждём тебя в команде
-        </Typography.Body.TwoM>
+        </Typography.Body.TwoR>
       </div>
 
-      <div className="offer-feedback grid gap-spacing-xxxl rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xxxl" aria-labelledby="feedback-title">
-        {sent ? (
-          <div className="flex items-center gap-spacing-lg" role="status">
-            <span className="flex size-size-sm shrink-0 items-center justify-center rounded-radius-rounded bg-base-surface-primary-lime-normal">
-              <CheckLine16Icon aria-hidden="true" />
-            </span>
-            <span className="grid gap-spacing-xxs">
-              <Typography.Body.TwoSB>Спасибо, оценка отправлена</Typography.Body.TwoSB>
-              <Typography.Body.ThreeR color="tertiary">Она поможет сделать оффер удобнее для следующих кандидатов</Typography.Body.ThreeR>
-            </span>
+      {sent ? (
+        <div className="offer-feedback offer-feedback--sent grid gap-spacing-md rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xxxl" role="status">
+          <Typography.Body.OneSB>Спасибо! Оценка отправлена</Typography.Body.OneSB>
+          <Typography.Body.TwoR color="tertiary">Она поможет нам сделать оффер удобнее</Typography.Body.TwoR>
+        </div>
+      ) : (
+        <div className="offer-feedback grid gap-spacing-exxxxs rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xxxl" aria-labelledby="feedback-title">
+          <div className="grid gap-spacing-md">
+            <Typography.Body.OneSB as="h3" id="feedback-title" className="m-0">
+              Насколько удобно было принять оффер?
+            </Typography.Body.OneSB>
+            <Typography.Body.TwoR as="p" color="tertiary" className="m-0">
+              Твоя оценка поможет нам улучшить процесс
+            </Typography.Body.TwoR>
           </div>
-        ) : (
-          <>
-            <div className="grid gap-spacing-xs">
-              <Typography.Body.TwoSB as="h3" id="feedback-title" className="m-0">
-                Насколько удобно было принять оффер?
-              </Typography.Body.TwoSB>
-              <Typography.Body.ThreeR as="p" color="tertiary" className="m-0">
-                Необязательно, займёт полминуты
-              </Typography.Body.ThreeR>
-            </div>
 
+          <div className="grid gap-spacing-xxxl">
             <div className="grid gap-spacing-md">
               <div className="flex gap-spacing-xs" role="radiogroup" aria-label="Оценка от 1 до 5" onMouseLeave={() => setHover(0)}>
                 {STARS.map((n) => (
@@ -77,34 +72,32 @@ export function AcceptedView() {
                     onMouseEnter={() => setHover(n)}
                     onFocus={() => setHover(n)}
                     onBlur={() => setHover(0)}
-                    onClick={() => setRating(n)}
+                    onClick={() => {
+                      setRating(n);
+                      setNeedRating(false);
+                    }}
                   >
                     <StarFill16Icon aria-hidden="true" />
                   </button>
                 ))}
               </div>
-              <div className="offer-feedback__scale flex justify-between" aria-hidden="true">
-                <Typography.Caption.OneR color="tertiary">{shown ? STAR_LABELS[shown - 1] : "Совсем неудобно"}</Typography.Caption.OneR>
-                {!shown ? <Typography.Caption.OneR color="tertiary">Очень удобно</Typography.Caption.OneR> : null}
-              </div>
+              <Typography.Body.ThreeR color="tertiary" className="offer-feedback__value" aria-live="polite">
+                {shown ? STAR_LABELS[shown - 1] : " "}
+              </Typography.Body.ThreeR>
             </div>
+            <TextAreaGroup surface="contrast" height="one-to-four" className="offer-feedback__comment">
+              <TextAreaGroupLabel>Поделись мнением</TextAreaGroupLabel>
+              <TextAreaGroupControl value={comment} onChange={(e) => setComment(e.target.value)} maxLength={500} />
+            </TextAreaGroup>
+          </div>
 
-            {rating > 0 ? (
-              <div className="grid gap-spacing-xl">
-                <TextAreaGroup surface="contrast" height="one-to-four">
-                  <TextAreaGroupLabel>Что было удобно или мешало? Необязательно</TextAreaGroupLabel>
-                  <TextAreaGroupControl value={comment} onChange={(e) => setComment(e.target.value)} maxLength={500} />
-                </TextAreaGroup>
-                <div className="flex justify-end">
-                  <Button size="large" tone="neutral" onClick={() => setSent(true)}>
-                    Отправить оценку
-                  </Button>
-                </div>
-              </div>
-            ) : null}
-          </>
-        )}
-      </div>
+          <div className="flex">
+            <Button size="large" tone="neutral" onClick={() => (rating ? setSent(true) : setNeedRating(true))}>
+              Отправить оценку
+            </Button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
