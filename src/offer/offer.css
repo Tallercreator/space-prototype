@@ -297,79 +297,17 @@
   width: 100%;
 }
 
-/* ---------- PDF ---------- */
-.offer-pdf__feed,
-.offer-pdf__slider {
-  height: 520px;
-}
+/* ---------- PDF (сценарий Б) ---------- */
+/* Рендер PDF из макета: 687×900 на ширину контента, без рамки и скругления. */
 .offer-pdf__page {
-  width: min(560px, 100%);
-  box-shadow: var(--ui-special-effects-shadow-md, 0 1px 4px rgba(0, 0, 0, 0.14));
-  user-select: none;
-}
-.offer-pdf__lime {
-  border-radius: var(--ui-radius-xs) var(--ui-radius-xs) 0 0;
-}
-.offer-pdf__watermark {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 1;
-  transform: translate(-50%, -50%) rotate(-28deg);
-  font-size: 22px;
-  font-weight: 600;
-  white-space: nowrap;
-  color: var(--ui-universal-alpha-black-5);
-  pointer-events: none;
-}
-.offer-pdf__num {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-}
-.offer-pdf__line {
   display: block;
-  height: 7px;
   width: 100%;
+  height: auto;
+  aspect-ratio: 687 / 900;
 }
-.offer-pdf__line--t {
-  width: 80%;
-}
-.offer-pdf__line--s {
-  width: 60%;
-}
-.offer-pdf__counter {
-  justify-self: center;
-  background: var(--ui-universal-alpha-black-75);
-}
-.offer-pdf__track {
-  height: 100%;
-  transition: transform 0.3s ease;
-}
-.offer-pdf__slide {
-  flex: 0 0 100%;
-}
-.offer-pdf__nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.offer-pdf__nav--prev {
-  left: 12px;
-}
-.offer-pdf__nav--next {
-  right: 12px;
-}
-.offer-pdf__counter--slider {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-@media (prefers-reduced-motion: reduce) {
-  .offer-pdf__track {
-    transition: none;
-  }
+.offer-pdf__error {
+  min-height: 320px;
+  align-content: center;
 }
 
 /* ---------- панель сценариев ---------- */

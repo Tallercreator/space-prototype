@@ -31,18 +31,18 @@ export function OfferPage() {
     content = (
       <>
         <StatusMessage scenario={state.scenario} />
-        {kind === "pdf" ? (
-          <PdfView failed={state.scenario === "pdferr"} />
-        ) : (
-          <div className="grid gap-spacing-esm">
+        <div className="grid gap-spacing-esm">
+          {kind === "pdf" ? (
+            <PdfView failed={state.scenario === "pdferr"} />
+          ) : (
             <div className="grid gap-spacing-exxs">
               <Salary />
               <Conditions />
             </div>
-            <Benefits />
-            <Culture />
-          </div>
-        )}
+          )}
+          <Benefits />
+          <Culture />
+        </div>
         <Actions state={state} actions={actions} onDecline={() => setDeclineOpen(true)} onParking={() => setParkingOpen(true)} />
       </>
     );
