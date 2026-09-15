@@ -27,6 +27,8 @@ export type OfferState = {
   view: View;
   /** Пожелание по дате выхода; undefined — кандидат пропустил шаг. */
   wish: Wish | undefined;
+  /** Закрытый сценарий, который запросили без кода, — страница покажет ввод кода. */
+  lockedRequest: Scenario | null;
 };
 
 export const SCENARIOS: Array<{ id: Scenario; label: string; group: "А" | "Б" }> = [
@@ -42,6 +44,31 @@ export const SCENARIOS: Array<{ id: Scenario; label: string; group: "А" | "Б" 
 ];
 
 const IDS = new Set<string>(SCENARIOS.map((s) => s.id));
+
+/** Сценарии, закрытые кодом модератора: по прямой ссылке и из панели без кода не открываются. */
+export const LOCKED = new Set<Scenario>(["ok", "dated"]);
+export const ACCESS_CODE = "2210";
+const UNLOCK_KEY = "offer-unlocked";
+
+export function isUnlocked(): boolean {
+  try {
+    return sessionStorage.getItem(UNLOCK_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function unlock(): void {
+  try {
+    sessionStorage.setItem(UNLOCK_KEY, "1");
+  } catch {
+    /* приватный режим — код спросим ещё раз */
+  }
+}
+
+export function isLocked(scenario: Scenario): boolean {
+  return LOCKED.has(scenario) && !isUnlocked();
+}
 
 /** Стартовое пожелание для сценария «принят»: как будто кандидат уже отправил период. */
 function initialWish(scenario: Scenario): Wish | undefined {
@@ -62,17 +89,15 @@ export function isAccepted(scenario: Scenario): boolean {
 }
 
 export function useOfferState() {
-  const [state, setState] = React.useState<OfferState>(() => ({
-    scenario: scenarioFromHash(),
-    view: "offer",
-    wish: initialWish(scenarioFromHash()),
-  }));
+  const fromHash = (): OfferState => {
+    const requested = scenarioFromHash();
+    if (isLocked(requested)) return { scenario: "due", view: "offer", wish: undefined, lockedRequest: requested };
+    return { scenario: requested, view: "offer", wish: initialWish(requested), lockedRequest: null };
+  };
+  const [state, setState] = React.useState<OfferState>(fromHash);
 
   React.useEffect(() => {
-    const onHash = () => {
-      const scenario = scenarioFromHash();
-      setState({ scenario, view: "offer", wish: initialWish(scenario) });
-    };
+    const onHash = () => setState(fromHash());
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
@@ -82,9 +107,24 @@ export function useOfferState() {
   const actions = React.useMemo(
     () => ({
       setScenario(scenario: Scenario) {
+        if (isLocked(scenario)) {
+          setState((s) => ({ ...s, lockedRequest: scenario }));
+          return;
+        }
         history.replaceState(null, "", scenario === "due" ? window.location.pathname : `#${scenario}`);
-        setState({ scenario, view: "offer", wish: initialWish(scenario) });
+        setState({ scenario, view: "offer", wish: initialWish(scenario), lockedRequest: null });
         scrollTop();
+      },
+      /** Код верный: запоминаем на сессию и открываем запрошенный сценарий. */
+      unlockAndOpen(scenario: Scenario) {
+        unlock();
+        history.replaceState(null, "", `#${scenario}`);
+        setState({ scenario, view: "offer", wish: initialWish(scenario), lockedRequest: null });
+        scrollTop();
+      },
+      cancelLocked() {
+        setState((s) => ({ ...s, lockedRequest: null }));
+        if (isLocked(scenarioFromHash())) history.replaceState(null, "", window.location.pathname);
       },
       accept() {
         setState((s) => ({ ...s, view: "when" }));

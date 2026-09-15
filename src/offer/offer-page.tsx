@@ -5,6 +5,7 @@ import { Banner } from "./banner";
 import { Benefits } from "./benefits";
 import { Conditions } from "./conditions";
 import { Culture } from "./culture";
+import { CodePopup } from "./code-popup";
 import { DeclinePopup, ParkingPopup } from "./decline-popup";
 import { PdfView } from "./pdf-view";
 import { Salary } from "./salary";
@@ -66,6 +67,7 @@ export function OfferPage() {
         }}
       />
       <ParkingPopup open={parkingOpen} onClose={() => setParkingOpen(false)} />
+      <CodePopup target={state.lockedRequest} onSuccess={actions.unlockAndOpen} onClose={actions.cancelLocked} />
       <ScenarioPanel current={state.scenario} onSelect={actions.setScenario} />
     </div>
   );

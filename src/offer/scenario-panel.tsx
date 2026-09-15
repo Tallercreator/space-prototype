@@ -2,9 +2,10 @@ import * as React from "react";
 
 import { Button } from "@otp/space-ui-kit/button";
 import { Chip } from "@otp/space-ui-kit/chip";
+import { LockClosedLine16Icon } from "@otp/space-ui-kit/icons/lock-closed-line-16";
 import { Typography } from "@otp/space-ui-kit/typography";
 
-import { SCENARIOS } from "./state";
+import { SCENARIOS, isLocked } from "./state";
 import type { Scenario } from "./state";
 
 /** Плавающий переключатель сценариев для модератора теста; скрывается параметром ?clean. */
@@ -20,7 +21,13 @@ export function ScenarioPanel({ current, onSelect }: { current: Scenario; onSele
               <Typography.Caption.OneM color="tertiary">Сценарий {group}</Typography.Caption.OneM>
               <div className="flex flex-wrap gap-spacing-sm">
                 {SCENARIOS.filter((s) => s.group === group).map((s) => (
-                  <Chip key={s.id} size="small" selected={s.id === current} onClick={() => onSelect(s.id)}>
+                  <Chip
+                    key={s.id}
+                    size="small"
+                    selected={s.id === current}
+                    onClick={() => onSelect(s.id)}
+                    icon={isLocked(s.id) ? <LockClosedLine16Icon aria-label="по коду" /> : undefined}
+                  >
                     {s.label}
                   </Chip>
                 ))}
