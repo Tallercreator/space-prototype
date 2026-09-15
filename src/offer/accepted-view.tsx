@@ -67,7 +67,7 @@ export function AcceptedView() {
                     aria-checked={rating === n}
                     aria-label={`${n} из 5 — ${STAR_LABELS[n - 1]}`}
                     className={`offer-star flex cursor-pointer items-center justify-center rounded-radius-sm border-0 p-0 ${
-                      n <= shown ? "bg-base-surface-primary-lime-normal text-base-texticons-primary" : "bg-base-surface-secondary-standard-lime-normal text-base-texticons-lime-bright"
+                      n <= shown ? "bg-base-surface-primary-lime-normal text-base-texticons-primary" : "bg-base-surface-secondary-contrast-lime-normal text-base-texticons-lime-bright"
                     }`}
                     onMouseEnter={() => setHover(n)}
                     onFocus={() => setHover(n)}
