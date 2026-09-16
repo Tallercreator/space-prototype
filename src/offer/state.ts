@@ -41,7 +41,7 @@ export const SCENARIOS: Array<{ id: Scenario; label: string; group: "А" | "Б" 
 const IDS = new Set<string>(SCENARIOS.map((s) => s.id));
 
 /** Сценарии, закрытые кодом модератора: по прямой ссылке и из панели без кода не открываются. */
-export const LOCKED = new Set<Scenario>(["ok", "dated"]);
+export const LOCKED = new Set<Scenario>(["dated"]);
 export const ACCESS_CODE = "2210";
 const UNLOCK_KEY = "offer-unlocked";
 
