@@ -63,19 +63,19 @@ export function Salary() {
         <Typography.Body.ThreeR as="div" color="tertiary">
           {salary.breakdownTitle}
         </Typography.Body.ThreeR>
-        <div className="flex flex-wrap items-center gap-spacing-lg">
-          <div className="offer-salary__group flex flex-wrap items-center gap-spacing-xxxl rounded-radius-md bg-base-surface-tertiary-neutral-normal px-spacing-md py-spacing-md">
+        <div className="offer-salary__formula flex items-center gap-spacing-lg">
+          <div className="offer-salary__group flex items-center gap-spacing-xl rounded-radius-md bg-base-surface-tertiary-neutral-normal px-spacing-md py-spacing-md">
             {salary.parts.map((part, i) => (
-              <span key={part.caption} className="flex items-center gap-spacing-xxxl">
+              <span key={part.caption} className="flex items-center gap-spacing-xl">
                 {i > 0 ? <Op>+</Op> : null}
                 <Part {...part} />
               </span>
             ))}
           </div>
           <Op>×</Op>
-          <div className="offer-salary__group flex flex-wrap items-center gap-spacing-xxxl rounded-radius-md bg-base-surface-tertiary-neutral-normal px-spacing-md py-spacing-md">
+          <div className="offer-salary__group flex items-center gap-spacing-xl rounded-radius-md bg-base-surface-tertiary-neutral-normal px-spacing-md py-spacing-md">
             {salary.coefficients.map((c, i) => (
-              <span key={c.caption} className="flex items-center gap-spacing-xxxl">
+              <span key={c.caption} className="flex items-center gap-spacing-xl">
                 {i > 0 ? <Op>+</Op> : null}
                 <Coefficient {...c} />
               </span>

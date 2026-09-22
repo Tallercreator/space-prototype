@@ -105,6 +105,15 @@
 .offer-pill {
   line-height: 1;
 }
+/* Формула — строго в одну строку на десктопе (289-127705); на мобильном переносится. */
+.offer-salary__formula,
+.offer-salary__group {
+  flex-wrap: nowrap;
+}
+.offer-salary__group {
+  flex: 0 1 auto;
+  min-width: 0;
+}
 
 /* ---------- условия ---------- */
 .offer-conditions__label {
@@ -410,6 +419,10 @@
   }
   .offer-benefits {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .offer-salary__formula,
+  .offer-salary__group {
+    flex-wrap: wrap;
   }
   .offer-conditions__row {
     flex-direction: column;
