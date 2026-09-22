@@ -98,9 +98,11 @@
   height: 138px;
   pointer-events: none;
 }
+/* Переносы подписей заданы в данных, ширина блока — по самой длинной строке: без пустоты перед «+». */
 .offer-salary__caption {
   display: block;
-  max-width: 80px;
+  width: max-content;
+  white-space: pre-line;
 }
 .offer-pill {
   line-height: 1;
