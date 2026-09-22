@@ -1,8 +1,6 @@
 import * as React from "react";
 
 import { Button } from "@otp/space-ui-kit/button";
-import { Link } from "@otp/space-ui-kit/link";
-import { UprightArrowLine16Icon } from "@otp/space-ui-kit/icons/upright-arrow-line-16";
 import { Typography } from "@otp/space-ui-kit/typography";
 
 import { DEMO, fmtDay, legal } from "./data";
@@ -106,14 +104,9 @@ export function Actions({
         </Typography.Body.ThreeR>
       ) : null}
       {buttons ? <div className="offer-actions__buttons grid gap-spacing-lg">{buttons}</div> : null}
-      <div className="flex flex-wrap items-center justify-between gap-spacing-md">
-        <Typography.Body.ThreeR as="p" color="disabled" className="m-0">
-          {legal}
-        </Typography.Body.ThreeR>
-        <Link href="#pdf-download" size="medium" color="black" rightIcon={<UprightArrowLine16Icon aria-hidden="true" />} onClick={(e) => e.preventDefault()}>
-          PDF-версия оффера
-        </Link>
-      </div>
+      <Typography.Body.ThreeR as="p" color="disabled" className="m-0">
+        {legal}
+      </Typography.Body.ThreeR>
     </div>
   );
 }

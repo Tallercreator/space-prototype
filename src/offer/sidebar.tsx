@@ -2,30 +2,23 @@ import { Link } from "@otp/space-ui-kit/link";
 import { UprightArrowLine16Icon } from "@otp/space-ui-kit/icons/upright-arrow-line-16";
 import { Typography } from "@otp/space-ui-kit/typography";
 
-import { DEMO, fmtDay, mentor, recruiter } from "./data";
+import { DEMO, fmtDay, recruiter } from "./data";
 import type { OfferState } from "./state";
 
 type StepItem = { n: number; title: string; caption?: string; active: boolean };
 
 function buildSteps(state: OfferState): { of: string; items: StepItem[] } {
-  const { scenario, view } = state;
-  const base: StepItem[] = [
-    { n: 1, title: "Анкета кандидата", active: false },
-    { n: 2, title: "Оффер", active: true },
-  ];
-  if (scenario === "dated") {
-    return {
-      of: "Шаг 4 из 4",
-      items: [
-        ...base.map((s) => ({ ...s, active: false })),
-        { n: 3, title: "Дата выхода", caption: fmtDay(DEMO.startDate), active: false },
-        { n: 4, title: "Парковка", caption: `До ${fmtDay(DEMO.parkingDue)}`, active: true },
-      ],
-    };
-  }
-  // «Оффер принят» (217-96246): шаги остаются «2 из 2»
-  void view;
-  return { of: "Шаг 2 из 2", items: base };
+  const { scenario } = state;
+  // Figma 221-111789: три шага, «Трудоустройство» — следующий после оффера
+  const dated = scenario === "dated";
+  return {
+    of: dated ? "Шаг 3 из 3" : "Шаг 2 из 3",
+    items: [
+      { n: 1, title: "Анкета кандидата", active: false },
+      { n: 2, title: "Оффер", active: !dated },
+      { n: 3, title: "Трудоустройство", caption: dated ? `Выход ${fmtDay(DEMO.startDate)} · парковка до ${fmtDay(DEMO.parkingDue)}` : undefined, active: dated },
+    ],
+  };
 }
 
 function PersonCard({ name, note, href }: { name: string; note: string; href?: string }) {
@@ -81,8 +74,10 @@ export function Sidebar({ state }: { state: OfferState }) {
           ))}
         </ol>
       </div>
-      <div className="grid gap-spacing-lg">
-        <PersonCard name={mentor.name} note={mentor.note} />
+      <div className="grid gap-spacing-xl">
+        <Link href="#pdf-download" size="medium" color="black" className="justify-self-start" rightIcon={<UprightArrowLine16Icon aria-hidden="true" />} onClick={(e) => e.preventDefault()}>
+          Скачать PDF-версию оффера
+        </Link>
         <PersonCard name={recruiter.name} note={recruiter.note} href={recruiter.href} />
       </div>
     </aside>

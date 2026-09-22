@@ -18,10 +18,10 @@ function Part({ value, caption, note }: { value: string; caption: string; note?:
   );
 }
 
-/** Коэффициент: серая карточка с оранжевой плашкой и подписью (Figma 188-29752). */
+/** Коэффициент: оранжевая плашка и подпись (Figma 289-127705). */
 function Coefficient({ value, caption }: { value: string; caption: string }) {
   return (
-    <span className="grid justify-items-start gap-spacing-xs rounded-radius-md bg-base-surface-tertiary-neutral-normal p-spacing-md">
+    <span className="grid justify-items-start gap-spacing-xs">
       <span className="offer-pill inline-flex items-center rounded-radius-rounded bg-colorfull-surface-primary-orange-normal px-spacing-sm py-spacing-xxs">
         <Typography.Caption.TwoM color="invert">{value}</Typography.Caption.TwoM>
       </span>
@@ -64,19 +64,23 @@ export function Salary() {
           {salary.breakdownTitle}
         </Typography.Body.ThreeR>
         <div className="flex flex-wrap items-center gap-spacing-lg">
-          {salary.parts.map((part, i) => (
-            <span key={part.caption} className="flex items-center gap-spacing-lg">
-              {i > 0 ? <Op>+</Op> : null}
-              <Part {...part} />
-            </span>
-          ))}
+          <div className="offer-salary__group flex flex-wrap items-center gap-spacing-xxxl rounded-radius-md bg-base-surface-tertiary-neutral-normal px-spacing-md py-spacing-md">
+            {salary.parts.map((part, i) => (
+              <span key={part.caption} className="flex items-center gap-spacing-xxxl">
+                {i > 0 ? <Op>+</Op> : null}
+                <Part {...part} />
+              </span>
+            ))}
+          </div>
           <Op>×</Op>
-          {salary.coefficients.map((c, i) => (
-            <span key={c.caption} className="flex items-center gap-spacing-lg">
-              {i > 0 ? <Op>+</Op> : null}
-              <Coefficient {...c} />
-            </span>
-          ))}
+          <div className="offer-salary__group flex flex-wrap items-center gap-spacing-xxxl rounded-radius-md bg-base-surface-tertiary-neutral-normal px-spacing-md py-spacing-md">
+            {salary.coefficients.map((c, i) => (
+              <span key={c.caption} className="flex items-center gap-spacing-xxxl">
+                {i > 0 ? <Op>+</Op> : null}
+                <Coefficient {...c} />
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -31,11 +31,6 @@ export const positions: Record<OfferKind, { title: string; department: string }>
   },
 };
 
-export const mentor = {
-  name: "Когут Елена",
-  note: "Твой наставник, который поможет адаптироваться в первые дни",
-};
-
 export const recruiter = {
   name: "Святослав Месниченко",
   note: "Твой рекрутер, ему ты можешь задать все вопросы по условиям",
