@@ -21,22 +21,10 @@ function buildSteps(state: OfferState): { of: string; items: StepItem[] } {
   };
 }
 
-function PersonCard({ name, note, href }: { name: string; note: string; href?: string }) {
+function PersonCard({ name, note }: { name: string; note: string }) {
   return (
     <div className="grid gap-spacing-xs rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xl">
-      {href ? (
-        <Link
-          href={href}
-          size="large"
-          color="black"
-          className="justify-self-start font-(--ui-font-weight-semibold)"
-          rightIcon={<UprightArrowLine16Icon aria-hidden="true" />}
-        >
-          {name}
-        </Link>
-      ) : (
-        <Typography.Body.TwoSB>{name}</Typography.Body.TwoSB>
-      )}
+      <Typography.Body.TwoSB>{name}</Typography.Body.TwoSB>
       <Typography.Body.ThreeR color="secondary">{note}</Typography.Body.ThreeR>
     </div>
   );
@@ -78,7 +66,7 @@ export function Sidebar({ state }: { state: OfferState }) {
         <Link href="#pdf-download" size="medium" color="black" className="justify-self-start" rightIcon={<UprightArrowLine16Icon aria-hidden="true" />} onClick={(e) => e.preventDefault()}>
           Скачать PDF-версию оффера
         </Link>
-        <PersonCard name={recruiter.name} note={recruiter.note} href={recruiter.href} />
+        <PersonCard name={recruiter.name} note={recruiter.note} />
       </div>
     </aside>
   );

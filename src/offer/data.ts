@@ -34,7 +34,6 @@ export const positions: Record<OfferKind, { title: string; department: string }>
 export const recruiter = {
   name: "Святослав Месниченко",
   note: "Твой рекрутер, ему ты можешь задать все вопросы по условиям",
-  href: "#recruiter",
 };
 
 export const salary = {
