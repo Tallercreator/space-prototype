@@ -34,6 +34,8 @@ export const positions: Record<OfferKind, { title: string; department: string }>
 export const recruiter = {
   name: "Святослав Месниченко",
   note: "Твой рекрутер, ему ты можешь задать все вопросы по условиям",
+  phone: "+7 (916) 123-45-67",
+  email: "s.mesnichenko@otpbank.ru",
 };
 
 export const salary = {

@@ -1,4 +1,6 @@
 import { Link } from "@otp/space-ui-kit/link";
+import { MessageLine16Icon } from "@otp/space-ui-kit/icons/message-line-16";
+import { PhoneLine16Icon } from "@otp/space-ui-kit/icons/phone-line-16";
 import { UprightArrowLine16Icon } from "@otp/space-ui-kit/icons/upright-arrow-line-16";
 import { Typography } from "@otp/space-ui-kit/typography";
 
@@ -21,11 +23,22 @@ function buildSteps(state: OfferState): { of: string; items: StepItem[] } {
   };
 }
 
-function PersonCard({ name, note }: { name: string; note: string }) {
+/** Карточка рекрутера: имя, пояснение и контакты — телефон и почта кликабельны. */
+function PersonCard({ name, note, phone, email }: { name: string; note: string; phone: string; email: string }) {
   return (
-    <div className="grid gap-spacing-xs rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xl">
-      <Typography.Body.TwoSB>{name}</Typography.Body.TwoSB>
-      <Typography.Body.ThreeR color="secondary">{note}</Typography.Body.ThreeR>
+    <div className="grid gap-spacing-lg rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xl">
+      <div className="grid gap-spacing-xs">
+        <Typography.Body.TwoSB>{name}</Typography.Body.TwoSB>
+        <Typography.Body.ThreeR color="secondary">{note}</Typography.Body.ThreeR>
+      </div>
+      <div className="grid justify-items-start gap-spacing-md">
+        <Link href={`tel:${phone.replace(/[^\d+]/g, "")}`} size="medium" color="black" leftIcon={<PhoneLine16Icon aria-hidden="true" />}>
+          {phone}
+        </Link>
+        <Link href={`mailto:${email}`} size="medium" color="black" leftIcon={<MessageLine16Icon aria-hidden="true" />}>
+          {email}
+        </Link>
+      </div>
     </div>
   );
 }
@@ -66,7 +79,7 @@ export function Sidebar({ state }: { state: OfferState }) {
         <Link href="#pdf-download" size="medium" color="black" className="justify-self-start" rightIcon={<UprightArrowLine16Icon aria-hidden="true" />} onClick={(e) => e.preventDefault()}>
           Скачать PDF-версию оффера
         </Link>
-        <PersonCard name={recruiter.name} note={recruiter.note} />
+        <PersonCard name={recruiter.name} note={recruiter.note} phone={recruiter.phone} email={recruiter.email} />
       </div>
     </aside>
   );
