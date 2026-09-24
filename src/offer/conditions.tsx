@@ -1,6 +1,5 @@
 import { CalendarLine16Icon } from "@otp/space-ui-kit/icons/calendar-line-16";
 import { ClockLine16Icon } from "@otp/space-ui-kit/icons/clock-line-16";
-import { CoinStackLine16Icon } from "@otp/space-ui-kit/icons/coin-stack-line-16";
 import { DocumentEmptyLine16Icon } from "@otp/space-ui-kit/icons/document-empty-line-16";
 import { PinMapLine16Icon } from "@otp/space-ui-kit/icons/pin-map-line-16";
 import { ShopAirplaneLine16Icon } from "@otp/space-ui-kit/icons/shop-airplane-line-16";
@@ -16,7 +15,6 @@ const ICONS: Record<ConditionIcon, React.ComponentType<React.SVGProps<SVGSVGElem
   suitcase: SuitcaseLine16Icon,
   clock: ClockLine16Icon,
   airplane: ShopAirplaneLine16Icon,
-  coins: CoinStackLine16Icon,
   user: UserLine16Icon,
   document: DocumentEmptyLine16Icon,
   calendar: CalendarLine16Icon,
@@ -37,7 +35,17 @@ export function Conditions() {
               </Typography.Body.ThreeR>
               <dd className="m-0 flex min-w-0 flex-1 items-start gap-spacing-md">
                 {Icon ? <Icon aria-hidden="true" className="offer-conditions__icon shrink-0 text-base-texticons-primary" /> : null}
-                <Typography.Body.ThreeR>{row.value}</Typography.Body.ThreeR>
+                {row.items ? (
+                  <ul className="offer-conditions__list m-0 grid gap-spacing-xs">
+                    {row.items.map((item) => (
+                      <Typography.Body.ThreeR as="li" key={item}>
+                        {item}
+                      </Typography.Body.ThreeR>
+                    ))}
+                  </ul>
+                ) : (
+                  <Typography.Body.ThreeR>{row.value}</Typography.Body.ThreeR>
+                )}
               </dd>
             </div>
           </div>

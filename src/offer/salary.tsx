@@ -47,7 +47,7 @@ export function Salary() {
       <div className="offer-salary__tiles grid gap-spacing-md">
         <div className="offer-salary__main relative flex flex-col justify-center gap-spacing-xl overflow-hidden rounded-radius-md border border-base-border-standard-neutral-normal bg-base-surface-primary-block-normal p-spacing-lg">
           <Typography.Promo.SixM as="div">{salary.total}</Typography.Promo.SixM>
-          <Typography.Caption.OneR as="div" color="tertiary" className="offer-salary__main-caption">
+          <Typography.Caption.OneR as="div" color="tertiary" className="offer-salary__main-caption whitespace-pre-line">
             {salary.totalCaption}
           </Typography.Caption.OneR>
           <img className="offer-salary__money" src={asset("money")} alt="" />
