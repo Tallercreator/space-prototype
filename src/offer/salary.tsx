@@ -22,8 +22,9 @@ function Part({ value, caption, note }: { value: string; caption: string; note?:
 function Coefficient({ value, caption }: { value: string; caption: string }) {
   return (
     <span className="grid justify-items-start gap-spacing-xs">
-      <span className="offer-pill inline-flex items-center rounded-radius-rounded bg-colorfull-surface-primary-orange-normal px-spacing-sm py-spacing-xxs">
-        <Typography.Caption.TwoM color="invert">{value}</Typography.Caption.TwoM>
+      {/* На оранжевой плашке текст всегда белый — universal-токен, не зависит от темы */}
+      <span className="offer-pill inline-flex items-center rounded-radius-rounded bg-colorfull-surface-primary-orange-normal px-spacing-sm py-spacing-xxs text-universal-neutral-white">
+        <Typography.Caption.TwoM color="inherit">{value}</Typography.Caption.TwoM>
       </span>
       <Typography.Caption.TwoR color="tertiary" className="offer-salary__caption">
         {caption}
