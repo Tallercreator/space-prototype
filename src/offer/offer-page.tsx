@@ -14,10 +14,12 @@ import { ScenarioPanel } from "./scenario-panel";
 import { Sidebar } from "./sidebar";
 import { StatusMessage } from "./status";
 import { offerKind, useOfferState } from "./state";
+import { useTheme } from "./theme";
 
 /** Страница оффера кандидата: баннер, сайдбар с шагами и контент по сценарию. */
 export function OfferPage() {
   const { state, actions } = useOfferState();
+  const [theme, toggleTheme] = useTheme();
   const [declineOpen, setDeclineOpen] = React.useState(false);
   const [parkingOpen, setParkingOpen] = React.useState(false);
   const kind = offerKind(state.scenario);
@@ -65,7 +67,7 @@ export function OfferPage() {
       />
       <ParkingPopup open={parkingOpen} onClose={() => setParkingOpen(false)} />
       <CodePopup target={state.lockedRequest} onSuccess={actions.unlockAndOpen} onClose={actions.cancelLocked} />
-      <ScenarioPanel current={state.scenario} onSelect={actions.setScenario} />
+      <ScenarioPanel current={state.scenario} onSelect={actions.setScenario} theme={theme} onToggleTheme={toggleTheme} />
     </div>
   );
 }

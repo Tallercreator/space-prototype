@@ -26,20 +26,20 @@ export function Banner({ kind }: { kind: OfferKind }) {
   };
 
   return (
-    <section className="offer-banner" aria-label="Приглашение в команду" onClick={onClick}>
+    <section className="offer-banner bg-base-surface-primary-block-normal" aria-label="Приглашение в команду" onClick={onClick}>
       <img className="offer-banner__bg" src={asset("banner-bg")} alt="" />
       <canvas ref={canvasRef} className="offer-confetti-layer" aria-hidden="true" />
       <img className="offer-banner__logo" src={asset("otp-logo", "svg")} alt="ОТП Банк" />
-      <div className="offer-banner__toast rounded-radius-sm bg-base-surface-primary-block-normal px-spacing-md py-spacing-xs">
-        <Typography.Body.ThreeM>Все будет ОТП</Typography.Body.ThreeM>
+      <div className="offer-banner__toast rounded-radius-sm bg-universal-neutral-white px-spacing-md py-spacing-xs">
+        <Typography.Body.ThreeM color="inherit">Все будет ОТП</Typography.Body.ThreeM>
       </div>
       <div className="offer-banner__text grid gap-spacing-lg justify-items-center text-center">
-        <Typography.Promo.FourM as="h1" className="offer-banner__title m-0">
+        <Typography.Promo.FourM as="h1" color="inherit" className="offer-banner__title m-0">
           {candidate.firstName}, мы приглашаем тебя
           <br />
           на позицию {position.title}
         </Typography.Promo.FourM>
-        <Typography.Body.ThreeR as="p" color="secondary" className="m-0">
+        <Typography.Body.ThreeR as="p" color="inherit" className="offer-banner__subtitle m-0">
           {position.department}
         </Typography.Body.ThreeR>
       </div>

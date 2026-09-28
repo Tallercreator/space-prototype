@@ -62,10 +62,10 @@ export function Sidebar({ state }: { state: OfferState }) {
             <li key={step.n} className="flex items-center gap-spacing-lg" aria-current={step.active ? "step" : undefined}>
               <span
                 className={`flex size-size-sm shrink-0 items-center justify-center rounded-radius-md ${
-                  step.active ? "bg-base-surface-primary-lime-normal" : "bg-base-surface-secondary-contrast-neutral-normal"
+                  step.active ? "bg-base-surface-primary-lime-normal text-universal-neutral-dark" : "bg-base-surface-secondary-contrast-neutral-normal text-base-texticons-primary"
                 }`}
               >
-                <Typography.Body.ThreeM>{step.n}</Typography.Body.ThreeM>
+                <Typography.Body.ThreeM color="inherit">{step.n}</Typography.Body.ThreeM>
               </span>
               <span className="grid gap-spacing-xxs">
                 <Typography.Body.OneM>{step.title}</Typography.Body.OneM>

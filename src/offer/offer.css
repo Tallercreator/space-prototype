@@ -7,6 +7,10 @@
 .offer-page {
   padding: var(--ui-spacing-xxxl);
 }
+/* Тёмная тема кита — класс dark на <html>; нативные контролы и скроллбары тоже тёмные. */
+html.dark {
+  color-scheme: dark;
+}
 /* В ките нет preflight: макетные блоки прототипа считаем по border-box. */
 .offer-page [class^="offer-"],
 .offer-page [class*=" offer-"] {
@@ -18,19 +22,30 @@
 }
 
 /* ---------- баннер ---------- */
+/* Рамка 8px — подложкой карточки (в тёмной теме темнеет), сама картинка без рамки, радиус 16 внутри. */
 .offer-banner {
   position: relative;
   aspect-ratio: 1130 / 460;
   min-height: 300px;
+  padding: var(--ui-spacing-md);
   overflow: hidden;
   border-radius: var(--ui-radius-xl);
+  /* баннер лаймовый в обеих темах — текст и тост всегда тёмные */
+  color: var(--ui-universal-neutral-dark);
 }
 .offer-banner__bg {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  inset: var(--ui-spacing-md);
+  width: calc(100% - 2 * var(--ui-spacing-md));
+  height: calc(100% - 2 * var(--ui-spacing-md));
+  border-radius: var(--ui-radius-lg);
   object-fit: cover;
+}
+.offer-banner__toast {
+  color: var(--ui-universal-neutral-dark);
+}
+.offer-banner__subtitle {
+  color: var(--ui-universal-neutral-gray);
 }
 /* Конфетти по клику на баннер: слой на весь экран, сыплется поверх страницы, клики пропускает */
 .offer-confetti-layer {
@@ -182,12 +197,12 @@
 /* Градиенты — по gradientTransform из Figma (188-42370): позиции стопов пересчитаны в проценты высоты карточки. */
 .offer-culture__card--lime {
   background:
-    linear-gradient(180deg, var(--ui-vibrant-adaptive-sl-40-150) -7%, rgba(240, 251, 223, 0) 56%),
+    linear-gradient(180deg, var(--ui-vibrant-adaptive-sl-40-150) -7%, transparent 56%),
     var(--ui-base-surface-secondary-standard-lime-normal);
 }
 .offer-culture__card--purple {
   background:
-    linear-gradient(180deg, #e8deff 30%, rgba(249, 249, 250, 0.28) 91%),
+    linear-gradient(180deg, var(--ui-vibrant-adaptive-vl-20-100) 30%, transparent 91%),
     var(--ui-colorfull-surface-secondary-standard-purple-normal);
 }
 /* Размытая фиолетовая полоса из макета (Rectangle 7 в карточке «ОТП Коины»). */
@@ -205,7 +220,9 @@
   pointer-events: none;
 }
 .offer-culture__card--blue {
-  background: linear-gradient(180deg, var(--ui-vibrant-adaptive-sk-30-150) -39%, rgba(237, 246, 253, 0.22) 117%);
+  background:
+    linear-gradient(180deg, var(--ui-vibrant-adaptive-sk-30-150) -39%, transparent 117%),
+    var(--ui-base-surface-tertiary-neutral-normal);
 }
 .offer-culture__deco {
   position: absolute;
