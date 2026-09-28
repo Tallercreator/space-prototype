@@ -132,20 +132,9 @@ export function Salary({ numericBonus = false }: { numericBonus?: boolean }) {
           <img className="offer-salary__money" src={asset("money")} alt="" />
         </div>
         {numericBonus ? (
-          <div className="flex flex-col justify-between gap-spacing-md rounded-radius-md bg-base-surface-secondary-standard-lime-normal p-spacing-lg">
-            <div className="grid gap-spacing-xxs">
-              <Typography.Caption.TwoM as="div" color="limeBright">
-                {bonus.rate}
-              </Typography.Caption.TwoM>
-              <Typography.Body.OneM as="div">
-                {bonus.amount}
-              </Typography.Body.OneM>
-            </div>
-            <Typography.Caption.OneR
-              as="div"
-              color="tertiary"
-              className="whitespace-pre-line"
-            >
+          <div className="flex flex-col justify-between gap-spacing-xl rounded-radius-md bg-base-surface-secondary-standard-lime-normal p-spacing-lg">
+            <Typography.Body.OneM as="div">{bonus.amount}</Typography.Body.OneM>
+            <Typography.Caption.OneR as="div" color="tertiary">
               {bonus.caption}
             </Typography.Caption.OneR>
           </div>

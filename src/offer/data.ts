@@ -52,8 +52,7 @@ export const salary = {
    */
   bonusDetailed: {
     amount: "44 138 ₽",
-    rate: "15% от оклада",
-    caption: "Квартальная премия,\nсверх дохода",
+    caption: "Квартальная премия",
     formulaTitle: "Как считается квартальная премия",
     parts: [
       { value: "64 108 ₽", caption: "фиксированный\nоклад" },
