@@ -36,7 +36,7 @@ export function OfferPage() {
             <PdfView failed={state.scenario === "pdferr"} inner={state.scenario === "pdf2"} />
           ) : (
             <>
-              <Salary />
+              <Salary numericBonus={state.scenario === "bonus"} />
               <Benefits />
               <Conditions />
             </>

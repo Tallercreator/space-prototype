@@ -122,6 +122,9 @@ html.dark {
 .offer-pill {
   line-height: 1;
 }
+.offer-salary__note {
+  max-width: 560px;
+}
 /* Формула — строго в одну строку на десктопе (289-127705); на мобильном переносится. */
 .offer-salary__formula,
 .offer-salary__group {

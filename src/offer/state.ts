@@ -8,6 +8,7 @@ import type { OfferKind } from "./data";
  */
 export type Scenario =
   | "due" // оффер активен, до дедлайна несколько дней
+  | "bonus" // как due, но премия показана суммой + формула её расчёта
   | "last" // последний день ответа
   | "gone" // срок истёк
   | "no" // кандидат отклонил
@@ -26,8 +27,13 @@ export type OfferState = {
   lockedRequest: Scenario | null;
 };
 
-export const SCENARIOS: Array<{ id: Scenario; label: string; group: "А" | "Б" }> = [
+export const SCENARIOS: Array<{
+  id: Scenario;
+  label: string;
+  group: "А" | "Б";
+}> = [
   { id: "due", label: "Оффер — активен", group: "А" },
+  { id: "bonus", label: "Премия цифрами + формула", group: "А" },
   { id: "last", label: "Оффер — последний день", group: "А" },
   { id: "ok", label: "Оффер принят", group: "А" },
   { id: "dated", label: "Дата подтверждена → парковка", group: "А" },
@@ -76,7 +82,9 @@ export function scenarioFromHash(): Scenario {
 }
 
 export function offerKind(scenario: Scenario): OfferKind {
-  return scenario === "pdf" || scenario === "pdf2" || scenario === "pdferr" ? "pdf" : "structured";
+  return scenario === "pdf" || scenario === "pdf2" || scenario === "pdferr"
+    ? "pdf"
+    : "structured";
 }
 
 export function isAccepted(scenario: Scenario): boolean {
@@ -86,8 +94,13 @@ export function isAccepted(scenario: Scenario): boolean {
 export function useOfferState() {
   const fromHash = (): OfferState => {
     const requested = scenarioFromHash();
-    if (isLocked(requested)) return { scenario: "due", view: "offer", lockedRequest: requested };
-    return { scenario: requested, view: initialView(requested), lockedRequest: null };
+    if (isLocked(requested))
+      return { scenario: "due", view: "offer", lockedRequest: requested };
+    return {
+      scenario: requested,
+      view: initialView(requested),
+      lockedRequest: null,
+    };
   };
   const [state, setState] = React.useState<OfferState>(fromHash);
 
@@ -106,20 +119,33 @@ export function useOfferState() {
           setState((s) => ({ ...s, lockedRequest: scenario }));
           return;
         }
-        history.replaceState(null, "", scenario === "due" ? window.location.pathname : `#${scenario}`);
-        setState({ scenario, view: initialView(scenario), lockedRequest: null });
+        history.replaceState(
+          null,
+          "",
+          scenario === "due" ? window.location.pathname : `#${scenario}`,
+        );
+        setState({
+          scenario,
+          view: initialView(scenario),
+          lockedRequest: null,
+        });
         scrollTop();
       },
       /** Код верный: запоминаем на сессию и открываем запрошенный сценарий. */
       unlockAndOpen(scenario: Scenario) {
         unlock();
         history.replaceState(null, "", `#${scenario}`);
-        setState({ scenario, view: initialView(scenario), lockedRequest: null });
+        setState({
+          scenario,
+          view: initialView(scenario),
+          lockedRequest: null,
+        });
         scrollTop();
       },
       cancelLocked() {
         setState((s) => ({ ...s, lockedRequest: null }));
-        if (isLocked(scenarioFromHash())) history.replaceState(null, "", window.location.pathname);
+        if (isLocked(scenarioFromHash()))
+          history.replaceState(null, "", window.location.pathname);
       },
       accept() {
         setState((s) => ({ ...s, scenario: "ok", view: "accepted" }));
