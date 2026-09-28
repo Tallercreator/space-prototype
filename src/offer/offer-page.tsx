@@ -35,12 +35,12 @@ export function OfferPage() {
           {kind === "pdf" ? (
             <PdfView failed={state.scenario === "pdferr"} inner={state.scenario === "pdf2"} />
           ) : (
-            <div className="grid gap-spacing-exxs">
+            <>
               <Salary />
+              <Benefits />
               <Conditions />
-            </div>
+            </>
           )}
-          {kind === "pdf" ? null : <Benefits />}
           <Culture />
         </div>
         <Actions state={state} actions={actions} onDecline={() => setDeclineOpen(true)} onParking={() => setParkingOpen(true)} />
