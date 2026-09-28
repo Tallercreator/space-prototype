@@ -134,7 +134,7 @@ export function Salary({ numericBonus = false }: { numericBonus?: boolean }) {
         {numericBonus ? (
           <div className="flex flex-col justify-between gap-spacing-xl rounded-radius-md bg-base-surface-secondary-standard-lime-normal p-spacing-lg">
             <Typography.Body.OneM as="div">{bonus.amount}</Typography.Body.OneM>
-            <Typography.Caption.OneR as="div" color="tertiary">
+            <Typography.Caption.OneR as="div" color="tertiary" className="whitespace-pre-line">
               {bonus.caption}
             </Typography.Caption.OneR>
           </div>
