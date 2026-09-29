@@ -14,55 +14,53 @@ function Part({
   return (
     <span className="grid gap-spacing-xxs">
       <Typography.Body.ThreeM>{value}</Typography.Body.ThreeM>
-      <Typography.Caption.TwoR
+      <Typography.Caption.OneR
         color="tertiary"
         className="offer-salary__caption"
       >
         {caption}
-      </Typography.Caption.TwoR>
+      </Typography.Caption.OneR>
       {note ? (
-        <Typography.Caption.TwoR
+        <Typography.Caption.OneR
           color="limeBright"
           className="whitespace-nowrap"
         >
           {note}
-        </Typography.Caption.TwoR>
+        </Typography.Caption.OneR>
       ) : null}
     </span>
   );
 }
 
-/** Коэффициент: оранжевая плашка и подпись (Figma 289-127705). */
+/** Коэффициент: оранжевая плашка и подпись (Figma 289-127732). */
 function Coefficient({ value, caption }: { value: string; caption: string }) {
   return (
     <span className="grid justify-items-start gap-spacing-xs">
       {/* На оранжевой плашке текст всегда белый — universal-токен, не зависит от темы */}
-      <span className="offer-pill inline-flex items-center rounded-radius-rounded bg-colorfull-surface-primary-orange-normal px-spacing-sm py-spacing-xxs text-universal-neutral-white">
-        <Typography.Caption.TwoM color="inherit">
-          {value}
-        </Typography.Caption.TwoM>
+      <span className="offer-pill inline-flex items-center rounded-radius-rounded bg-colorfull-surface-primary-orange-normal px-spacing-md py-spacing-xxs text-universal-neutral-white">
+        <Typography.Body.ThreeM color="inherit">{value}</Typography.Body.ThreeM>
       </span>
-      <Typography.Caption.TwoR
+      <Typography.Caption.OneR
         color="tertiary"
         className="offer-salary__caption"
       >
         {caption}
-      </Typography.Caption.TwoR>
+      </Typography.Caption.OneR>
     </span>
   );
 }
 
 function Op({ children }: { children: string }) {
   return (
-    <Typography.Body.ThreeM color="secondary" aria-hidden="true">
+    <Typography.Body.ThreeR aria-hidden="true">
       {children}
-    </Typography.Body.ThreeM>
+    </Typography.Body.ThreeR>
   );
 }
 
 type FormulaPart = { value: string; caption: string; note?: string };
 
-/** Формула в две серые карточки: слагаемые (или множители) слева, коэффициенты справа (Figma 289-127705). */
+/** Формула в две серые карточки: слагаемые (или множители) слева, коэффициенты справа (Figma 289-127732). */
 function Formula({
   title,
   parts,
@@ -76,15 +74,15 @@ function Formula({
 }) {
   return (
     <div className="grid gap-spacing-md">
-      <Typography.Body.ThreeR as="div" color="tertiary">
+      <Typography.Caption.OneR as="div" color="tertiary">
         {title}
-      </Typography.Body.ThreeR>
+      </Typography.Caption.OneR>
       <div className="offer-salary__formula flex items-center gap-spacing-lg">
-        <div className="offer-salary__group flex items-center gap-spacing-xl rounded-radius-md bg-base-surface-tertiary-neutral-normal px-spacing-md py-spacing-md">
+        <div className="offer-salary__group flex items-center gap-spacing-lg rounded-radius-md bg-base-surface-tertiary-neutral-normal px-spacing-md py-spacing-md">
           {parts.map((part, i) => (
             <span
               key={part.caption}
-              className="flex items-center gap-spacing-xl"
+              className="flex items-center gap-spacing-lg"
             >
               {i > 0 ? <Op>{op}</Op> : null}
               <Part {...part} />
@@ -92,9 +90,9 @@ function Formula({
           ))}
         </div>
         <Op>×</Op>
-        <div className="offer-salary__group flex items-center gap-spacing-xl rounded-radius-md bg-base-surface-tertiary-neutral-normal px-spacing-md py-spacing-md">
+        <div className="offer-salary__group flex items-center gap-spacing-md rounded-radius-md bg-base-surface-tertiary-neutral-normal px-spacing-md py-spacing-md">
           {salary.coefficients.map((c, i) => (
-            <span key={c.caption} className="flex items-center gap-spacing-xl">
+            <span key={c.caption} className="flex items-center gap-spacing-md">
               {i > 0 ? <Op>+</Op> : null}
               <Coefficient {...c} />
             </span>
