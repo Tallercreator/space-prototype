@@ -36,54 +36,49 @@ export type CatalogBenefit = {
   image?: string;
 };
 
+/** Каталог по макету «Льготы» (Figma 188-41853), порядок и тексты как там. Картинки — b-<id>.webp. */
 export const BENEFIT_CATALOG: CatalogBenefit[] = [
   {
+    id: "dms",
+    title: "ДМС со стоматологией",
+    caption: "После испытательного срока",
+    icon: "pharmacy",
+  },
+  {
+    id: "fitness-alt",
+    title: "Фитнес вместо ДМС",
+    caption: "Компенсация абонемента",
+    icon: "heart",
+  },
+  {
+    id: "mobile",
+    title: "Мобильная связь",
+    caption: "Корпоративный тариф",
+    icon: "card",
+  },
+  {
+    id: "insurance",
+    title: "Страхование",
+    caption: "С первого дня работы",
+    icon: "shield",
+  },
+  // В макете подпись «Корпоративный тариф» — похоже, скопирована от мобильной связи; оставлена прежняя
+  {
+    id: "card",
+    title: "Зарплатная карта",
+    caption: "Премиальное обслуживание",
+    icon: "card",
+  },
+  {
     id: "car",
-    title: "Корпоративный автомобиль и личный водитель",
+    title: "Корпоративный автомобиль\nи личный водитель",
     caption: "Для рабочих поездок и встреч",
     icon: "car",
   },
   {
-    id: "car-compensation",
-    title: "Компенсация личного автомобиля",
-    caption: "Топливо и обслуживание по нормам банка",
-    icon: "coins",
-  },
-  {
-    id: "parking",
-    title: "Парковка",
-    caption: "Открытая, закрытая или городская у офиса",
-    icon: "card",
-  },
-  {
-    id: "dms",
-    title: "ДМС сотрудника",
-    caption: "Уровень программы по грейду, с первого дня",
-    icon: "pharmacy",
-    image: "b-dms",
-  },
-  {
-    id: "dms-family",
-    title: "ДМС для родственников",
-    caption: "Супруги и дети до 21 года — за счёт банка",
-    icon: "users",
-  },
-  {
-    id: "checkup",
-    title: "Чек-ап за счёт банка",
-    caption: "Ежегодное обследование",
-    icon: "checkup",
-  },
-  {
-    id: "dms-discount",
-    title: "Скидка на ДМС для родственников",
-    caption: "Корпоративные условия покупки",
-    icon: "percent",
-  },
-  {
     id: "insurance-critical",
     title: "Страхование от критических заболеваний",
-    caption: "Онкология и другие тяжёлые диагнозы",
+    caption: "Онкология и другие диагнозы",
     icon: "shield",
   },
   {
@@ -91,26 +86,31 @@ export const BENEFIT_CATALOG: CatalogBenefit[] = [
     title: "Страхование от несчастных случаев",
     caption: "С первого дня работы",
     icon: "insurance",
-    image: "b-insurance",
   },
   {
-    id: "fitness-alt",
-    title: "Фитнес-клуб вместо ДМС",
-    caption: "Оплата членства как альтернатива ДМС",
-    icon: "heart",
+    id: "car-compensation",
+    title: "Компенсация личного автомобиля",
+    caption: "Топливо и обслуживание",
+    icon: "coins",
   },
   {
     id: "fitness-club",
     title: "Фитнес или спортивный клуб",
     caption: "Оплата членства или занятий",
     icon: "heart",
-    image: "b-fitness",
   },
   {
-    id: "education",
-    title: "Обучение сотрудников",
-    caption: "Курсы, конференции и программы развития",
-    icon: "book",
+    id: "checkup",
+    title: "Чек-ап за счёт банка",
+    caption: "Ежегодное обследование",
+    icon: "checkup",
+  },
+  // В макете подпись «Топливо и обслуживание» — скопирована от компенсации авто; поставлена по смыслу
+  {
+    id: "dms-discount",
+    title: "Скидка на ДМС\nдля родственников",
+    caption: "Корпоративные условия покупки",
+    icon: "percent",
   },
 ];
 
@@ -184,13 +184,7 @@ export function cultureCards(pkg: BenefitsPackage): CultureCard[] {
 
 export const DEFAULT_PACKAGE: BenefitsPackage = {
   segment: "ho",
-  benefits: [
-    "dms",
-    "dms-family",
-    "checkup",
-    "insurance-accident",
-    "fitness-club",
-  ],
+  benefits: ["dms", "fitness-alt", "mobile", "insurance", "card"],
   culture: CULTURE_PRESETS.ho,
 };
 

@@ -154,10 +154,10 @@ html.dark {
 }
 
 /* ---------- льготы ---------- */
+/* Сетка льгот (Figma 188-41853): две колонки, зазор 24 по обеим осям. */
 .offer-benefits {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: var(--ui-spacing-xl);
-  row-gap: var(--ui-spacing-xxxl);
+  gap: var(--ui-spacing-xxxl);
 }
 /* Иконка вписана в плитку с полями ~10px, как в макете: ничего не обрезается. */
 .offer-benefits__img {
