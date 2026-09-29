@@ -114,7 +114,73 @@ export const BENEFIT_CATALOG: CatalogBenefit[] = [
   },
 ];
 
-export type BenefitsPackage = { segment: Segment; benefits: string[] };
+export type BenefitsPackage = {
+  segment: Segment;
+  benefits: string[];
+  culture: string[];
+};
+
+/** Малые карточки «Тебя ждёт в ОТП» (Figma «Карточка», Size=Vertical). */
+export type CultureCard = {
+  id: string;
+  title: string;
+  caption: string;
+  image: string;
+};
+
+/** Заголовок карточки обучения зависит от шаблона: ГО — внутреннее обучение, ИТ — IT Academy. */
+export const STUDY_TITLE: Record<Segment, string> = {
+  mass: "Обучение для сотрудников",
+  ho: "Внутреннее обучение",
+  it: "IT Academy",
+};
+
+export const CULTURE_CARDS: CultureCard[] = [
+  {
+    id: "sport",
+    title: "Сообщества ЗОЖ",
+    caption: "Cycling, running и другие —\nмы за здоровый образ жизни",
+    image: "c-pingpong",
+  },
+  {
+    id: "study",
+    title: STUDY_TITLE.ho,
+    caption: "Прокачаешься по soft и hard skills",
+    image: "c-lightning",
+  },
+  {
+    id: "welcome",
+    title: "Welcome pack",
+    caption: "Стильный и полезный мерч\nв первый день",
+    image: "c-bag",
+  },
+  {
+    id: "style",
+    title: "Свободный стиль",
+    caption: "Вместо пиджака дадим тебе\nкомфортное и яркое худи",
+    image: "c-hoodie",
+  },
+  {
+    id: "flex",
+    title: "Гибкий график",
+    caption: "По согласованию с руководителем —\nбез отпрашиваний",
+    image: "c-clock",
+  },
+];
+
+/** Шаблоны по таблице «Блок × сегмент»: Масс — без обучения и Welcome pack; ГО и ИТ — полный набор. */
+export const CULTURE_PRESETS: Record<Segment, string[]> = {
+  mass: ["sport", "style"],
+  ho: ["sport", "study", "welcome", "style"],
+  it: ["sport", "study", "welcome", "style"],
+};
+
+/** Карточки с учётом шаблона: подставляет заголовок обучения по сегменту. */
+export function cultureCards(pkg: BenefitsPackage): CultureCard[] {
+  return CULTURE_CARDS.filter((c) => pkg.culture.includes(c.id)).map((c) =>
+    c.id === "study" ? { ...c, title: STUDY_TITLE[pkg.segment] } : c,
+  );
+}
 
 export const DEFAULT_PACKAGE: BenefitsPackage = {
   segment: "ho",
@@ -125,61 +191,12 @@ export const DEFAULT_PACKAGE: BenefitsPackage = {
     "insurance-accident",
     "fitness-club",
   ],
-};
-
-/** Как сегмент меняет блок «Тебя ждёт в ОТП» (таблица «Блок × сегмент»). */
-export const CULTURE_BY_SEGMENT: Record<
-  Segment,
-  {
-    flex: { title: string; caption: string };
-    /** Вторая широкая карточка: обучение (ГО/ИТ) или зарплатная карта (Масс — обучения нет). */
-    wide: { key: string; title: string; caption: string; image: string };
-    welcomePack: boolean;
-  }
-> = {
-  mass: {
-    flex: {
-      title: "Гибкий график",
-      caption: "По согласованию с руководителем —\nбез отпрашиваний",
-    },
-    wide: {
-      key: "card",
-      title: "Зарплатная карта",
-      caption: "Премиальное обслуживание\nс первого дня",
-      image: "b-card",
-    },
-    welcomePack: false,
-  },
-  ho: {
-    flex: {
-      title: "Гибкое начало\nи окончание дня",
-      caption: "По согласованию с руководителем —\nбез отпрашиваний",
-    },
-    wide: {
-      key: "academy",
-      title: "Внутреннее обучение",
-      caption: "Курсы и программы\nразвития внутри банка",
-      image: "c-lightning",
-    },
-    welcomePack: true,
-  },
-  it: {
-    flex: {
-      title: "Гибкое начало\nи окончание дня",
-      caption: "По согласованию с руководителем —\nбез отпрашиваний",
-    },
-    wide: {
-      key: "academy",
-      title: "IT Academy\n+ конференции",
-      caption: "Прокачаешься\nпо soft и hard skills",
-      image: "c-lightning",
-    },
-    welcomePack: true,
-  },
+  culture: CULTURE_PRESETS.ho,
 };
 
 const KEY = "offer-package";
 const IDS = new Set(BENEFIT_CATALOG.map((b) => b.id));
+const CULTURE_IDS = new Set(CULTURE_CARDS.map((c) => c.id));
 const SEGMENT_IDS = new Set<string>(SEGMENTS.map((s) => s.id));
 
 function sanitize(raw: unknown): BenefitsPackage {
@@ -188,12 +205,15 @@ function sanitize(raw: unknown): BenefitsPackage {
     typeof p.segment === "string" && SEGMENT_IDS.has(p.segment)
       ? (p.segment as Segment)
       : DEFAULT_PACKAGE.segment;
-  const benefits = Array.isArray(p.benefits)
-    ? p.benefits.filter(
-        (id): id is string => typeof id === "string" && IDS.has(id),
-      )
-    : DEFAULT_PACKAGE.benefits;
-  return { segment, benefits };
+  const pick = (list: unknown, ids: Set<string>, fallback: string[]) =>
+    Array.isArray(list)
+      ? list.filter((id): id is string => typeof id === "string" && ids.has(id))
+      : fallback;
+  return {
+    segment,
+    benefits: pick(p.benefits, IDS, DEFAULT_PACKAGE.benefits),
+    culture: pick(p.culture, CULTURE_IDS, CULTURE_PRESETS[segment]),
+  };
 }
 
 function load(): BenefitsPackage {

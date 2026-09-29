@@ -14,8 +14,11 @@ import { Typography } from "@otp/space-ui-kit/typography";
 
 import {
   BENEFIT_CATALOG,
+  CULTURE_CARDS,
+  CULTURE_PRESETS,
   DEFAULT_PACKAGE,
   SEGMENTS,
+  STUDY_TITLE,
   setPackage,
   usePackage,
 } from "./package";
@@ -26,13 +29,20 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
   const saved = usePackage();
   const [draft, setDraft] = React.useState<BenefitsPackage>(saved);
 
-  const toggle = (id: string, checked: boolean) =>
+  const toggleIn = (
+    key: "benefits" | "culture",
+    id: string,
+    checked: boolean,
+  ) =>
     setDraft((d) => ({
       ...d,
-      benefits: checked
-        ? [...d.benefits, id]
-        : d.benefits.filter((b) => b !== id),
+      [key]: checked ? [...d[key], id] : d[key].filter((b) => b !== id),
     }));
+  const toggle = (id: string, checked: boolean) =>
+    toggleIn("benefits", id, checked);
+  /** Шаблон: сегмент задаёт набор карточек «Тебя ждёт в ОТП», дальше его можно подправить руками. */
+  const applyTemplate = (segment: Segment) =>
+    setDraft((d) => ({ ...d, segment, culture: CULTURE_PRESETS[segment] }));
 
   const apply = () => {
     setPackage(draft);
@@ -52,13 +62,16 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
         <PopupBody className="grid gap-spacing-xxxl">
           <fieldset className="m-0 grid gap-spacing-md border-0 p-0">
             <Typography.Body.TwoSB as="legend" className="p-0">
-              Сегмент позиции
+              Шаблон по сегменту
             </Typography.Body.TwoSB>
+            <Typography.Caption.OneR color="tertiary">
+              Задаёт набор карточек «Тебя ждёт в ОТП» по таблице: обучение и
+              Welcome pack только у ГО и ИТ, у ИТ вместо внутреннего обучения —
+              IT Academy
+            </Typography.Caption.OneR>
             <RadioGroup
               value={draft.segment}
-              onValueChange={(value) =>
-                setDraft((d) => ({ ...d, segment: value as Segment }))
-              }
+              onValueChange={(value) => applyTemplate(value as Segment)}
               className="flex flex-wrap gap-spacing-xxxl"
             >
               {SEGMENTS.map((s) => (
@@ -76,6 +89,30 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
                 </label>
               ))}
             </RadioGroup>
+          </fieldset>
+          <fieldset className="m-0 grid gap-spacing-md border-0 p-0">
+            <Typography.Body.TwoSB as="legend" className="p-0">
+              Тебя ждёт в ОТП
+            </Typography.Body.TwoSB>
+            <Typography.Caption.OneR color="tertiary">
+              Коины, кредиты и BestBenefits есть всегда; малые карточки — по
+              выбору
+            </Typography.Caption.OneR>
+            <div className="grid">
+              {CULTURE_CARDS.map((c) => (
+                <CheckboxCell
+                  key={c.id}
+                  tone="lime"
+                  checked={draft.culture.includes(c.id)}
+                  onCheckedChange={(checked) =>
+                    toggleIn("culture", c.id, checked)
+                  }
+                  description={c.caption.replace("\n", " ")}
+                >
+                  {c.id === "study" ? STUDY_TITLE[draft.segment] : c.title}
+                </CheckboxCell>
+              ))}
+            </div>
           </fieldset>
           <fieldset className="m-0 grid gap-spacing-md border-0 p-0">
             <Typography.Body.TwoSB as="legend" className="p-0">

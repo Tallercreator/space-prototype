@@ -126,58 +126,28 @@ export const conditions: Condition[] = [
   },
 ];
 
+/** «Тебя ждёт в ОТП» (Figma 325-39395): три больших карточки фиксированы, малые — из пакета (см. package.ts). */
 export const culture = {
   title: "Тебя ждёт в ОТП",
   subtitle: "Это есть у всех в банке — с первого дня и без условий",
   big: [
     {
-      key: "flex",
-      title: "Гибкое начало\nи окончание дня",
-      caption: "По согласованию с руководителем —\nбез отпрашиваний",
-    },
-    {
       key: "coins",
       title: "ОТП Коины",
       caption: "Собирай и трать на что угодно: от мерча до day-off",
+      image: "c-big-coins",
     },
     {
       key: "credit",
       title: "Кредиты\nи депозиты для своих",
       caption: "Льготные условия — сможешь выгодно что-нибудь купить",
+      image: "c-big-credit",
     },
-  ],
-  wide: [
     {
-      key: "bestbenefits",
+      key: "bb",
       title: "BestBenefits",
-      caption: "Скидки на путешествия, технику,\nспорт и другие полезности",
-      image: "c-bestbenefits",
-    },
-    {
-      key: "academy",
-      title: "IT Academy",
-      caption: "Прокачаешься\nпо soft и hard skills",
-      image: "c-lightning",
-    },
-  ],
-  small: [
-    {
-      key: "sport",
-      title: "Сообщества ЗОЖ",
-      caption: "Cycling, running и другие —\nмы за здоровый образ жизни",
-      image: "c-pingpong",
-    },
-    {
-      key: "welcome",
-      title: "Welcome pack",
-      caption: "Стильный и полезный мерч\nв первый день",
-      image: "c-bag",
-    },
-    {
-      key: "style",
-      title: "Свободный стиль",
-      caption: "Вместо пиджака дадим тебе комфортное и яркое худи",
-      image: "c-hoodie",
+      caption: "Скидки на сервисы и товары\nв разных категориях",
+      image: "c-big-bb",
     },
   ],
 };

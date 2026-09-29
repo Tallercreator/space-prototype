@@ -2,30 +2,46 @@ import { HeartFill16Icon } from "@otp/space-ui-kit/icons/heart-fill-16";
 import { Typography } from "@otp/space-ui-kit/typography";
 
 import { asset, culture } from "./data";
-import { CULTURE_BY_SEGMENT, usePackage } from "./package";
+import { cultureCards, usePackage } from "./package";
+import type { CultureCard } from "./package";
 
-function CardText({ title, caption }: { title: string; caption: string }) {
+/** Раскладка малых карточек по числу (Figma «Бенефиты»: 2 и 3 — в ряд, 4 — 2×2, дальше по 3). */
+function chunk(n: number): number[] {
+  if (n <= 3) return n ? [n] : [];
+  if (n === 4) return [2, 2];
+  if (n === 5) return [3, 2];
+  return [3, 3, ...chunk(n - 6)];
+}
+
+/** Малая карточка (Figma «Карточка», Size=Vertical, 336×136): картинка 48 сверху, текст снизу. */
+function SmallCard({ card }: { card: CultureCard }) {
   return (
-    <span className="relative grid gap-spacing-md">
-      <Typography.Body.ThreeM className="whitespace-pre-line">
-        {title}
-      </Typography.Body.ThreeM>
-      <Typography.Caption.OneR color="tertiary" className="whitespace-pre-line">
-        {caption}
-      </Typography.Caption.OneR>
-    </span>
+    <li className="offer-culture__small grid content-between gap-spacing-lg rounded-radius-md bg-base-surface-tertiary-neutral-normal p-spacing-lg">
+      <img className="offer-culture__img" src={asset(card.image)} alt="" />
+      <span className="grid gap-spacing-sm">
+        <Typography.Body.ThreeM className="whitespace-pre-line">
+          {card.title}
+        </Typography.Body.ThreeM>
+        <Typography.Caption.OneR
+          color="secondary"
+          className="whitespace-pre-line"
+        >
+          {card.caption}
+        </Typography.Caption.OneR>
+      </span>
+    </li>
   );
 }
 
-/** «Тебя ждёт в ОТП» — редакционный блок про культуру, три ряда карточек-виджетов. */
+/** «Тебя ждёт в ОТП» (Figma 325-39395): три больших карточки-иллюстрации и малые карточки из пакета. */
 export function Culture() {
-  const [, coins, credit] = culture.big;
-  const variant = CULTURE_BY_SEGMENT[usePackage().segment];
-  const flex = variant.flex;
-  const wide = [culture.wide[0], variant.wide];
-  const small = variant.welcomePack
-    ? culture.small
-    : culture.small.filter((c) => c.key !== "welcome");
+  const cards = cultureCards(usePackage());
+  const rows: CultureCard[][] = [];
+  let i = 0;
+  for (const n of chunk(cards.length)) {
+    rows.push(cards.slice(i, i + n));
+    i += n;
+  }
   return (
     <section
       className="grid gap-spacing-exxxxs"
@@ -47,95 +63,40 @@ export function Culture() {
           {culture.subtitle}
         </Typography.Body.ThreeR>
       </div>
-      <div className="grid gap-spacing-lg">
-        <div className="offer-culture__row3 grid gap-spacing-lg">
-          <div className="offer-culture__card offer-culture__card--tall offer-culture__card--lime rounded-radius-md p-spacing-lg">
-            <img
-              className="offer-culture__deco offer-culture__clock-big"
-              src={asset("c-clock")}
-              alt=""
-            />
-            <img
-              className="offer-culture__deco offer-culture__clock-small"
-              src={asset("c-clock")}
-              alt=""
-            />
-            <img
-              className="offer-culture__deco offer-culture__star-1"
-              src={asset("c-star")}
-              alt=""
-            />
-            <img
-              className="offer-culture__deco offer-culture__star-2"
-              src={asset("c-star")}
-              alt=""
-            />
-            <CardText {...flex} />
-          </div>
-          <div className="offer-culture__card offer-culture__card--tall offer-culture__card--purple rounded-radius-md p-spacing-lg">
-            <img
-              className="offer-culture__deco offer-culture__confetti"
-              src={asset("c-confetti")}
-              alt=""
-            />
-            <img
-              className="offer-culture__deco offer-culture__coin"
-              src={asset("c-coin")}
-              alt=""
-            />
-            <CardText {...coins} />
-          </div>
-          <div className="offer-culture__card offer-culture__card--tall offer-culture__card--blue rounded-radius-md p-spacing-lg">
-            <img
-              className="offer-culture__deco offer-culture__cards-left"
-              src={asset("c-cards")}
-              alt=""
-            />
-            <img
-              className="offer-culture__deco offer-culture__cards-right"
-              src={asset("c-cards")}
-              alt=""
-            />
-            <img
-              className="offer-culture__deco offer-culture__safe"
-              src={asset("c-safe")}
-              alt=""
-            />
-            <CardText {...credit} />
-          </div>
-        </div>
-        <div className="offer-culture__row2 grid gap-spacing-lg">
-          {wide.map((c) => (
-            <div
+      <div className="grid gap-spacing-md">
+        <ul className="offer-culture__row m-0 grid list-none gap-spacing-lg p-0">
+          {culture.big.map((c) => (
+            // Фон — экспорт карточки из Figma (градиент + иллюстрация запечены в растр), текст — живой, всегда тёмный
+            <li
               key={c.key}
-              className="offer-culture__card offer-culture__card--wide rounded-radius-md bg-base-surface-tertiary-neutral-normal p-spacing-lg"
+              className="offer-culture__big flex flex-col justify-end gap-spacing-md overflow-hidden rounded-radius-md p-spacing-lg text-universal-neutral-dark"
+              style={{ backgroundImage: `url(${asset(c.image)})` }}
             >
-              <img
-                className={`offer-culture__deco offer-culture__wide-img offer-culture__wide-img--${c.key}`}
-                src={asset(c.image)}
-                alt=""
-              />
-              <CardText title={c.title} caption={c.caption} />
-            </div>
+              <Typography.Body.ThreeM
+                color="inherit"
+                className="whitespace-pre-line"
+              >
+                {c.title}
+              </Typography.Body.ThreeM>
+              <Typography.Caption.OneR
+                color="inherit"
+                className="offer-culture__big-caption whitespace-pre-line"
+              >
+                {c.caption}
+              </Typography.Caption.OneR>
+            </li>
           ))}
-        </div>
-        <div
-          className={`offer-culture__row3 ${small.length === 2 ? "offer-culture__row3--two" : ""} grid gap-spacing-lg`}
-        >
-          {small.map((c) => (
-            <div
-              key={c.key}
-              className="offer-culture__card offer-culture__card--small rounded-radius-md bg-base-surface-tertiary-neutral-normal p-spacing-lg"
-            >
-              <img
-                className={`offer-culture__deco offer-culture__small-img offer-culture__small-img--${c.key}`}
-                src={asset(c.image)}
-                alt=""
-              />
-              <CardText title={c.title} caption={c.caption} />
-            </div>
-          ))}
-        </div>
+        </ul>
+        {rows.map((row, r) => (
+          <ul
+            key={r}
+            className={`offer-culture__row offer-culture__row--${row.length} m-0 grid list-none gap-spacing-md p-0`}
+          >
+            {row.map((card) => (
+              <SmallCard key={card.id} card={card} />
+            ))}
+          </ul>
+        ))}
       </div>
     </section>
   );

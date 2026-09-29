@@ -167,147 +167,38 @@ html.dark {
   object-fit: contain;
 }
 
-/* ---------- культура ---------- */
+/* ---------- культура (Figma 325-39395) ---------- */
 .offer-culture__heart {
   width: 16px;
   height: 16px;
   color: var(--ui-base-surface-primary-lime-active);
 }
-.offer-culture__row3 {
+.offer-culture__row {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-.offer-culture__row2 {
+.offer-culture__row--2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-/* Масс: без Welcome pack — в третьем ряду две карточки */
-.offer-culture__row3--two {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.offer-culture__row--1 {
+  grid-template-columns: minmax(0, 1fr);
 }
-.offer-culture__card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  overflow: hidden;
-  isolation: isolate;
+/* Большая карточка 220×240: фон — экспорт из Figma (градиент + иллюстрация), в тёмной теме остаётся светлым, как баннер. */
+.offer-culture__big {
+  min-height: 240px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
-.offer-culture__card--tall {
-  min-height: 280px;
+.offer-culture__big-caption {
+  opacity: 0.72;
 }
-.offer-culture__card--wide {
-  min-height: 78px;
-  padding-right: 80px;
+/* Малая карточка 336×136 (Size=Vertical). */
+.offer-culture__small {
+  min-height: 136px;
 }
-.offer-culture__card--small {
-  min-height: 129px;
-}
-/* Градиенты — по gradientTransform из Figma (188-42370): позиции стопов пересчитаны в проценты высоты карточки. */
-.offer-culture__card--lime {
-  background:
-    linear-gradient(180deg, var(--ui-vibrant-adaptive-sl-40-150) -7%, transparent 56%),
-    var(--ui-base-surface-secondary-standard-lime-normal);
-}
-.offer-culture__card--purple {
-  background:
-    linear-gradient(180deg, var(--ui-vibrant-adaptive-vl-20-100) 30%, transparent 91%),
-    var(--ui-colorfull-surface-secondary-standard-purple-normal);
-}
-/* Размытая фиолетовая полоса из макета (Rectangle 7 в карточке «ОТП Коины»). */
-.offer-culture__card--purple::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  left: 155px;
-  top: -60px;
-  width: 49px;
-  height: 400px;
-  background: var(--ui-colorfull-surface-secondary-standard-purple-pressed, #d5c2ff);
-  opacity: 0.6;
-  filter: blur(24px);
-  pointer-events: none;
-}
-.offer-culture__card--blue {
-  background:
-    linear-gradient(180deg, var(--ui-vibrant-adaptive-sk-30-150) -39%, transparent 117%),
-    var(--ui-base-surface-tertiary-neutral-normal);
-}
-.offer-culture__deco {
-  position: absolute;
-  z-index: -1;
-  pointer-events: none;
-}
-.offer-culture__clock-big {
-  left: 267px;
-  top: 17px;
-  width: 146px;
-  height: 146px;
-}
-.offer-culture__clock-small {
-  left: 46px;
-  top: 38px;
-  width: 109px;
-  height: 109px;
-}
-.offer-culture__star-1 {
-  left: 14px;
-  top: 32px;
-  width: 41px;
-  height: 41px;
-}
-.offer-culture__star-2 {
-  left: 163px;
-  top: 93px;
-  width: 63px;
-  height: 63px;
-}
-.offer-culture__confetti {
-  left: -42px;
-  top: -52px;
-  width: 317px;
-  height: 317px;
-}
-.offer-culture__coin {
-  left: 71px;
-  top: 53px;
-  width: 102px;
-  height: 109px;
-  object-fit: contain;
-}
-.offer-culture__cards-left {
-  left: -13px;
-  top: 66px;
-  width: 80px;
-  height: 80px;
-}
-.offer-culture__cards-right {
-  left: 155px;
-  top: 66px;
-  width: 80px;
-  height: 80px;
-}
-.offer-culture__safe {
-  left: 74px;
-  top: 70px;
-  width: 74px;
-  height: 74px;
-}
-.offer-culture__wide-img {
-  right: 24px;
-  top: 12px;
-  width: 52px;
-  height: 52px;
-  object-fit: contain;
-}
-.offer-culture__wide-img--academy {
-  top: 10px;
-  width: 56px;
-  height: 56px;
-}
-.offer-culture__small-img {
-  left: 12px;
-  top: 10px;
-  height: 40px;
-  width: auto;
+.offer-culture__img {
+  width: 48px;
+  height: 48px;
   object-fit: contain;
 }
 
@@ -319,7 +210,8 @@ html.dark {
   transition: opacity 0.2s ease;
 }
 .offer-actions--stuck {
-  margin: 0 calc(-1 * var(--ui-spacing-exxxs)) calc(-1 * var(--ui-spacing-exxxs));
+  margin: 0 calc(-1 * var(--ui-spacing-exxxs))
+    calc(-1 * var(--ui-spacing-exxxs));
   padding: var(--ui-spacing-xxxl) var(--ui-spacing-exxxs);
   border-radius: 0 0 var(--ui-radius-lg) var(--ui-radius-lg);
 }
@@ -425,15 +317,15 @@ html.dark {
     min-height: 360px;
   }
   /* Конфетти по клику на баннер: слой на весь экран, сыплется поверх страницы, клики пропускает */
-.offer-confetti-layer {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 60;
-}
-.offer-banner__logo {
+  .offer-confetti-layer {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 60;
+  }
+  .offer-banner__logo {
     top: 20px;
     left: 20px;
   }
@@ -445,8 +337,7 @@ html.dark {
     top: 64px;
   }
   .offer-salary__tiles,
-  .offer-culture__row3,
-  .offer-culture__row2,
+  .offer-culture__row,
   .offer-actions__buttons,
   .offer-when__range {
     grid-template-columns: minmax(0, 1fr);
