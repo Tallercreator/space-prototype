@@ -1,7 +1,9 @@
+import * as React from "react";
+
 import { Link } from "@otp/space-ui-kit/link";
-import { MessageLine16Icon } from "@otp/space-ui-kit/icons/message-line-16";
-import { PaperAirplaneFill24Icon } from "@otp/space-ui-kit/icons/paper-airplane-fill-24";
-import { PhoneLine16Icon } from "@otp/space-ui-kit/icons/phone-line-16";
+import { MessageLine24Icon } from "@otp/space-ui-kit/icons/message-line-24";
+import { MobileLine24Icon } from "@otp/space-ui-kit/icons/mobile-line-24";
+import { PhoneLine24Icon } from "@otp/space-ui-kit/icons/phone-line-24";
 import { UprightArrowLine16Icon } from "@otp/space-ui-kit/icons/upright-arrow-line-16";
 import { Typography } from "@otp/space-ui-kit/typography";
 
@@ -31,7 +33,33 @@ function buildSteps(state: OfferState): { of: string; items: StepItem[] } {
   };
 }
 
-/** Карточка рекрутера: имя, пояснение и контакты — телефон и почта кликабельны. */
+/** Карточка рекрутера (Figma 221-110470): имя, пояснение и контакты — телефон, почта, Telegram. */
+function Contact({
+  href,
+  icon,
+  children,
+  external,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  children: string;
+  external?: boolean;
+}) {
+  return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
+      className="offer-person__contact flex items-center gap-spacing-md text-base-texticons-primary no-underline"
+    >
+      <span className="shrink-0" aria-hidden="true">
+        {icon}
+      </span>
+      <Typography.Body.TwoR color="inherit">{children}</Typography.Body.TwoR>
+    </a>
+  );
+}
+
 function PersonCard({
   name,
   note,
@@ -46,45 +74,30 @@ function PersonCard({
   telegram: string;
 }) {
   return (
-    <div className="grid gap-spacing-lg rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xl">
+    <div className="grid gap-spacing-xl rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xl">
       <div className="grid gap-spacing-xs">
         <Typography.Body.TwoSB>{name}</Typography.Body.TwoSB>
         <Typography.Body.ThreeR color="secondary">
           {note}
         </Typography.Body.ThreeR>
       </div>
-      <div className="grid justify-items-start gap-spacing-md">
-        <Link
+      <div className="grid justify-items-start gap-spacing-xl">
+        <Contact
           href={`tel:${phone.replace(/[^\d+]/g, "")}`}
-          size="medium"
-          color="black"
-          leftIcon={<PhoneLine16Icon aria-hidden="true" />}
+          icon={<PhoneLine24Icon />}
         >
           {phone}
-        </Link>
-        <Link
-          href={`mailto:${email}`}
-          size="medium"
-          color="black"
-          leftIcon={<MessageLine16Icon aria-hidden="true" />}
-        >
+        </Contact>
+        <Contact href={`mailto:${email}`} icon={<MessageLine24Icon />}>
           {email}
-        </Link>
-        <Link
+        </Contact>
+        <Contact
           href={`https://t.me/${telegram.replace(/^@/, "")}`}
-          target="_blank"
-          rel="noreferrer"
-          size="medium"
-          color="black"
-          leftIcon={
-            <PaperAirplaneFill24Icon
-              aria-hidden="true"
-              className="offer-person__tg"
-            />
-          }
+          icon={<MobileLine24Icon />}
+          external
         >
           {telegram}
-        </Link>
+        </Contact>
       </div>
     </div>
   );
@@ -134,7 +147,14 @@ export function Sidebar({ state }: { state: OfferState }) {
           ))}
         </ol>
       </div>
-      <div className="grid gap-spacing-xl">
+      <div className="grid gap-spacing-xxxl">
+        <PersonCard
+          name={recruiter.name}
+          note={recruiter.note}
+          phone={recruiter.phone}
+          email={recruiter.email}
+          telegram={recruiter.telegram}
+        />
         <Link
           href="#pdf-download"
           size="medium"
@@ -145,13 +165,6 @@ export function Sidebar({ state }: { state: OfferState }) {
         >
           Скачать PDF-версию оффера
         </Link>
-        <PersonCard
-          name={recruiter.name}
-          note={recruiter.note}
-          phone={recruiter.phone}
-          email={recruiter.email}
-          telegram={recruiter.telegram}
-        />
       </div>
     </aside>
   );

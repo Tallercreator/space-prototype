@@ -97,12 +97,6 @@ html.dark {
   min-height: 56px;
 }
 
-/* В ките нет иконки Telegram в 16px — бумажный самолётик из 24-го набора, уменьшенный до 16. */
-.offer-person__tg {
-  width: 16px;
-  height: 16px;
-}
-
 /* ---------- регалии банка (Figma 355-123184 карточки / 355-127835 разделители) ---------- */
 .offer-facts {
   position: relative;
@@ -266,6 +260,13 @@ html.dark {
   .offer-facts::after {
     display: none;
   }
+}
+
+.offer-person__contact {
+  text-decoration: none;
+}
+.offer-person__contact:hover {
+  text-decoration: underline;
 }
 
 /* ---------- доход ---------- */

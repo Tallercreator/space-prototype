@@ -37,9 +37,9 @@ export const positions: Record<
 export const recruiter = {
   name: "Святослав Месниченко",
   note: "Твой рекрутер, ему ты можешь задать все вопросы по условиям",
-  phone: "+7 (916) 123-45-67",
+  phone: "+7 (808) 999-33-22",
   email: "s.mesnichenko@otpbank.ru",
-  telegram: "@s_mesnichenko",
+  telegram: "@mesnich",
 };
 
 export const salary = {
