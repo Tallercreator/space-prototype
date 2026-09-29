@@ -95,6 +95,12 @@ html.dark {
   min-height: 56px;
 }
 
+/* В ките нет иконки Telegram в 16px — бумажный самолётик из 24-го набора, уменьшенный до 16. */
+.offer-person__tg {
+  width: 16px;
+  height: 16px;
+}
+
 /* ---------- доход ---------- */
 .offer-salary__tiles {
   grid-template-columns: minmax(0, 1fr) 137px;

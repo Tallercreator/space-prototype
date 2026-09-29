@@ -39,6 +39,7 @@ export const recruiter = {
   note: "Твой рекрутер, ему ты можешь задать все вопросы по условиям",
   phone: "+7 (916) 123-45-67",
   email: "s.mesnichenko@otpbank.ru",
+  telegram: "@s_mesnichenko",
 };
 
 export const salary = {

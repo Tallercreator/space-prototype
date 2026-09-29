@@ -1,5 +1,6 @@
 import { Link } from "@otp/space-ui-kit/link";
 import { MessageLine16Icon } from "@otp/space-ui-kit/icons/message-line-16";
+import { PaperAirplaneFill24Icon } from "@otp/space-ui-kit/icons/paper-airplane-fill-24";
 import { PhoneLine16Icon } from "@otp/space-ui-kit/icons/phone-line-16";
 import { UprightArrowLine16Icon } from "@otp/space-ui-kit/icons/upright-arrow-line-16";
 import { Typography } from "@otp/space-ui-kit/typography";
@@ -36,11 +37,13 @@ function PersonCard({
   note,
   phone,
   email,
+  telegram,
 }: {
   name: string;
   note: string;
   phone: string;
   email: string;
+  telegram: string;
 }) {
   return (
     <div className="grid gap-spacing-lg rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xl">
@@ -66,6 +69,21 @@ function PersonCard({
           leftIcon={<MessageLine16Icon aria-hidden="true" />}
         >
           {email}
+        </Link>
+        <Link
+          href={`https://t.me/${telegram.replace(/^@/, "")}`}
+          target="_blank"
+          rel="noreferrer"
+          size="medium"
+          color="black"
+          leftIcon={
+            <PaperAirplaneFill24Icon
+              aria-hidden="true"
+              className="offer-person__tg"
+            />
+          }
+        >
+          {telegram}
         </Link>
       </div>
     </div>
@@ -132,6 +150,7 @@ export function Sidebar({ state }: { state: OfferState }) {
           note={recruiter.note}
           phone={recruiter.phone}
           email={recruiter.email}
+          telegram={recruiter.telegram}
         />
       </div>
     </aside>
