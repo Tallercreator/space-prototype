@@ -114,8 +114,8 @@ function Formula({
   );
 }
 
-/** Режим блока дохода по сценарию: обычный, «премия цифрами» (#bonus) или «только оклад» (#plain). */
-export type SalaryMode = "default" | "bonus" | "plain";
+/** Режим блока дохода: обычный или «только оклад» (#plain) — без формулы «из чего складывается». */
+export type SalaryMode = "default" | "plain";
 
 /** Блок дохода: плитки суммы/премии и формула «из чего складывается». */
 export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
@@ -155,14 +155,12 @@ export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
       {mode === "plain" ? null : (
         <Formula title={salary.breakdownTitle} parts={salary.parts} op="+" />
       )}
-      {mode === "bonus" ? (
-        <Formula
-          title={bonus.formulaTitle}
-          parts={bonus.parts}
-          op="×"
-          note={bonus.note}
-        />
-      ) : null}
+      <Formula
+        title={bonus.formulaTitle}
+        parts={bonus.parts}
+        op="×"
+        note={bonus.note}
+      />
     </section>
   );
 }

@@ -39,13 +39,7 @@ export function OfferPage() {
             />
           ) : (
             <>
-              <Salary
-                mode={
-                  state.scenario === "bonus" || state.scenario === "plain"
-                    ? state.scenario
-                    : "default"
-                }
-              />
+              <Salary mode={state.scenario === "plain" ? "plain" : "default"} />
               <Benefits />
               <Conditions />
             </>
