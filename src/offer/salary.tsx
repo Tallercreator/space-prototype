@@ -119,7 +119,6 @@ export type SalaryMode = "default" | "bonus" | "plain";
 
 /** Блок дохода: плитки суммы/премии и формула «из чего складывается». */
 export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
-  const numericBonus = mode === "bonus";
   const bonus = salary.bonusDetailed;
   return (
     <section className="grid gap-spacing-xxxl" aria-label="Доход">
@@ -141,35 +140,22 @@ export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
             </Typography.Caption.OneR>
             <img className="offer-salary__money" src={asset("money")} alt="" />
           </div>
-          {numericBonus ? (
-            <div className="flex flex-col justify-between gap-spacing-xl rounded-radius-md bg-base-surface-secondary-standard-lime-normal p-spacing-lg">
-              <Typography.Body.OneM as="div">
-                {bonus.amount}
-              </Typography.Body.OneM>
-              <Typography.Caption.OneR
-                as="div"
-                color="tertiary"
-                className="whitespace-pre-line"
-              >
-                {bonus.caption}
-              </Typography.Caption.OneR>
-            </div>
-          ) : (
-            <div className="flex flex-col justify-between gap-spacing-xl rounded-radius-md bg-base-surface-secondary-standard-lime-normal p-spacing-lg">
-              <Typography.Body.OneM as="div">
-                {salary.bonus.value}
-              </Typography.Body.OneM>
-              <Typography.Caption.OneR as="div" color="tertiary">
-                {salary.bonus.caption}
-              </Typography.Caption.OneR>
-            </div>
-          )}
+          <div className="flex flex-col justify-between gap-spacing-xl rounded-radius-md bg-base-surface-secondary-standard-lime-normal p-spacing-lg">
+            <Typography.Body.OneM as="div">{bonus.amount}</Typography.Body.OneM>
+            <Typography.Caption.OneR
+              as="div"
+              color="tertiary"
+              className="whitespace-pre-line"
+            >
+              {bonus.caption}
+            </Typography.Caption.OneR>
+          </div>
         </div>
       </div>
       {mode === "plain" ? null : (
         <Formula title={salary.breakdownTitle} parts={salary.parts} op="+" />
       )}
-      {numericBonus ? (
+      {mode === "bonus" ? (
         <Formula
           title={bonus.formulaTitle}
           parts={bonus.parts}
