@@ -163,14 +163,8 @@ html.dark {
   transform: translateX(-100%);
   animation: offer-facts-shine 900ms ease-in-out 1s 1 forwards;
 }
-/* Ховер «победной компании»: карточка приподнимается и подсвечивается лаймом,
+/* Ховер «победной компании»: сама карточка не меняется (она не кликабельна),
    иконка подпрыгивает как поднятый кубок, вокруг неё вспыхивают две искры. */
-.offer-facts__item {
-  transition:
-    transform 250ms cubic-bezier(0.2, 0.7, 0.2, 1),
-    background-color 250ms ease,
-    box-shadow 250ms ease;
-}
 .offer-facts__badge {
   position: relative;
   display: inline-grid;
@@ -243,12 +237,6 @@ html.dark {
   }
 }
 @media (hover: hover) {
-  .offer-facts--cards .offer-facts__item:hover {
-    transform: translateY(-3px);
-    background-color: var(--ui-base-surface-secondary-standard-lime-normal);
-    box-shadow: 0 10px 24px
-      color-mix(in srgb, var(--ui-universal-brand-lime) 22%, transparent);
-  }
   .offer-facts__item:hover .offer-facts__icon {
     color: var(--ui-base-texticons-lime-intense);
     animation: offer-facts-cheer 600ms cubic-bezier(0.34, 1.56, 0.64, 1)
@@ -264,15 +252,11 @@ html.dark {
 @media (prefers-reduced-motion: reduce) {
   .offer-facts__item {
     animation: none;
-    transition: none;
   }
   .offer-facts__item:hover .offer-facts__icon,
   .offer-facts__item:hover .offer-facts__badge::before,
   .offer-facts__item:hover .offer-facts__badge::after {
     animation: none;
-  }
-  .offer-facts--cards .offer-facts__item:hover {
-    transform: none;
   }
   .offer-facts::after {
     display: none;
