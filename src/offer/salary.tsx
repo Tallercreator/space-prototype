@@ -158,6 +158,9 @@ export function Salary({ numericBonus = false }: { numericBonus?: boolean }) {
           note={bonus.note}
         />
       ) : null}
+      <Typography.Caption.OneR as="p" color="tertiary" className="m-0 pl-spacing-lg">
+        {salary.taxNote}
+      </Typography.Caption.OneR>
     </section>
   );
 }
