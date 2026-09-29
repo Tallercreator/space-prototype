@@ -114,17 +114,6 @@ html.dark {
 .offer-facts--cards2 .offer-facts__item {
   min-height: 150px;
 }
-.offer-facts--dividers {
-  padding: var(--ui-spacing-lg) var(--ui-spacing-xl);
-  gap: var(--ui-spacing-xl);
-}
-.offer-facts--dividers .offer-facts__item {
-  min-height: 142px;
-}
-.offer-facts--dividers .offer-facts__item + .offer-facts__item {
-  border-left: 1px solid var(--ui-base-border-standard-neutral-normal);
-  padding-left: var(--ui-spacing-xl);
-}
 .offer-facts__icon {
   width: 24px;
   height: 24px;
@@ -442,21 +431,6 @@ html.dark {
   aspect-ratio: 687 / 900;
 }
 /* V2: область под документ — высота по окну, скролл внутри, полоса прокрутки всегда видна. */
-.offer-pdf__scroller {
-  height: min(760px, calc(100vh - 280px));
-  min-height: 420px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-gutter: stable;
-  overscroll-behavior: contain;
-}
-.offer-pdf__scroller .offer-pdf__page {
-  aspect-ratio: auto;
-}
-.offer-pdf__error {
-  min-height: 320px;
-  align-content: center;
-}
 
 /* ---------- панель сценариев ---------- */
 .offer-scenarios {
@@ -494,13 +468,6 @@ html.dark {
   .offer-facts {
     grid-template-columns: minmax(0, 1fr);
   }
-  .offer-facts--dividers .offer-facts__item + .offer-facts__item {
-    border-left: 0;
-    padding-left: 0;
-    border-top: 1px solid var(--ui-base-border-standard-neutral-normal);
-    padding-top: var(--ui-spacing-lg);
-  }
-  .offer-facts--dividers .offer-facts__item,
   .offer-facts--cards .offer-facts__item,
   .offer-facts--cards2 .offer-facts__item {
     min-height: 0;

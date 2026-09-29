@@ -43,31 +43,3 @@ export function DeclinePopup({
     </Popup>
   );
 }
-
-/** Заглушка анкеты парковки (в прототипе не проектируется). */
-export function ParkingPopup({
-  open,
-  onClose,
-}: {
-  open: boolean;
-  onClose: () => void;
-}) {
-  return (
-    <Popup open={open} onClose={onClose}>
-      <PopupContent>
-        <PopupHeader
-          type="title"
-          title="Данные для парковки"
-          description="Здесь откроется анкета: номер и марка машины. Дата выхода уже подтверждена и не редактируется."
-          showCloseButton
-          closeLabel="Закрыть"
-        />
-        <PopupActionPanel>
-          <Button tone="neutral" size="large" onClick={onClose}>
-            Понятно
-          </Button>
-        </PopupActionPanel>
-      </PopupContent>
-    </Popup>
-  );
-}

@@ -45,16 +45,7 @@ function statusFor(scenario: Scenario): {
         title: `Ты принял предложение ${fmtDay(DEMO.acceptedOn)}`,
         text: "Рекрутер согласует дату выхода и напишет в течение двух рабочих дней.",
       };
-    case "dated":
-      return {
-        tone: "lime",
-        icon: "check",
-        title: `Дата выхода: ${fmtWeekdayDay(DEMO.startDate)}`,
-        text: "Рекрутер подтвердил дату из твоего пожелания. Осталось заполнить данные для парковки.",
-      };
     case "pdf":
-    case "pdf2":
-    case "pdferr":
       return {
         tone: "orange",
         icon: "clock",

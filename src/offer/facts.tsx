@@ -37,13 +37,11 @@ const ICONS: Record<
 };
 
 /**
- * Регалии банка под баннером (Figma 355-123184 — карточки, 355-127835 — с разделителями).
+ * Регалии банка под баннером (Figma 355-123184: карточки V1 и V2).
  * Появляются каскадом слева направо, затем один раз проходит блик; при reduced-motion — статично.
  */
 export function FactsRow() {
   const variant = usePackage().facts;
-  if (variant === "none") return null;
-  const cards = variant === "cards" || variant === "cards2";
   const v2 = variant === "cards2";
   return (
     <ul
@@ -55,12 +53,10 @@ export function FactsRow() {
         return (
           <li
             key={f.headline}
-            className={`offer-facts__item grid content-between gap-spacing-lg ${cards ? "rounded-radius-md bg-base-surface-tertiary-neutral-normal p-spacing-lg" : ""}`}
+            className="offer-facts__item grid content-between gap-spacing-lg rounded-radius-md bg-base-surface-tertiary-neutral-normal p-spacing-lg"
             style={{ animationDelay: `${200 + i * 80}ms` }}
           >
-            <span
-              className={`grid ${cards ? "gap-spacing-lg" : "gap-spacing-xxl"}`}
-            >
+            <span className="grid gap-spacing-lg">
               <span className="offer-facts__badge" aria-hidden="true">
                 <Icon className="offer-facts__icon text-base-texticons-primary" />
               </span>

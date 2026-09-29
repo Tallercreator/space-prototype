@@ -112,8 +112,8 @@ function Formula({
   );
 }
 
-/** Режим блока дохода: обычный или «только оклад» (#plain) — без формулы «из чего складывается». */
-export type SalaryMode = "default" | "plain";
+/** Режим блока дохода: по умолчанию один оклад без формулы, «formula» (#formula) — с формулой «из чего складывается». */
+export type SalaryMode = "default" | "formula";
 
 /** Блок дохода: плитки суммы/премии и формула «из чего складывается». */
 export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
@@ -134,7 +134,7 @@ export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
               color="tertiary"
               className="offer-salary__main-caption whitespace-pre-line"
             >
-              {mode === "plain" ? salary.plainCaption : salary.totalCaption}
+              {mode === "formula" ? salary.totalCaption : salary.plainCaption}
             </Typography.Caption.OneR>
             <img className="offer-salary__money" src={asset("money")} alt="" />
           </div>
@@ -150,9 +150,9 @@ export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
           </div>
         </div>
       </div>
-      {mode === "plain" ? null : (
+      {mode === "formula" ? (
         <Formula title={salary.breakdownTitle} parts={salary.parts} op="+" />
-      )}
+      ) : null}
       <Formula
         title={bonus.formulaTitle}
         parts={bonus.parts}

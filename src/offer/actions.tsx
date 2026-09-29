@@ -3,7 +3,7 @@ import * as React from "react";
 import { Button } from "@otp/space-ui-kit/button";
 import { Typography } from "@otp/space-ui-kit/typography";
 
-import { DEMO, fmtDay, legal } from "./data";
+import { legal } from "./data";
 import type { OfferActions, OfferState } from "./state";
 
 /**
@@ -43,12 +43,10 @@ export function Actions({
   state,
   actions,
   onDecline,
-  onParking,
 }: {
   state: OfferState;
   actions: OfferActions;
   onDecline: () => void;
-  onParking: () => void;
 }) {
   const { scenario } = state;
   const ref = React.useRef<HTMLDivElement>(null);
@@ -74,19 +72,6 @@ export function Actions({
       hint =
         "Ты отклонил предложение. Если передумаешь — рекрутер сможет отправить новый оффер.";
       buttons = null;
-      break;
-    case "dated":
-      hint = `Нужно до ${fmtDay(DEMO.parkingDue)} — за 2 рабочих дня до выхода`;
-      buttons = (
-        <>
-          <Button variant="secondary" tone="neutral" size="large" disabled>
-            Оффер принят
-          </Button>
-          <Button tone="neutral" size="large" onClick={onParking}>
-            Заполнить данные для парковки
-          </Button>
-        </>
-      );
       break;
     default:
       buttons = (

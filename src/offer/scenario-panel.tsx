@@ -4,12 +4,11 @@ import { Button } from "@otp/space-ui-kit/button";
 import { Chip } from "@otp/space-ui-kit/chip";
 import { IconButton } from "@otp/space-ui-kit/icon-button";
 import { LightbulbLine24Icon } from "@otp/space-ui-kit/icons/lightbulb-line-24";
-import { LockClosedLine16Icon } from "@otp/space-ui-kit/icons/lock-closed-line-16";
 import { Typography } from "@otp/space-ui-kit/typography";
 
 import { PackagePopup } from "./package-popup";
 import { FACTS_VARIANTS, setPackage, usePackage } from "./package";
-import { SCENARIOS, isLocked } from "./state";
+import { SCENARIOS } from "./state";
 import type { Scenario } from "./state";
 import type { Theme } from "./theme";
 
@@ -45,11 +44,6 @@ export function ScenarioPanel({
                     size="small"
                     selected={s.id === current}
                     onClick={() => onSelect(s.id)}
-                    icon={
-                      isLocked(s.id) ? (
-                        <LockClosedLine16Icon aria-label="по коду" />
-                      ) : undefined
-                    }
                   >
                     {s.label}
                   </Chip>

@@ -7,28 +7,19 @@ import { PhoneLine24Icon } from "@otp/space-ui-kit/icons/phone-line-24";
 import { UprightArrowLine16Icon } from "@otp/space-ui-kit/icons/upright-arrow-line-16";
 import { Typography } from "@otp/space-ui-kit/typography";
 
-import { DEMO, fmtDay, recruiter } from "./data";
+import { recruiter } from "./data";
 import type { OfferState } from "./state";
 
 type StepItem = { n: number; title: string; caption?: string; active: boolean };
 
-function buildSteps(state: OfferState): { of: string; items: StepItem[] } {
-  const { scenario } = state;
+function buildSteps(): { of: string; items: StepItem[] } {
   // Figma 221-111789: три шага, «Трудоустройство» — следующий после оффера
-  const dated = scenario === "dated";
   return {
-    of: dated ? "Шаг 3 из 3" : "Шаг 2 из 3",
+    of: "Шаг 2 из 3",
     items: [
       { n: 1, title: "Анкета кандидата", active: false },
-      { n: 2, title: "Оффер", active: !dated },
-      {
-        n: 3,
-        title: "Трудоустройство",
-        caption: dated
-          ? `Выход ${fmtDay(DEMO.startDate)} · парковка до ${fmtDay(DEMO.parkingDue)}`
-          : undefined,
-        active: dated,
-      },
+      { n: 2, title: "Оффер", active: true },
+      { n: 3, title: "Трудоустройство", active: false },
     ],
   };
 }
@@ -105,7 +96,7 @@ function PersonCard({
 
 /** Левая колонка: заголовок шага, список шагов, карточки наставника и рекрутера. */
 export function Sidebar({ state }: { state: OfferState }) {
-  const steps = buildSteps(state);
+  const steps = buildSteps();
   return (
     <aside className="offer-sidebar flex flex-col justify-between gap-spacing-exxxs rounded-radius-lg bg-base-surface-primary-block-normal p-spacing-exxxs">
       <div className="grid gap-spacing-exxxs">

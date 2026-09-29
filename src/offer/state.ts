@@ -7,24 +7,19 @@ import type { OfferKind } from "./data";
  * Переключаются панелью сценариев или хэшем в адресе (#last, #pdf …).
  */
 export type Scenario =
-  | "due" // оффер активен, до дедлайна несколько дней
-  | "plain" // как due, но зарплата — один оклад: без формулы «из чего складывается»
+  | "due" // оффер активен, до дедлайна несколько дней; зарплата — один оклад, без формулы
+  | "formula" // как due, но с формулой «из чего складывается» (оклад + гарант × коэффициенты)
   | "last" // последний день ответа
   | "gone" // срок истёк
   | "no" // кандидат отклонил
   | "ok" // принял — экран «оффер принят» с оценкой
-  | "dated" // дата выхода подтверждена — открыта парковка
-  | "pdf" // сценарий Б: PDF-оффер на всю высоту
-  | "pdf2" // сценарий Б, V2: PDF в области со своим скроллом
-  | "pdferr"; // сценарий Б: PDF не сконвертировался
+  | "pdf"; // сценарий Б: PDF-оффер на всю высоту
 
 export type View = "offer" | "accepted";
 
 export type OfferState = {
   scenario: Scenario;
   view: View;
-  /** Закрытый сценарий, который запросили без кода, — страница покажет ввод кода. */
-  lockedRequest: Scenario | null;
 };
 
 export const SCENARIOS: Array<{
@@ -33,43 +28,15 @@ export const SCENARIOS: Array<{
   group: "А" | "Б";
 }> = [
   { id: "due", label: "Оффер — активен", group: "А" },
-  { id: "plain", label: "Только оклад, без формулы", group: "А" },
+  { id: "formula", label: "Формула для оклада", group: "А" },
   { id: "last", label: "Оффер — последний день", group: "А" },
   { id: "ok", label: "Оффер принят", group: "А" },
-  { id: "dated", label: "Дата подтверждена → парковка", group: "А" },
   { id: "gone", label: "Срок истёк", group: "А" },
   { id: "no", label: "Отклонён", group: "А" },
   { id: "pdf", label: "Оффер как PDF", group: "Б" },
-  { id: "pdf2", label: "PDF, V2 — скролл внутри", group: "Б" },
-  { id: "pdferr", label: "PDF не сконвертировался", group: "Б" },
 ];
 
 const IDS = new Set<string>(SCENARIOS.map((s) => s.id));
-
-/** Сценарии, закрытые кодом модератора: по прямой ссылке и из панели без кода не открываются. */
-export const LOCKED = new Set<Scenario>(["dated"]);
-export const ACCESS_CODE = "2210";
-const UNLOCK_KEY = "offer-unlocked";
-
-export function isUnlocked(): boolean {
-  try {
-    return sessionStorage.getItem(UNLOCK_KEY) === "1";
-  } catch {
-    return false;
-  }
-}
-
-export function unlock(): void {
-  try {
-    sessionStorage.setItem(UNLOCK_KEY, "1");
-  } catch {
-    /* приватный режим — код спросим ещё раз */
-  }
-}
-
-export function isLocked(scenario: Scenario): boolean {
-  return LOCKED.has(scenario) && !isUnlocked();
-}
 
 /** Сценарий «принят» открывается сразу экраном подтверждения. */
 function initialView(scenario: Scenario): View {
@@ -82,25 +49,17 @@ export function scenarioFromHash(): Scenario {
 }
 
 export function offerKind(scenario: Scenario): OfferKind {
-  return scenario === "pdf" || scenario === "pdf2" || scenario === "pdferr"
-    ? "pdf"
-    : "structured";
+  return scenario === "pdf" ? "pdf" : "structured";
 }
 
 export function isAccepted(scenario: Scenario): boolean {
-  return scenario === "ok" || scenario === "dated";
+  return scenario === "ok";
 }
 
 export function useOfferState() {
   const fromHash = (): OfferState => {
     const requested = scenarioFromHash();
-    if (isLocked(requested))
-      return { scenario: "due", view: "offer", lockedRequest: requested };
-    return {
-      scenario: requested,
-      view: initialView(requested),
-      lockedRequest: null,
-    };
+    return { scenario: requested, view: initialView(requested) };
   };
   const [state, setState] = React.useState<OfferState>(fromHash);
 
@@ -115,37 +74,13 @@ export function useOfferState() {
   const actions = React.useMemo(
     () => ({
       setScenario(scenario: Scenario) {
-        if (isLocked(scenario)) {
-          setState((s) => ({ ...s, lockedRequest: scenario }));
-          return;
-        }
         history.replaceState(
           null,
           "",
           scenario === "due" ? window.location.pathname : `#${scenario}`,
         );
-        setState({
-          scenario,
-          view: initialView(scenario),
-          lockedRequest: null,
-        });
+        setState({ scenario, view: initialView(scenario) });
         scrollTop();
-      },
-      /** Код верный: запоминаем на сессию и открываем запрошенный сценарий. */
-      unlockAndOpen(scenario: Scenario) {
-        unlock();
-        history.replaceState(null, "", `#${scenario}`);
-        setState({
-          scenario,
-          view: initialView(scenario),
-          lockedRequest: null,
-        });
-        scrollTop();
-      },
-      cancelLocked() {
-        setState((s) => ({ ...s, lockedRequest: null }));
-        if (isLocked(scenarioFromHash()))
-          history.replaceState(null, "", window.location.pathname);
       },
       accept() {
         setState((s) => ({ ...s, scenario: "ok", view: "accepted" }));

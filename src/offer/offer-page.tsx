@@ -6,8 +6,7 @@ import { Banner } from "./banner";
 import { Benefits } from "./benefits";
 import { Conditions } from "./conditions";
 import { Culture } from "./culture";
-import { CodePopup } from "./code-popup";
-import { DeclinePopup, ParkingPopup } from "./decline-popup";
+import { DeclinePopup } from "./decline-popup";
 import { PdfView } from "./pdf-view";
 import { Salary } from "./salary";
 import { ScenarioPanel } from "./scenario-panel";
@@ -21,7 +20,6 @@ export function OfferPage() {
   const { state, actions } = useOfferState();
   const [theme, toggleTheme] = useTheme();
   const [declineOpen, setDeclineOpen] = React.useState(false);
-  const [parkingOpen, setParkingOpen] = React.useState(false);
   const kind = offerKind(state.scenario);
 
   let content: React.ReactNode;
@@ -33,13 +31,12 @@ export function OfferPage() {
         <StatusMessage scenario={state.scenario} />
         <div className="grid gap-spacing-esm">
           {kind === "pdf" ? (
-            <PdfView
-              failed={state.scenario === "pdferr"}
-              inner={state.scenario === "pdf2"}
-            />
+            <PdfView />
           ) : (
             <>
-              <Salary mode={state.scenario === "plain" ? "plain" : "default"} />
+              <Salary
+                mode={state.scenario === "formula" ? "formula" : "default"}
+              />
               <Benefits />
               <Conditions />
             </>
@@ -50,7 +47,6 @@ export function OfferPage() {
           state={state}
           actions={actions}
           onDecline={() => setDeclineOpen(true)}
-          onParking={() => setParkingOpen(true)}
         />
       </>
     );
@@ -76,12 +72,6 @@ export function OfferPage() {
           setDeclineOpen(false);
           actions.decline();
         }}
-      />
-      <ParkingPopup open={parkingOpen} onClose={() => setParkingOpen(false)} />
-      <CodePopup
-        target={state.lockedRequest}
-        onSuccess={actions.unlockAndOpen}
-        onClose={actions.cancelLocked}
       />
       <ScenarioPanel
         current={state.scenario}
