@@ -114,8 +114,12 @@ function Formula({
   );
 }
 
-/** Блок дохода: плитки суммы/премии и формула «из чего складывается». В сценарии «премия цифрами» — сумма премии и вторая формула. */
-export function Salary({ numericBonus = false }: { numericBonus?: boolean }) {
+/** Режим блока дохода по сценарию: обычный, «премия цифрами» (#bonus) или «только оклад» (#plain). */
+export type SalaryMode = "default" | "bonus" | "plain";
+
+/** Блок дохода: плитки суммы/премии и формула «из чего складывается». */
+export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
+  const numericBonus = mode === "bonus";
   const bonus = salary.bonusDetailed;
   return (
     <section className="grid gap-spacing-xxxl" aria-label="Доход">
@@ -133,7 +137,7 @@ export function Salary({ numericBonus = false }: { numericBonus?: boolean }) {
               color="tertiary"
               className="offer-salary__main-caption whitespace-pre-line"
             >
-              {salary.totalCaption}
+              {mode === "plain" ? salary.plainCaption : salary.totalCaption}
             </Typography.Caption.OneR>
             <img className="offer-salary__money" src={asset("money")} alt="" />
           </div>
@@ -162,7 +166,9 @@ export function Salary({ numericBonus = false }: { numericBonus?: boolean }) {
           )}
         </div>
       </div>
-      <Formula title={salary.breakdownTitle} parts={salary.parts} op="+" />
+      {mode === "plain" ? null : (
+        <Formula title={salary.breakdownTitle} parts={salary.parts} op="+" />
+      )}
       {numericBonus ? (
         <Formula
           title={bonus.formulaTitle}

@@ -39,7 +39,13 @@ export function OfferPage() {
             />
           ) : (
             <>
-              <Salary numericBonus={state.scenario === "bonus"} />
+              <Salary
+                mode={
+                  state.scenario === "bonus" || state.scenario === "plain"
+                    ? state.scenario
+                    : "default"
+                }
+              />
               <Benefits />
               <Conditions />
             </>

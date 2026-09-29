@@ -9,6 +9,7 @@ import type { OfferKind } from "./data";
 export type Scenario =
   | "due" // оффер активен, до дедлайна несколько дней
   | "bonus" // как due, но премия показана суммой + формула её расчёта
+  | "plain" // как due, но зарплата — один оклад: без формулы «из чего складывается»
   | "last" // последний день ответа
   | "gone" // срок истёк
   | "no" // кандидат отклонил
@@ -34,6 +35,7 @@ export const SCENARIOS: Array<{
 }> = [
   { id: "due", label: "Оффер — активен", group: "А" },
   { id: "bonus", label: "Премия цифрами + формула", group: "А" },
+  { id: "plain", label: "Только оклад, без формулы", group: "А" },
   { id: "last", label: "Оффер — последний день", group: "А" },
   { id: "ok", label: "Оффер принят", group: "А" },
   { id: "dated", label: "Дата подтверждена → парковка", group: "А" },
