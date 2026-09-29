@@ -23,22 +23,24 @@ html.dark {
 
 /* ---------- баннер ---------- */
 /* Рамка 8px — подложкой карточки (в тёмной теме темнеет), сама картинка без рамки, радиус 16 внутри. */
+/* Белый контейнер баннера: лаймовая область + регалии (Figma 355-123184: padding 8, gap 8, radius 20). */
+.offer-hero {
+  border-radius: var(--ui-radius-xl);
+}
 .offer-banner {
   position: relative;
-  aspect-ratio: 1130 / 460;
-  min-height: 300px;
-  padding: var(--ui-spacing-md);
-  overflow: hidden;
-  border-radius: var(--ui-radius-xl);
+  aspect-ratio: 1114 / 444;
   /* баннер лаймовый в обеих темах — текст и тост всегда тёмные */
   color: var(--ui-universal-neutral-dark);
+  min-height: 292px;
+  overflow: hidden;
+  border-radius: var(--ui-radius-lg);
 }
 .offer-banner__bg {
   position: absolute;
-  inset: var(--ui-spacing-md);
-  width: calc(100% - 2 * var(--ui-spacing-md));
-  height: calc(100% - 2 * var(--ui-spacing-md));
-  border-radius: var(--ui-radius-lg);
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 .offer-banner__toast {
@@ -58,19 +60,19 @@ html.dark {
 }
 .offer-banner__logo {
   position: absolute;
-  top: 48px;
-  left: 48px;
+  top: 40px;
+  left: 40px;
   width: 77px;
   height: 16px;
 }
 .offer-banner__toast {
   position: absolute;
-  top: 48px;
-  right: 48px;
+  top: 40px;
+  right: 40px;
 }
 .offer-banner__text {
   position: absolute;
-  top: 106px;
+  top: 98px;
   left: 50%;
   width: min(600px, calc(100% - 48px));
   transform: translateX(-50%);
@@ -99,6 +101,75 @@ html.dark {
 .offer-person__tg {
   width: 16px;
   height: 16px;
+}
+
+/* ---------- регалии банка (Figma 355-123184 карточки / 355-127835 разделители) ---------- */
+.offer-facts {
+  position: relative;
+  overflow: hidden;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.offer-facts--cards {
+  gap: var(--ui-spacing-md);
+}
+.offer-facts--cards .offer-facts__item {
+  min-height: 140px;
+}
+.offer-facts--dividers {
+  padding: var(--ui-spacing-lg) var(--ui-spacing-xl);
+  gap: var(--ui-spacing-xl);
+}
+.offer-facts--dividers .offer-facts__item {
+  min-height: 142px;
+}
+.offer-facts--dividers .offer-facts__item + .offer-facts__item {
+  border-left: 1px solid var(--ui-base-border-standard-neutral-normal);
+  padding-left: var(--ui-spacing-xl);
+}
+.offer-facts__icon {
+  width: 24px;
+  height: 24px;
+}
+/* Появление: каскад слева направо (задержка задаётся в компоненте), затем один блик по всему ряду. */
+@keyframes offer-facts-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes offer-facts-shine {
+  to {
+    transform: translateX(100%);
+  }
+}
+.offer-facts__item {
+  animation: offer-facts-in 400ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.offer-facts::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    color-mix(in srgb, var(--ui-universal-neutral-white) 35%, transparent) 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  animation: offer-facts-shine 900ms ease-in-out 1s 1 forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .offer-facts__item {
+    animation: none;
+  }
+  .offer-facts::after {
+    display: none;
+  }
 }
 
 /* ---------- доход ---------- */
@@ -322,6 +393,19 @@ html.dark {
   .offer-banner {
     aspect-ratio: auto;
     min-height: 360px;
+  }
+  .offer-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .offer-facts--dividers .offer-facts__item + .offer-facts__item {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--ui-base-border-standard-neutral-normal);
+    padding-top: var(--ui-spacing-lg);
+  }
+  .offer-facts--dividers .offer-facts__item,
+  .offer-facts--cards .offer-facts__item {
+    min-height: 0;
   }
   /* Конфетти по клику на баннер: слой на весь экран, сыплется поверх страницы, клики пропускает */
   .offer-confetti-layer {

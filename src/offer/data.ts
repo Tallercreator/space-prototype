@@ -152,6 +152,28 @@ export const culture = {
   ],
 };
 
+/** Регалии банка под баннером (Figma 355-123184). Источник — в скобках мелким; у двух фактов его нет. */
+export type FactIcon = "trophy" | "bank" | "planet" | "flash" | "users";
+export const facts: Array<{ icon: FactIcon; text: string; source?: string }> = [
+  {
+    icon: "trophy",
+    text: "В топ-5\nлучших работодателей\nРоссии в категории «Банки»",
+    source: "HH.ru, 2025",
+  },
+  {
+    icon: "bank",
+    text: "В топ-20\nкрупнейших банков\nРоссии по активам",
+    source: "Frank RG, 2026",
+  },
+  {
+    icon: "planet",
+    text: "10-е место в мире в категории «Большие банки»",
+    source: "OTP Group, Forbes World's Top Performing Banks, 2026",
+  },
+  { icon: "flash", text: "30+ лет\nна российском рынке" },
+  { icon: "users", text: "Более\n2 миллионов клиентов" },
+];
+
 export const legal =
   "Принятие оффера не является подписанием трудового договора";
 

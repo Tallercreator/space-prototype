@@ -114,10 +114,19 @@ export const BENEFIT_CATALOG: CatalogBenefit[] = [
   },
 ];
 
+/** Как показать регалии банка под баннером: карточки (355-123184), с разделителями (355-127835) или скрыть. */
+export type FactsVariant = "cards" | "dividers" | "none";
+export const FACTS_VARIANTS: Array<{ id: FactsVariant; label: string }> = [
+  { id: "cards", label: "Регалии: карточки" },
+  { id: "dividers", label: "Регалии: разделители" },
+  { id: "none", label: "Без регалий" },
+];
+
 export type BenefitsPackage = {
   segment: Segment;
   benefits: string[];
   culture: string[];
+  facts: FactsVariant;
 };
 
 /** Малые карточки «Тебя ждёт в ОТП» (Figma «Карточка», Size=Vertical). */
@@ -186,6 +195,7 @@ export const DEFAULT_PACKAGE: BenefitsPackage = {
   segment: "ho",
   benefits: ["dms", "fitness-alt", "mobile", "insurance", "card"],
   culture: CULTURE_PRESETS.ho,
+  facts: "cards",
 };
 
 const KEY = "offer-package";
@@ -207,6 +217,9 @@ function sanitize(raw: unknown): BenefitsPackage {
     segment,
     benefits: pick(p.benefits, IDS, DEFAULT_PACKAGE.benefits),
     culture: pick(p.culture, CULTURE_IDS, CULTURE_PRESETS[segment]),
+    facts: FACTS_VARIANTS.some((v) => v.id === p.facts)
+      ? (p.facts as FactsVariant)
+      : DEFAULT_PACKAGE.facts,
   };
 }
 

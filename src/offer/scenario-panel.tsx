@@ -8,7 +8,7 @@ import { LockClosedLine16Icon } from "@otp/space-ui-kit/icons/lock-closed-line-1
 import { Typography } from "@otp/space-ui-kit/typography";
 
 import { PackagePopup } from "./package-popup";
-import { usePackage } from "./package";
+import { FACTS_VARIANTS, setPackage, usePackage } from "./package";
 import { SCENARIOS, isLocked } from "./state";
 import type { Scenario } from "./state";
 import type { Theme } from "./theme";
@@ -65,6 +65,18 @@ export function ScenarioPanel({
               <Chip size="small" onClick={() => setPkgOpen(true)}>
                 {`Пакет льгот · ${pkg.benefits.length}`}
               </Chip>
+            </div>
+            <div className="flex flex-wrap gap-spacing-sm">
+              {FACTS_VARIANTS.map((v) => (
+                <Chip
+                  key={v.id}
+                  size="small"
+                  selected={pkg.facts === v.id}
+                  onClick={() => setPackage({ ...pkg, facts: v.id })}
+                >
+                  {v.label}
+                </Chip>
+              ))}
             </div>
           </div>
         </div>
