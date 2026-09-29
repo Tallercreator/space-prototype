@@ -115,9 +115,10 @@ export const BENEFIT_CATALOG: CatalogBenefit[] = [
 ];
 
 /** Как показать регалии банка под баннером: карточки (355-123184), с разделителями (355-127835) или скрыть. */
-export type FactsVariant = "cards" | "dividers" | "none";
+export type FactsVariant = "cards" | "cards2" | "dividers" | "none";
 export const FACTS_VARIANTS: Array<{ id: FactsVariant; label: string }> = [
   { id: "cards", label: "Регалии: карточки" },
+  { id: "cards2", label: "Регалии: карточки V2" },
   { id: "dividers", label: "Регалии: разделители" },
   { id: "none", label: "Без регалий" },
 ];

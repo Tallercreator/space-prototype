@@ -43,7 +43,8 @@ const ICONS: Record<
 export function FactsRow() {
   const variant = usePackage().facts;
   if (variant === "none") return null;
-  const cards = variant === "cards";
+  const cards = variant === "cards" || variant === "cards2";
+  const v2 = variant === "cards2";
   return (
     <ul
       className={`offer-facts offer-facts--${variant} m-0 grid list-none p-0`}
@@ -53,7 +54,7 @@ export function FactsRow() {
         const Icon = ICONS[f.icon];
         return (
           <li
-            key={f.text}
+            key={f.headline}
             className={`offer-facts__item grid content-between gap-spacing-lg ${cards ? "rounded-radius-md bg-base-surface-tertiary-neutral-normal p-spacing-lg" : ""}`}
             style={{ animationDelay: `${200 + i * 80}ms` }}
           >
@@ -63,14 +64,36 @@ export function FactsRow() {
               <span className="offer-facts__badge" aria-hidden="true">
                 <Icon className="offer-facts__icon text-base-texticons-primary" />
               </span>
-              <Typography.Body.ThreeM className="whitespace-pre-line">
-                {f.text}
-              </Typography.Body.ThreeM>
+              {v2 ? (
+                <span className="grid gap-spacing-xs">
+                  <Typography.Body.TwoM className="whitespace-pre-line">
+                    {f.headline}
+                  </Typography.Body.TwoM>
+                  {f.detail ? (
+                    <Typography.Caption.OneR
+                      color="secondary"
+                      className="whitespace-pre-line"
+                    >
+                      {f.detail}
+                    </Typography.Caption.OneR>
+                  ) : null}
+                </span>
+              ) : (
+                <Typography.Body.ThreeM className="whitespace-pre-line">
+                  {f.text}
+                </Typography.Body.ThreeM>
+              )}
             </span>
             {f.source ? (
-              <Typography.Caption.OneR color="tertiary">
-                ({f.source})
-              </Typography.Caption.OneR>
+              v2 ? (
+                <Typography.Caption.TwoR color="disabled">
+                  ({f.source})
+                </Typography.Caption.TwoR>
+              ) : (
+                <Typography.Caption.OneR color="tertiary">
+                  ({f.source})
+                </Typography.Caption.OneR>
+              )
             ) : null}
           </li>
         );
