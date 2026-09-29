@@ -75,7 +75,7 @@ function Formula({
   note?: string;
 }) {
   return (
-    <div className="grid gap-spacing-md pl-spacing-lg">
+    <div className="grid gap-spacing-md">
       <Typography.Body.ThreeR as="div" color="tertiary">
         {title}
       </Typography.Body.ThreeR>
