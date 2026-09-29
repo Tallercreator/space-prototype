@@ -127,7 +127,7 @@ export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
           {salary.taxNote}
         </Typography.Caption.OneR>
         <div className="offer-salary__tiles grid gap-spacing-md">
-          <div className="offer-salary__main relative flex flex-col justify-center gap-spacing-xl overflow-hidden rounded-radius-md border border-base-border-standard-neutral-normal bg-base-surface-primary-block-normal p-spacing-lg">
+          <div className="offer-salary__main relative flex flex-col justify-center gap-spacing-xl overflow-hidden rounded-radius-md bg-base-surface-tertiary-neutral-normal p-spacing-lg">
             <Typography.Promo.SixM as="div">
               {salary.total}
             </Typography.Promo.SixM>

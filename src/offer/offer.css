@@ -99,18 +99,19 @@ html.dark {
 .offer-salary__tiles {
   grid-template-columns: minmax(0, 1fr) 137px;
 }
+/* Карточка суммы (Figma 221-110529): 98 высоты, серая подложка без рамки, купюры 126 у правого края. */
 .offer-salary__main {
-  min-height: 100px;
+  min-height: 98px;
 }
 .offer-salary__main-caption {
   max-width: 380px;
 }
 .offer-salary__money {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 138px;
-  height: 138px;
+  top: 6px;
+  right: 12px;
+  width: 126px;
+  height: 126px;
   pointer-events: none;
 }
 /* Переносы подписей заданы в данных, ширина блока — по самой длинной строке: без пустоты перед «+». */
