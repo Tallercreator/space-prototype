@@ -76,9 +76,9 @@ export function Benefits() {
           <li key={b.id} className="flex items-center gap-spacing-xl">
             <Tile item={b} />
             <span className="grid gap-spacing-xxs">
-              <Typography.Body.OneM className="whitespace-pre-line">
+              <Typography.Body.TwoM className="whitespace-pre-line">
                 {b.title}
-              </Typography.Body.OneM>
+              </Typography.Body.TwoM>
               <Typography.Body.ThreeR color="secondary">
                 {b.caption}
               </Typography.Body.ThreeR>
