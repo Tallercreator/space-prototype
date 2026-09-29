@@ -60,10 +60,9 @@ export function FactsRow() {
             <span
               className={`grid ${cards ? "gap-spacing-lg" : "gap-spacing-xxl"}`}
             >
-              <Icon
-                aria-hidden="true"
-                className="offer-facts__icon text-base-texticons-primary"
-              />
+              <span className="offer-facts__badge" aria-hidden="true">
+                <Icon className="offer-facts__icon text-base-texticons-primary" />
+              </span>
               <Typography.Body.ThreeM className="whitespace-pre-line">
                 {f.text}
               </Typography.Body.ThreeM>
