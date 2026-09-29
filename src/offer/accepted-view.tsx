@@ -2,13 +2,23 @@ import * as React from "react";
 
 import { Button } from "@otp/space-ui-kit/button";
 import { StarFill16Icon } from "@otp/space-ui-kit/icons/star-fill-16";
-import { TextAreaGroup, TextAreaGroupControl, TextAreaGroupLabel } from "@otp/space-ui-kit/textarea";
+import {
+  TextAreaGroup,
+  TextAreaGroupControl,
+  TextAreaGroupLabel,
+} from "@otp/space-ui-kit/textarea";
 import { Typography } from "@otp/space-ui-kit/typography";
 
 import { asset } from "./data";
 
 const STARS = [1, 2, 3, 4, 5];
-const STAR_LABELS = ["Совсем неудобно", "Неудобно", "Нормально", "Удобно", "Очень удобно"];
+const STAR_LABELS = [
+  "Совсем неудобно",
+  "Неудобно",
+  "Нормально",
+  "Удобно",
+  "Очень удобно",
+];
 
 /**
  * Экран после «Принять оффер» (Figma 217-101766, после отправки — 221-103690):
@@ -22,14 +32,25 @@ export function AcceptedView() {
   const [sent, setSent] = React.useState(false);
   const [needRating, setNeedRating] = React.useState(false);
   const shown = hover || rating;
-  const valueLabel = shown ? STAR_LABELS[shown - 1] : needRating ? "Поставь оценку — это обязательно" : "\u00a0";
+  const valueLabel = shown
+    ? STAR_LABELS[shown - 1]
+    : needRating
+      ? "Поставь оценку — это обязательно"
+      : "\u00a0";
 
   return (
-    <section className="offer-accepted grid justify-items-center gap-spacing-exxxs" aria-labelledby="accepted-title">
+    <section
+      className="offer-accepted grid justify-items-center gap-spacing-exxxs"
+      aria-labelledby="accepted-title"
+    >
       <div className="grid justify-items-center gap-spacing-lg text-center">
         <div className="grid justify-items-center gap-spacing-xxxl">
           <img className="offer-accepted__heart" src={asset("heart")} alt="" />
-          <Typography.Heading.TwoM as="h2" id="accepted-title" className="offer-accepted__title m-0">
+          <Typography.Heading.TwoM
+            as="h2"
+            id="accepted-title"
+            className="offer-accepted__title m-0"
+          >
             Оффер принят, рекрутер свяжется
             <br />с тобой для обсуждения даты выхода!
           </Typography.Heading.TwoM>
@@ -41,12 +62,22 @@ export function AcceptedView() {
       </div>
 
       {sent ? (
-        <div className="offer-feedback offer-feedback--sent grid gap-spacing-md rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xxxl" role="status">
-          <Typography.Body.OneSB>Спасибо! Оценка отправлена</Typography.Body.OneSB>
-          <Typography.Body.TwoR color="tertiary">Она поможет нам сделать оффер удобнее</Typography.Body.TwoR>
+        <div
+          className="offer-feedback offer-feedback--sent grid gap-spacing-md rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xxxl"
+          role="status"
+        >
+          <Typography.Body.OneSB>
+            Спасибо! Оценка отправлена
+          </Typography.Body.OneSB>
+          <Typography.Body.TwoR color="tertiary">
+            Она поможет нам сделать оффер удобнее
+          </Typography.Body.TwoR>
         </div>
       ) : (
-        <div className="offer-feedback grid gap-spacing-exxxxs rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xxxl" aria-labelledby="feedback-title">
+        <div
+          className="offer-feedback grid gap-spacing-exxxxs rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xxxl"
+          aria-labelledby="feedback-title"
+        >
           <div className="grid gap-spacing-md">
             <Typography.Body.OneSB as="h3" id="feedback-title" className="m-0">
               Насколько удобно было принять оффер?
@@ -58,7 +89,15 @@ export function AcceptedView() {
 
           <div className="grid gap-spacing-xxxl">
             <div className="grid gap-spacing-md">
-              <div className="flex gap-spacing-xs" role="radiogroup" aria-label="Оценка от 1 до 5" aria-required="true" aria-invalid={needRating && !rating} aria-describedby="feedback-value" onMouseLeave={() => setHover(0)}>
+              <div
+                className="flex gap-spacing-xs"
+                role="radiogroup"
+                aria-label="Оценка от 1 до 5"
+                aria-required="true"
+                aria-invalid={needRating && !rating}
+                aria-describedby="feedback-value"
+                onMouseLeave={() => setHover(0)}
+              >
                 {STARS.map((n) => (
                   <button
                     key={n}
@@ -67,7 +106,9 @@ export function AcceptedView() {
                     aria-checked={rating === n}
                     aria-label={`${n} из 5 — ${STAR_LABELS[n - 1]}`}
                     className={`offer-star flex cursor-pointer items-center justify-center rounded-radius-sm border-0 p-0 ${
-                      n <= shown ? "bg-base-surface-primary-lime-normal text-universal-neutral-dark" : "bg-base-surface-secondary-contrast-lime-normal text-base-texticons-lime-bright"
+                      n <= shown
+                        ? "bg-base-surface-primary-lime-normal text-universal-neutral-dark"
+                        : "bg-base-surface-secondary-contrast-lime-normal text-base-texticons-lime-bright"
                     }`}
                     onMouseEnter={() => setHover(n)}
                     onFocus={() => setHover(n)}
@@ -81,18 +122,35 @@ export function AcceptedView() {
                   </button>
                 ))}
               </div>
-              <Typography.Body.ThreeR color="tertiary" className="offer-feedback__value" id="feedback-value" aria-live="polite">
+              <Typography.Body.ThreeR
+                color="tertiary"
+                className="offer-feedback__value"
+                id="feedback-value"
+                aria-live="polite"
+              >
                 {shown ? STAR_LABELS[shown - 1] : " "}
               </Typography.Body.ThreeR>
             </div>
-            <TextAreaGroup surface="contrast" height="one-to-four" className="offer-feedback__comment">
+            <TextAreaGroup
+              surface="contrast"
+              height="one-to-four"
+              className="offer-feedback__comment"
+            >
               <TextAreaGroupLabel>Поделись мнением</TextAreaGroupLabel>
-              <TextAreaGroupControl value={comment} onChange={(e) => setComment(e.target.value)} maxLength={500} />
+              <TextAreaGroupControl
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                maxLength={500}
+              />
             </TextAreaGroup>
           </div>
 
           <div className="flex">
-            <Button size="large" tone="neutral" onClick={() => (rating ? setSent(true) : setNeedRating(true))}>
+            <Button
+              size="large"
+              tone="neutral"
+              onClick={() => (rating ? setSent(true) : setNeedRating(true))}
+            >
               Отправить оценку
             </Button>
           </div>

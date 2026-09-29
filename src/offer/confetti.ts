@@ -4,7 +4,12 @@
  * брендовых токена Universal/Brand: lime, orange, purple, blue-light.
  */
 
-const BRAND_TOKENS = ["--ui-universal-brand-lime", "--ui-universal-brand-orange", "--ui-universal-brand-purple", "--ui-universal-brand-blue-light"];
+const BRAND_TOKENS = [
+  "--ui-universal-brand-lime",
+  "--ui-universal-brand-orange",
+  "--ui-universal-brand-purple",
+  "--ui-universal-brand-blue-light",
+];
 const FALLBACK = ["#bdf70d", "#ff7f32", "#8a5cf6", "#c6dcff"];
 
 type Particle = {
@@ -24,11 +29,19 @@ type Particle = {
 
 export function brandColors(el: Element): string[] {
   const style = getComputedStyle(el);
-  return BRAND_TOKENS.map((token, i) => style.getPropertyValue(token).trim() || FALLBACK[i]);
+  return BRAND_TOKENS.map(
+    (token, i) => style.getPropertyValue(token).trim() || FALLBACK[i],
+  );
 }
 
 /** Запускает залп из точки (x, y) в координатах канваса. Возвращает функцию остановки. */
-export function burst(canvas: HTMLCanvasElement, x: number, y: number, colors: string[], count = 140): () => void {
+export function burst(
+  canvas: HTMLCanvasElement,
+  x: number,
+  y: number,
+  colors: string[],
+  count = 140,
+): () => void {
   const ctx = canvas.getContext("2d");
   if (!ctx) return () => {};
   const dpr = Math.min(window.devicePixelRatio || 1, 2);

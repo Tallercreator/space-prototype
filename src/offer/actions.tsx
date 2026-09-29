@@ -11,14 +11,21 @@ import type { OfferActions, OfferState } from "./state";
  * подложка на всю ширину карточки, поля 24/40), `default` — стоит в потоке в
  * конце контента (без полей). Наверху страницы, пока виден баннер, панель скрыта.
  */
-function usePanelState(ref: React.RefObject<HTMLDivElement | null>, threshold: number): { visible: boolean; stuck: boolean } {
+function usePanelState(
+  ref: React.RefObject<HTMLDivElement | null>,
+  threshold: number,
+): { visible: boolean; stuck: boolean } {
   const [state, setState] = React.useState({ visible: false, stuck: false });
   React.useEffect(() => {
     const update = () => {
       const el = ref.current;
       const visible = window.scrollY > threshold;
-      const stuck = el ? el.getBoundingClientRect().bottom >= window.innerHeight - 1 : false;
-      setState((s) => (s.visible === visible && s.stuck === stuck ? s : { visible, stuck }));
+      const stuck = el
+        ? el.getBoundingClientRect().bottom >= window.innerHeight - 1
+        : false;
+      setState((s) =>
+        s.visible === visible && s.stuck === stuck ? s : { visible, stuck },
+      );
     };
     update();
     window.addEventListener("scroll", update, { passive: true });
@@ -64,7 +71,8 @@ export function Actions({
       );
       break;
     case "no":
-      hint = "Ты отклонил предложение. Если передумаешь — рекрутер сможет отправить новый оффер.";
+      hint =
+        "Ты отклонил предложение. Если передумаешь — рекрутер сможет отправить новый оффер.";
       buttons = null;
       break;
     case "dated":
@@ -83,7 +91,12 @@ export function Actions({
     default:
       buttons = (
         <>
-          <Button variant="secondary" tone="neutral" size="large" onClick={onDecline}>
+          <Button
+            variant="secondary"
+            tone="neutral"
+            size="large"
+            onClick={onDecline}
+          >
             Отклонить
           </Button>
           <Button tone="neutral" size="large" onClick={actions.accept}>
@@ -103,7 +116,11 @@ export function Actions({
           {hint}
         </Typography.Body.ThreeR>
       ) : null}
-      {buttons ? <div className="offer-actions__buttons grid gap-spacing-lg">{buttons}</div> : null}
+      {buttons ? (
+        <div className="offer-actions__buttons grid gap-spacing-lg">
+          {buttons}
+        </div>
+      ) : null}
       <Typography.Body.ThreeR as="p" color="disabled" className="m-0">
         {legal}
       </Typography.Body.ThreeR>

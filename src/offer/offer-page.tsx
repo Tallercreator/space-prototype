@@ -33,7 +33,10 @@ export function OfferPage() {
         <StatusMessage scenario={state.scenario} />
         <div className="grid gap-spacing-esm">
           {kind === "pdf" ? (
-            <PdfView failed={state.scenario === "pdferr"} inner={state.scenario === "pdf2"} />
+            <PdfView
+              failed={state.scenario === "pdferr"}
+              inner={state.scenario === "pdf2"}
+            />
           ) : (
             <>
               <Salary numericBonus={state.scenario === "bonus"} />
@@ -43,7 +46,12 @@ export function OfferPage() {
           )}
           <Culture />
         </div>
-        <Actions state={state} actions={actions} onDecline={() => setDeclineOpen(true)} onParking={() => setParkingOpen(true)} />
+        <Actions
+          state={state}
+          actions={actions}
+          onDecline={() => setDeclineOpen(true)}
+          onParking={() => setParkingOpen(true)}
+        />
       </>
     );
   }
@@ -54,7 +62,11 @@ export function OfferPage() {
         <Banner kind={kind} />
         <div className="offer-columns grid items-start gap-spacing-md">
           <Sidebar state={state} />
-          <main className={`offer-content grid gap-spacing-exxxs rounded-radius-lg bg-base-surface-primary-block-normal ${state.view === "accepted" ? "offer-content--centered" : ""}`}>{content}</main>
+          <main
+            className={`offer-content grid gap-spacing-exxxs rounded-radius-lg bg-base-surface-primary-block-normal ${state.view === "accepted" ? "offer-content--centered" : ""}`}
+          >
+            {content}
+          </main>
         </div>
       </div>
       <DeclinePopup
@@ -66,8 +78,17 @@ export function OfferPage() {
         }}
       />
       <ParkingPopup open={parkingOpen} onClose={() => setParkingOpen(false)} />
-      <CodePopup target={state.lockedRequest} onSuccess={actions.unlockAndOpen} onClose={actions.cancelLocked} />
-      <ScenarioPanel current={state.scenario} onSelect={actions.setScenario} theme={theme} onToggleTheme={toggleTheme} />
+      <CodePopup
+        target={state.lockedRequest}
+        onSuccess={actions.unlockAndOpen}
+        onClose={actions.cancelLocked}
+      />
+      <ScenarioPanel
+        current={state.scenario}
+        onSelect={actions.setScenario}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
     </div>
   );
 }

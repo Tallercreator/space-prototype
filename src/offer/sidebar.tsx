@@ -18,24 +18,53 @@ function buildSteps(state: OfferState): { of: string; items: StepItem[] } {
     items: [
       { n: 1, title: "Анкета кандидата", active: false },
       { n: 2, title: "Оффер", active: !dated },
-      { n: 3, title: "Трудоустройство", caption: dated ? `Выход ${fmtDay(DEMO.startDate)} · парковка до ${fmtDay(DEMO.parkingDue)}` : undefined, active: dated },
+      {
+        n: 3,
+        title: "Трудоустройство",
+        caption: dated
+          ? `Выход ${fmtDay(DEMO.startDate)} · парковка до ${fmtDay(DEMO.parkingDue)}`
+          : undefined,
+        active: dated,
+      },
     ],
   };
 }
 
 /** Карточка рекрутера: имя, пояснение и контакты — телефон и почта кликабельны. */
-function PersonCard({ name, note, phone, email }: { name: string; note: string; phone: string; email: string }) {
+function PersonCard({
+  name,
+  note,
+  phone,
+  email,
+}: {
+  name: string;
+  note: string;
+  phone: string;
+  email: string;
+}) {
   return (
     <div className="grid gap-spacing-lg rounded-radius-lg bg-base-surface-tertiary-neutral-normal p-spacing-xl">
       <div className="grid gap-spacing-xs">
         <Typography.Body.TwoSB>{name}</Typography.Body.TwoSB>
-        <Typography.Body.ThreeR color="secondary">{note}</Typography.Body.ThreeR>
+        <Typography.Body.ThreeR color="secondary">
+          {note}
+        </Typography.Body.ThreeR>
       </div>
       <div className="grid justify-items-start gap-spacing-md">
-        <Link href={`tel:${phone.replace(/[^\d+]/g, "")}`} size="medium" color="black" leftIcon={<PhoneLine16Icon aria-hidden="true" />}>
+        <Link
+          href={`tel:${phone.replace(/[^\d+]/g, "")}`}
+          size="medium"
+          color="black"
+          leftIcon={<PhoneLine16Icon aria-hidden="true" />}
+        >
           {phone}
         </Link>
-        <Link href={`mailto:${email}`} size="medium" color="black" leftIcon={<MessageLine16Icon aria-hidden="true" />}>
+        <Link
+          href={`mailto:${email}`}
+          size="medium"
+          color="black"
+          leftIcon={<MessageLine16Icon aria-hidden="true" />}
+        >
           {email}
         </Link>
       </div>
@@ -59,27 +88,51 @@ export function Sidebar({ state }: { state: OfferState }) {
         </div>
         <ol className="m-0 grid list-none gap-spacing-xxl p-0">
           {steps.items.map((step) => (
-            <li key={step.n} className="flex items-center gap-spacing-lg" aria-current={step.active ? "step" : undefined}>
+            <li
+              key={step.n}
+              className="flex items-center gap-spacing-lg"
+              aria-current={step.active ? "step" : undefined}
+            >
               <span
                 className={`flex size-size-sm shrink-0 items-center justify-center rounded-radius-md ${
-                  step.active ? "bg-base-surface-primary-lime-normal text-universal-neutral-dark" : "bg-base-surface-secondary-standard-neutral-normal text-base-texticons-primary"
+                  step.active
+                    ? "bg-base-surface-primary-lime-normal text-universal-neutral-dark"
+                    : "bg-base-surface-secondary-standard-neutral-normal text-base-texticons-primary"
                 }`}
               >
-                <Typography.Body.ThreeM color="inherit">{step.n}</Typography.Body.ThreeM>
+                <Typography.Body.ThreeM color="inherit">
+                  {step.n}
+                </Typography.Body.ThreeM>
               </span>
               <span className="grid gap-spacing-xxs">
                 <Typography.Body.OneM>{step.title}</Typography.Body.OneM>
-                {step.caption ? <Typography.Caption.OneR color="tertiary">{step.caption}</Typography.Caption.OneR> : null}
+                {step.caption ? (
+                  <Typography.Caption.OneR color="tertiary">
+                    {step.caption}
+                  </Typography.Caption.OneR>
+                ) : null}
               </span>
             </li>
           ))}
         </ol>
       </div>
       <div className="grid gap-spacing-xl">
-        <Link href="#pdf-download" size="medium" color="black" className="justify-self-start" rightIcon={<UprightArrowLine16Icon aria-hidden="true" />} onClick={(e) => e.preventDefault()}>
+        <Link
+          href="#pdf-download"
+          size="medium"
+          color="black"
+          className="justify-self-start"
+          rightIcon={<UprightArrowLine16Icon aria-hidden="true" />}
+          onClick={(e) => e.preventDefault()}
+        >
           Скачать PDF-версию оффера
         </Link>
-        <PersonCard name={recruiter.name} note={recruiter.note} phone={recruiter.phone} email={recruiter.email} />
+        <PersonCard
+          name={recruiter.name}
+          note={recruiter.note}
+          phone={recruiter.phone}
+          email={recruiter.email}
+        />
       </div>
     </aside>
   );

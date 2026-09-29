@@ -12,7 +12,9 @@ function readInitial(): Theme {
   } catch {
     /* приватный режим */
   }
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
 }
 
 function apply(theme: Theme) {

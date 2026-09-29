@@ -1,8 +1,21 @@
 import { Button } from "@otp/space-ui-kit/button";
-import { Popup, PopupActionPanel, PopupContent, PopupHeader } from "@otp/space-ui-kit/popup";
+import {
+  Popup,
+  PopupActionPanel,
+  PopupContent,
+  PopupHeader,
+} from "@otp/space-ui-kit/popup";
 
 /** Подтверждение отклонения — необратимое действие. */
-export function DeclinePopup({ open, onClose, onConfirm }: { open: boolean; onClose: () => void; onConfirm: () => void }) {
+export function DeclinePopup({
+  open,
+  onClose,
+  onConfirm,
+}: {
+  open: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+}) {
   return (
     <Popup open={open} onClose={onClose}>
       <PopupContent>
@@ -14,7 +27,12 @@ export function DeclinePopup({ open, onClose, onConfirm }: { open: boolean; onCl
           closeLabel="Закрыть"
         />
         <PopupActionPanel>
-          <Button variant="secondary" tone="neutral" size="large" onClick={onClose}>
+          <Button
+            variant="secondary"
+            tone="neutral"
+            size="large"
+            onClick={onClose}
+          >
             Вернуться
           </Button>
           <Button tone="red" size="large" onClick={onConfirm}>
@@ -27,7 +45,13 @@ export function DeclinePopup({ open, onClose, onConfirm }: { open: boolean; onCl
 }
 
 /** Заглушка анкеты парковки (в прототипе не проектируется). */
-export function ParkingPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function ParkingPopup({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   return (
     <Popup open={open} onClose={onClose}>
       <PopupContent>

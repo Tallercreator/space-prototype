@@ -179,6 +179,10 @@ html.dark {
 .offer-culture__row2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+/* Масс: без Welcome pack — в третьем ряду две карточки */
+.offer-culture__row3--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 .offer-culture__card {
   position: relative;
   display: flex;

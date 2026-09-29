@@ -124,32 +124,6 @@ export const conditions: Condition[] = [
   },
 ];
 
-export type Benefit = { title: string; caption: string; image: string };
-
-export const benefits: Benefit[] = [
-  {
-    title: "ДМС со стоматологией",
-    caption: "С первого дня работы",
-    image: "b-dms",
-  },
-  { title: "Фитнес", caption: "Компенсация абонемента", image: "b-fitness" },
-  {
-    title: "Мобильная связь",
-    caption: "Корпоративный тариф",
-    image: "b-mobile",
-  },
-  {
-    title: "Страхование",
-    caption: "С первого дня работы",
-    image: "b-insurance",
-  },
-  {
-    title: "Зарплатная карта",
-    caption: "Премиальное обслуживание",
-    image: "b-card",
-  },
-];
-
 export const culture = {
   title: "Тебя ждёт в ОТП",
   subtitle: "Это есть у всех в банке — с первого дня и без условий",
