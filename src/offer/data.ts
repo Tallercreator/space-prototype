@@ -92,7 +92,7 @@ export const conditions: Condition[] = [
     value: "Москва, Метрополис, Ленинградское ш., 16А",
     icon: "pin",
   },
-  { label: "Формат работы", value: "Гибрид, 2 дня из дома", icon: "suitcase" },
+  { label: "Формат работы", value: "Гибрид", icon: "suitcase" },
   {
     label: "График",
     value: "9:00–18:00, в пятницу до 16:45, обед 45 минут",
@@ -103,7 +103,6 @@ export const conditions: Condition[] = [
     value: "31 день (28 основной + 3 дня за ненормированный график)",
     icon: "airplane",
   },
-  { label: "Занятость", value: "Основное место работы", icon: "user" },
   { label: "Испытательный срок", value: "3 месяца", icon: "calendar" },
   {
     label: "Цели\nна испытательный срок",
