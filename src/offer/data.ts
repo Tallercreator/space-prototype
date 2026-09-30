@@ -104,7 +104,6 @@ export const conditions: Condition[] = [
     icon: "airplane",
   },
   { label: "Занятость", value: "Основное место работы", icon: "user" },
-  { label: "Тип договора", value: "Бессрочный", icon: "document" },
   { label: "Испытательный срок", value: "3 месяца", icon: "calendar" },
   {
     label: "Цели\nна испытательный срок",
