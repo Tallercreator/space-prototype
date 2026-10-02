@@ -188,11 +188,6 @@ export const facts: Array<{
     text: "30+ лет\nна российском рынке",
     headline: "30+ лет\nна российском рынке",
   },
-  {
-    icon: "users",
-    text: "Более\n2 миллионов клиентов",
-    headline: "Более\n2 миллионов клиентов",
-  },
 ];
 
 export const legal =
