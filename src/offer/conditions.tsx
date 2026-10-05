@@ -1,3 +1,4 @@
+import { DocumentLine16Icon } from "@otp/space-ui-kit/icons/document-line-16";
 import { CalendarLine16Icon } from "@otp/space-ui-kit/icons/calendar-line-16";
 import { ClockLine16Icon } from "@otp/space-ui-kit/icons/clock-line-16";
 import { DocumentEmptyLine16Icon } from "@otp/space-ui-kit/icons/document-empty-line-16";
@@ -21,6 +22,7 @@ const ICONS: Record<
   user: UserLine16Icon,
   document: DocumentEmptyLine16Icon,
   calendar: CalendarLine16Icon,
+  structure: DocumentLine16Icon,
 };
 
 /** Список условий: подпись слева, значение с иконкой справа, разделители между строками. */

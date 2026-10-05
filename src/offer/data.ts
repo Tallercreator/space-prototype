@@ -80,13 +80,18 @@ export const salary = {
 };
 
 export type ConditionIcon =
-  "pin" | "suitcase" | "clock" | "airplane" | "user" | "document" | "calendar";
+  "pin" | "suitcase" | "clock" | "airplane" | "user" | "document" | "calendar" | "structure";
 
 export type Condition = { label: string; icon?: ConditionIcon } & (
   { value: string; items?: never } | { items: string[]; value?: never }
 );
 
 export const conditions: Condition[] = [
+  {
+    label: "Структура",
+    value: "Ведущий аналитик Отдел развития цифровых продуктов Центр развития цифровых продуктов Дирекция организационного развития бизнеса",
+    icon: "structure",
+  },
   {
     label: "Город и место работы",
     value: "Москва, Метрополис, Ленинградское ш., 16А",
