@@ -139,7 +139,7 @@ export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
             <img className="offer-salary__money" src={asset("money")} alt="" />
           </div>
           <div className="flex flex-col justify-between gap-spacing-xl rounded-radius-md bg-base-surface-secondary-standard-lime-normal p-spacing-lg">
-            <Typography.Body.OneM as="div">{bonus.amount}</Typography.Body.OneM>
+            <Typography.Title.TwoM as="div">{bonus.rate}</Typography.Title.TwoM>
             <Typography.Caption.OneR
               as="div"
               color="tertiary"
