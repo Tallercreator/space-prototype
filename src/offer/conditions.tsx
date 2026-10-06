@@ -8,8 +8,7 @@ import { SuitcaseLine16Icon } from "@otp/space-ui-kit/icons/suitcase-line-16";
 import { UserLine16Icon } from "@otp/space-ui-kit/icons/user-line-16";
 import { Typography } from "@otp/space-ui-kit/typography";
 
-import { conditionsForRole, offerRoles } from "./data";
-import { usePackage } from "./package";
+import { conditionsForRole } from "./data";
 import type { ConditionIcon } from "./data";
 
 const ICONS: Record<ConditionIcon, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
@@ -25,9 +24,8 @@ const ICONS: Record<ConditionIcon, React.ComponentType<React.SVGProps<SVGSVGElem
 
 /** Список условий: подпись слева, значение с иконкой справа, разделители между строками. */
 export function Conditions() {
-  const { segment } = usePackage();
-  const role = segment === "agile" || segment === "it" ? offerRoles.agile : offerRoles.nonAgile;
-  const rows = conditionsForRole(role.name);
+  // Штатная позиция в структуре не зависит от Agile-роли в баннере.
+  const rows = conditionsForRole("Ведущий эксперт");
   return (
     <section className="grid gap-spacing-exxxxs" aria-labelledby="conditions-title">
       <div className="grid gap-spacing-md">
