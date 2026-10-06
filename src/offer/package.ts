@@ -14,105 +14,98 @@ export const SEGMENTS: Array<{ id: Segment; label: string; hint: string }> = [
   { id: "it", label: "ИТ Agile", hint: "ИТ-команды · тёмная тема" },
 ];
 
-export type BenefitIcon =
-  | "car"
-  | "coins"
+export type BenefitImage =
+  | "dms"
+  | "fitness"
+  | "mobile"
+  | "life"
   | "card"
-  | "pharmacy"
-  | "users"
-  | "checkup"
-  | "percent"
-  | "shield"
-  | "insurance"
-  | "heart"
-  | "book";
+  | "insurance-blue"
+  | "car"
+  | "insurance-silver"
+  | "car-compensation"
+  | "dms-family"
+  | "checkup";
+export type InsuranceArtwork = "blue" | "silver";
 
 export type CatalogBenefit = {
   id: string;
   title: string;
   caption: string;
-  /** Иконка-заглушка, пока нет картинки `public/offer/b-<id>.webp`. */
-  icon: BenefitIcon;
-  /** Явный ключ картинки; по умолчанию ищется `b-<id>`. */
-  image?: string;
+  image: BenefitImage;
 };
 
-/** Каталог по макету «Льготы» (Figma 188-41853), порядок и тексты как там. Картинки — b-<id>.webp. */
+/** Полный каталог, Figma 188:41853. Два щита — оформление одной страховой льготы. */
 export const BENEFIT_CATALOG: CatalogBenefit[] = [
+  { id: "dms", title: "ДМС со стоматологией", caption: "После испытательного срока", image: "dms" },
   {
-    id: "dms",
+    id: "dms-first-month",
     title: "ДМС со стоматологией",
-    caption: "После испытательного срока",
-    icon: "pharmacy",
+    caption: "В первый месяц работы",
+    image: "dms",
   },
   {
     id: "fitness-alt",
-    title: "Фитнес вместо ДМС",
-    caption: "Компенсация абонемента",
-    icon: "heart",
+    title: "Фитнес",
+    caption: "Альтернатива на выбор вместо ДМС",
+    image: "fitness",
   },
   {
     id: "mobile",
-    title: "Мобильная связь",
-    caption: "Корпоративный тариф",
-    icon: "card",
+    title: "Корпоративная мобильная связь",
+    caption: "Тариф за счёт компании",
+    image: "mobile",
   },
   {
-    id: "insurance",
-    title: "Страхование",
-    caption: "С первого дня работы",
-    icon: "shield",
+    id: "fitness-club",
+    title: "Фитнес",
+    caption: "Выбор из каталога провайдеров",
+    image: "fitness",
   },
-  // В макете подпись «Корпоративный тариф» — похоже, скопирована от мобильной связи; оставлена прежняя
+  { id: "insurance", title: "Страхование жизни", caption: "В первый месяц работы", image: "life" },
   {
     id: "card",
-    title: "Зарплатная карта",
-    caption: "Премиальное обслуживание",
-    icon: "card",
+    title: "Премиальная зарплатная карта",
+    caption: "Специальные условия обслуживания",
+    image: "card",
   },
   {
-    id: "car",
-    title: "Корпоративный автомобиль\nи личный водитель",
-    caption: "Для рабочих поездок и встреч",
-    icon: "car",
+    id: "card-standard",
+    title: "Зарплатная карта",
+    caption: "Специальные условия обслуживания",
+    image: "card",
   },
   {
     id: "insurance-critical",
-    title: "Страхование от критических заболеваний",
-    caption: "Онкология и другие диагнозы",
-    icon: "shield",
+    title: "Дополнительная страховая защита",
+    caption: "Онкология и другие тяжёлые заболевания",
+    image: "insurance-blue",
   },
   {
-    id: "insurance-accident",
-    title: "Страхование от несчастных случаев",
-    caption: "С первого дня работы",
-    icon: "insurance",
+    id: "car",
+    title: "Корпоративный автомобиль\nс водителем",
+    caption: "Для рабочих поездок",
+    image: "car",
   },
   {
     id: "car-compensation",
     title: "Компенсация личного автомобиля",
     caption: "Топливо и обслуживание",
-    icon: "coins",
+    image: "car-compensation",
   },
   {
-    id: "fitness-club",
-    title: "Фитнес или спортивный клуб",
-    caption: "Оплата членства или занятий",
-    icon: "heart",
+    id: "dms-discount",
+    title: "ДМС для родственников со скидкой",
+    caption: "Специальные корпоративные условия",
+    image: "dms-family",
   },
   {
     id: "checkup",
-    title: "Чек-ап за счёт банка",
-    caption: "Ежегодное обследование",
-    icon: "checkup",
+    title: "Ежегодный медицинский чек-ап",
+    caption: "За счёт компании",
+    image: "checkup",
   },
-  // В макете подпись «Топливо и обслуживание» — скопирована от компенсации авто; поставлена по смыслу
-  {
-    id: "dms-discount",
-    title: "Скидка на ДМС\nдля родственников",
-    caption: "Корпоративные условия покупки",
-    icon: "percent",
-  },
+  { id: "parking", title: "Парковка", caption: "Парковочное место у офиса", image: "checkup" },
 ];
 
 /** Как показать регалии банка под баннером: карточки V1 или V2 (Figma 355-123184 до и после правки). */
@@ -128,6 +121,7 @@ export type BenefitsPackage = {
   culture: string[];
   facts: FactsVariant;
   variedBannerColors: boolean;
+  insuranceArtwork: InsuranceArtwork;
 };
 
 /** Малые карточки «Тебя ждёт в ОТП» (Figma «Карточка», Size=Vertical). */
@@ -222,6 +216,7 @@ export const DEFAULT_PACKAGE: BenefitsPackage = {
   culture: CULTURE_PRESETS.mass,
   facts: "cards2",
   variedBannerColors: false,
+  insuranceArtwork: "blue",
 };
 
 const KEY = "offer-package";
@@ -239,10 +234,22 @@ function sanitize(raw: unknown): BenefitsPackage {
     Array.isArray(list)
       ? list.filter((id): id is string => typeof id === "string" && ids.has(id))
       : fallback;
+  // Старый отдельный пункт со вторым щитом теперь вариант той же льготы.
+  const legacySilver = Array.isArray(p.benefits) && p.benefits.includes("insurance-accident");
+  const migratedBenefits = Array.isArray(p.benefits)
+    ? p.benefits.map((id) => (id === "insurance-accident" ? "insurance-critical" : id))
+    : p.benefits;
   return {
     segment,
+    insuranceArtwork:
+      p.insuranceArtwork === "silver" ||
+      (p.insuranceArtwork === undefined &&
+        legacySilver &&
+        !p.benefits?.includes("insurance-critical"))
+        ? "silver"
+        : "blue",
     variedBannerColors: p.variedBannerColors === true,
-    benefits: pick(p.benefits, IDS, DEFAULT_PACKAGE.benefits),
+    benefits: [...new Set(pick(migratedBenefits, IDS, DEFAULT_PACKAGE.benefits))],
     culture: pick(p.culture, CULTURE_IDS, CULTURE_PRESETS[segment]),
     facts: FACTS_VARIANTS.some((v) => v.id === p.facts)
       ? (p.facts as FactsVariant)
@@ -299,5 +306,9 @@ export function usePackage(): BenefitsPackage {
 
 /** Выбранные льготы в порядке каталога. */
 export function selectedBenefits(pkg: BenefitsPackage): CatalogBenefit[] {
-  return BENEFIT_CATALOG.filter((b) => pkg.benefits.includes(b.id));
+  return BENEFIT_CATALOG.filter((b) => pkg.benefits.includes(b.id)).map((b) =>
+    b.id === "insurance-critical" && pkg.insuranceArtwork === "silver"
+      ? { ...b, image: "insurance-silver" }
+      : b,
+  );
 }

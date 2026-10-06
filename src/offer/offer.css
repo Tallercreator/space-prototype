@@ -313,12 +313,38 @@ html.dark {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--ui-spacing-xxxl);
 }
-/* Иконка вписана в плитку с полями ~10px, как в макете: ничего не обрезается. */
+/* Позиции исходных изображений в плитке 64×64 из Figma. */
 .offer-benefits__img {
+  position: absolute;
   width: 100%;
   height: 100%;
-  padding: 10px;
-  object-fit: contain;
+  left: 0;
+  top: 0;
+}
+.offer-benefits__img--dms,
+.offer-benefits__img--fitness {
+  width: 58.56%;
+  height: 69.62%;
+  left: 20.94%;
+  top: 15.19%;
+}
+.offer-benefits__img--mobile {
+  width: 85.76%;
+  height: 80.27%;
+  left: 7.47%;
+  top: 9.65%;
+}
+.offer-benefits__img--card {
+  width: 67.17%;
+  height: 47.92%;
+  left: 16.42%;
+  top: 25.84%;
+}
+.offer-benefits__img--car {
+  width: 81.32%;
+  height: 81.32%;
+  left: 9.34%;
+  top: 10.94%;
 }
 
 /* ---------- культура (Figma 325-39395) ---------- */
@@ -709,4 +735,11 @@ html.dark {
     line-height: var(--ui-line-height-26);
     letter-spacing: var(--ui-tracking-normal);
   }
+}
+
+/* Модалка каталога льгот: все варианты доступны и на телефоне. */
+.offer-package-popup {
+  min-width: 0;
+  width: min(560px, calc(100vw - 32px));
+  max-height: min(700px, calc(100dvh - 32px));
 }

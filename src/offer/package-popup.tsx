@@ -22,7 +22,8 @@ import {
   setPackage,
   usePackage,
 } from "./package";
-import type { BenefitsPackage, Segment } from "./package";
+import { BenefitTile } from "./benefit-tile";
+import type { BenefitsPackage, Segment, InsuranceArtwork } from "./package";
 
 /** Модалка модератора: сегмент кандидата и набор льгот. Монтируется заново на каждое открытие — черновик всегда свежий. */
 export function PackagePopup({ onClose }: { onClose: () => void }) {
@@ -46,7 +47,7 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
 
   return (
     <Popup open onClose={onClose}>
-      <PopupContent>
+      <PopupContent className="offer-package-popup">
         <PopupHeader
           type="title"
           title="Пакет льгот"
@@ -55,7 +56,7 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
           closeLabel="Закрыть"
         />
         <PopupBody className="grid gap-spacing-xxxl">
-          <fieldset className="m-0 grid gap-spacing-md border-0 p-0">
+          <fieldset className="m-0 grid min-w-0 gap-spacing-md border-0 p-0">
             <Typography.Body.TwoSB as="legend" className="p-0">
               Шаблон по сегменту
             </Typography.Body.TwoSB>
@@ -79,7 +80,7 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
               ))}
             </RadioGroup>
           </fieldset>
-          <fieldset className="m-0 grid gap-spacing-md border-0 p-0">
+          <fieldset className="m-0 grid min-w-0 gap-spacing-md border-0 p-0">
             <Typography.Body.TwoSB as="legend" className="p-0">
               Тебя ждёт в ОТП
             </Typography.Body.TwoSB>
@@ -100,7 +101,7 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
               ))}
             </div>
           </fieldset>
-          <fieldset className="m-0 grid gap-spacing-md border-0 p-0">
+          <fieldset className="m-0 grid min-w-0 gap-spacing-md border-0 p-0">
             <Typography.Body.TwoSB as="legend" className="p-0">
               Льготы и привилегии
             </Typography.Body.TwoSB>
@@ -117,6 +118,33 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
                 </CheckboxCell>
               ))}
             </div>
+            {draft.benefits.includes("insurance-critical") ? (
+              <fieldset className="m-0 grid min-w-0 gap-spacing-md border-0 p-0">
+                <Typography.Caption.OneM as="legend" color="tertiary" className="p-0">
+                  Иконка дополнительной страховой защиты
+                </Typography.Caption.OneM>
+                <RadioGroup
+                  value={draft.insuranceArtwork}
+                  onValueChange={(value) =>
+                    setDraft((d) => ({ ...d, insuranceArtwork: value as InsuranceArtwork }))
+                  }
+                  className="flex flex-wrap gap-spacing-xl"
+                >
+                  {(["blue", "silver"] as const).map((variant) => (
+                    <label
+                      key={variant}
+                      className="flex cursor-pointer items-center gap-spacing-md"
+                    >
+                      <Radio value={variant} tone="lime" />
+                      <BenefitTile image={`insurance-${variant}`} />
+                      <Typography.Body.ThreeR>
+                        {variant === "blue" ? "Голубой щит" : "Серебристый щит"}
+                      </Typography.Body.ThreeR>
+                    </label>
+                  ))}
+                </RadioGroup>
+              </fieldset>
+            ) : null}
           </fieldset>
         </PopupBody>
         <PopupActionPanel>
