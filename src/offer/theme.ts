@@ -12,9 +12,7 @@ function readInitial(): Theme {
   } catch {
     /* приватный режим */
   }
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 function apply(theme: Theme) {
@@ -25,23 +23,24 @@ function apply(theme: Theme) {
  * Тема прототипа: класс `dark` на <html> переключает токены кита.
  * Источник по приоритету: ?theme=dark|light → localStorage → системная настройка.
  */
-export function useTheme(): [Theme, () => void] {
-  const [theme, setTheme] = React.useState<Theme>(() => {
-    const initial = readInitial();
-    apply(initial);
-    return initial;
-  });
+export function useTheme(forcedTheme?: Theme): [Theme, () => void] {
+  const [preference, setPreference] = React.useState<Theme>(readInitial);
+  const theme = forcedTheme ?? preference;
+
+  // Synchronize the document before paint; forced themes never overwrite the preference.
+  React.useLayoutEffect(() => {
+    apply(theme);
+  }, [theme]);
+
   const toggle = React.useCallback(() => {
-    setTheme((t) => {
-      const next: Theme = t === "dark" ? "light" : "dark";
-      apply(next);
-      try {
-        localStorage.setItem(KEY, next);
-      } catch {
-        /* приватный режим */
-      }
-      return next;
-    });
-  }, []);
+    if (forcedTheme) return;
+    const next: Theme = preference === "dark" ? "light" : "dark";
+    setPreference(next);
+    try {
+      localStorage.setItem(KEY, next);
+    } catch {
+      /* приватный режим */
+    }
+  }, [forcedTheme, preference]);
   return [theme, toggle];
 }

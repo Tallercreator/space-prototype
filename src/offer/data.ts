@@ -109,6 +109,15 @@ export const hoSalary = {
   },
 };
 
+/** Agile и ИТ Agile: квартальная премия, Figma 418:46802 / 418:52236. */
+export const agileSalary = {
+  ...massSalary,
+  bonusDetailed: {
+    ...salary.bonusDetailed,
+    note: "*Бонус выплачивается 1 раз в квартал.\nФактическая выплата зависит от достигнутых результатов",
+  },
+};
+
 export type ConditionIcon =
   | "pin"
   | "suitcase"

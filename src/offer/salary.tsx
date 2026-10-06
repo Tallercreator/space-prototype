@@ -1,6 +1,6 @@
 import { Typography } from "@otp/space-ui-kit/typography";
 
-import { asset, salary, massSalary, hoSalary } from "./data";
+import { asset, salary, massSalary, hoSalary, agileSalary } from "./data";
 import { usePackage } from "./package";
 
 function Part({ value, caption, note }: { value: string; caption: string; note?: string }) {
@@ -85,7 +85,11 @@ function Formula({
         </div>
       </div>
       {note ? (
-        <Typography.Caption.OneR as="p" color="tertiary" className="offer-salary__note m-0">
+        <Typography.Caption.OneR
+          as="p"
+          color="tertiary"
+          className="offer-salary__note m-0 whitespace-pre-line"
+        >
           {note}
         </Typography.Caption.OneR>
       ) : null}
@@ -99,8 +103,8 @@ export type SalaryMode = "default" | "formula";
 /** Блок дохода: плитки суммы/премии и формула «из чего складывается». */
 export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
   const { segment } = usePackage();
-  const detailed = segment === "mass" || segment === "ho";
-  const content = segment === "ho" ? hoSalary : segment === "mass" ? massSalary : salary;
+  const detailed = true;
+  const content = segment === "ho" ? hoSalary : segment === "mass" ? massSalary : agileSalary;
   const bonus = content.bonusDetailed;
   const Caption = detailed ? Typography.Caption.OneM : Typography.Caption.OneR;
   return (

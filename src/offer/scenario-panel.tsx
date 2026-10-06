@@ -89,16 +89,20 @@ export function ScenarioPanel({
       ) : null}
       {pkgOpen ? <PackagePopup onClose={() => setPkgOpen(false)} /> : null}
       <div className="flex items-center gap-spacing-md">
-        <IconButton
-          variant="secondary"
-          tone="specialBlack"
-          size="small"
-          aria-label={theme === "dark" ? "Включить светлую тему" : "Включить тёмную тему"}
-          aria-pressed={theme === "dark"}
-          onClick={onToggleTheme}
-        >
-          <LightbulbLine24Icon aria-hidden="true" />
-        </IconButton>
+        {pkg.segment === "it" ? (
+          <Typography.Caption.OneR color="tertiary">ИТ Agile · тёмная тема</Typography.Caption.OneR>
+        ) : (
+          <IconButton
+            variant="secondary"
+            tone="specialBlack"
+            size="small"
+            aria-label={theme === "dark" ? "Включить светлую тему" : "Включить тёмную тему"}
+            aria-pressed={theme === "dark"}
+            onClick={onToggleTheme}
+          >
+            <LightbulbLine24Icon aria-hidden="true" />
+          </IconButton>
+        )}
         <Button
           variant="secondary"
           tone="specialBlack"

@@ -19,8 +19,8 @@ import { useTheme } from "./theme";
 /** Страница оффера кандидата: баннер, сайдбар с шагами и контент по сценарию. */
 export function OfferPage() {
   const { state, actions } = useOfferState();
-  const [theme, toggleTheme] = useTheme();
   const { segment } = usePackage();
+  const [theme, toggleTheme] = useTheme(segment === "it" ? "dark" : undefined);
   const [declineOpen, setDeclineOpen] = React.useState(false);
   const kind = offerKind(state.scenario);
 

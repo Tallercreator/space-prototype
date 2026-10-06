@@ -29,17 +29,12 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
   const saved = usePackage();
   const [draft, setDraft] = React.useState<BenefitsPackage>(saved);
 
-  const toggleIn = (
-    key: "benefits" | "culture",
-    id: string,
-    checked: boolean,
-  ) =>
+  const toggleIn = (key: "benefits" | "culture", id: string, checked: boolean) =>
     setDraft((d) => ({
       ...d,
       [key]: checked ? [...d[key], id] : d[key].filter((b) => b !== id),
     }));
-  const toggle = (id: string, checked: boolean) =>
-    toggleIn("benefits", id, checked);
+  const toggle = (id: string, checked: boolean) => toggleIn("benefits", id, checked);
   /** Шаблон: сегмент задаёт набор карточек «Тебя ждёт в ОТП», дальше его можно подправить руками. */
   const applyTemplate = (segment: Segment) =>
     setDraft((d) => ({ ...d, segment, culture: CULTURE_PRESETS[segment] }));
@@ -65,9 +60,8 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
               Шаблон по сегменту
             </Typography.Body.TwoSB>
             <Typography.Caption.OneR color="tertiary">
-              Задаёт набор карточек «Тебя ждёт в ОТП» по таблице: обучение и
-              Welcome pack только у ГО и ИТ, у ИТ вместо внутреннего обучения —
-              IT Academy
+              Задаёт набор карточек «Тебя ждёт в ОТП»: у ГО — внутреннее обучение, у Agile и ИТ
+              Agile — IT Academy и гибкий график. ИТ Agile всегда в тёмной теме.
             </Typography.Caption.OneR>
             <RadioGroup
               value={draft.segment}
@@ -75,16 +69,11 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
               className="flex flex-wrap gap-spacing-xxxl"
             >
               {SEGMENTS.map((s) => (
-                <label
-                  key={s.id}
-                  className="flex cursor-pointer items-center gap-spacing-sm"
-                >
+                <label key={s.id} className="flex cursor-pointer items-center gap-spacing-sm">
                   <Radio value={s.id} tone="lime" />
                   <span className="grid">
                     <Typography.Body.ThreeM>{s.label}</Typography.Body.ThreeM>
-                    <Typography.Caption.TwoR color="tertiary">
-                      {s.hint}
-                    </Typography.Caption.TwoR>
+                    <Typography.Caption.TwoR color="tertiary">{s.hint}</Typography.Caption.TwoR>
                   </span>
                 </label>
               ))}
@@ -95,8 +84,7 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
               Тебя ждёт в ОТП
             </Typography.Body.TwoSB>
             <Typography.Caption.OneR color="tertiary">
-              Коины, кредиты и BestBenefits есть всегда; малые карточки — по
-              выбору
+              Коины, кредиты и BestBenefits есть всегда; малые карточки — по выбору
             </Typography.Caption.OneR>
             <div className="grid">
               {CULTURE_CARDS.map((c) => (
@@ -104,9 +92,7 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
                   key={c.id}
                   tone="lime"
                   checked={draft.culture.includes(c.id)}
-                  onCheckedChange={(checked) =>
-                    toggleIn("culture", c.id, checked)
-                  }
+                  onCheckedChange={(checked) => toggleIn("culture", c.id, checked)}
                   description={c.caption.replace("\n", " ")}
                 >
                   {c.id === "study" ? STUDY_TITLE[draft.segment] : c.title}

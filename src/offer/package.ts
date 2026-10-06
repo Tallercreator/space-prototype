@@ -5,12 +5,13 @@ import * as React from "react";
  * Хранится в localStorage, живёт поверх сценариев (сценарий меняет статус оффера, пакет — содержимое блоков).
  * Источник: таблица «Блок × Масс/ГО/ИТ» + список «Льготы и привилегии» (12 позиций).
  */
-export type Segment = "mass" | "ho" | "it";
+export type Segment = "mass" | "ho" | "agile" | "it";
 
 export const SEGMENTS: Array<{ id: Segment; label: string; hint: string }> = [
   { id: "mass", label: "Масс", hint: "массовые позиции" },
   { id: "ho", label: "ГО", hint: "головной офис" },
-  { id: "it", label: "ИТ", hint: "ИТ-позиции" },
+  { id: "agile", label: "Agile", hint: "Agile-команды" },
+  { id: "it", label: "ИТ Agile", hint: "ИТ-команды · тёмная тема" },
 ];
 
 export type BenefitIcon =
@@ -140,6 +141,7 @@ export type CultureCard = {
 export const STUDY_TITLE: Record<Segment, string> = {
   mass: "Обучение для сотрудников",
   ho: "Внутреннее обучение",
+  agile: "IT Academy",
   it: "IT Academy",
 };
 
@@ -180,31 +182,37 @@ export const CULTURE_CARDS: CultureCard[] = [
 export const CULTURE_PRESETS: Record<Segment, string[]> = {
   mass: ["sport", "style"],
   ho: ["sport", "study", "welcome", "style"],
-  it: ["sport", "study", "welcome", "style"],
+  agile: ["welcome", "study", "style", "sport", "flex"],
+  it: ["welcome", "study", "style", "sport", "flex"],
 };
 
 /** Карточки с учётом шаблона: подставляет заголовок обучения по сегменту. */
 export function cultureCards(pkg: BenefitsPackage): CultureCard[] {
-  return CULTURE_CARDS.filter((c) => pkg.culture.includes(c.id)).map((c) => {
-    if (c.id === "study")
-      return {
-        ...c,
-        title: STUDY_TITLE[pkg.segment],
-        caption: pkg.segment === "ho" ? "Прокачай свои soft и hard skills" : c.caption,
-      };
-    if (pkg.segment !== "it" && c.id === "sport")
-      return {
-        ...c,
-        caption:
-          "По интересам, профессиональные и спортивные — мы за здоровый образ жизни, поддержим твое хобби и твои профессиональные амбиции",
-      };
-    if (pkg.segment !== "it" && c.id === "style")
-      return {
-        ...c,
-        caption: "Любим худи и удобные джинсы",
-      };
-    return c;
-  });
+  const order = [...CULTURE_PRESETS[pkg.segment], ...CULTURE_CARDS.map((c) => c.id)];
+  return CULTURE_CARDS.filter((c) => pkg.culture.includes(c.id))
+    .sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id))
+    .map((c) => {
+      if (c.id === "study")
+        return {
+          ...c,
+          title: STUDY_TITLE[pkg.segment],
+          caption: "Прокачай свои soft и hard skills",
+        };
+      if (c.id === "sport")
+        return {
+          ...c,
+          caption:
+            "По интересам, профессиональные и спортивные — мы за здоровый образ жизни, поддержим твое хобби и твои профессиональные амбиции",
+        };
+      if (c.id === "style")
+        return {
+          ...c,
+          caption: "Любим худи и удобные джинсы",
+        };
+      if ((pkg.segment === "agile" || pkg.segment === "it") && c.id === "flex")
+        return { ...c, caption: "По согласованию с руководителем" };
+      return c;
+    });
 }
 
 export const DEFAULT_PACKAGE: BenefitsPackage = {
@@ -274,7 +282,7 @@ export function selectTemplate(segment: Segment): void {
     ...current,
     segment,
     culture: CULTURE_PRESETS[segment],
-    facts: segment !== "it" ? "cards2" : current.facts,
+    facts: "cards2",
   });
 }
 

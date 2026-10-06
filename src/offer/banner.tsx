@@ -11,6 +11,7 @@ import type { OfferKind } from "./data";
 /** Баннер-приглашение: фон — экспорт из Figma без текста, поверх — лого, тост и заголовок. */
 export function Banner({ kind }: { kind: OfferKind }) {
   const { segment } = usePackage();
+  const agile = (segment === "agile" || segment === "it") && kind === "structured";
   const position =
     segment === "ho" && kind === "structured"
       ? { ...positions[kind], title: "Ведущего эксперта" }
@@ -43,15 +44,29 @@ export function Banner({ kind }: { kind: OfferKind }) {
         <div className="offer-banner__toast rounded-radius-sm bg-universal-neutral-white px-spacing-md py-spacing-xs">
           <Typography.Body.ThreeM color="inherit">Все будет ОТП</Typography.Body.ThreeM>
         </div>
-        <div className="offer-banner__text grid gap-spacing-lg justify-items-center text-center">
+        <div
+          className={`offer-banner__text ${agile ? "offer-banner__text--agile" : ""} grid gap-spacing-lg justify-items-center text-center`}
+        >
           <Typography.Promo.FourM as="h1" color="inherit" className="offer-banner__title m-0">
-            {candidate.firstName}, мы приглашаем тебя
-            <br />
-            на позицию {position.title}
+            {agile ? (
+              <>
+                {candidate.firstName}, приглашаем тебя
+                <br />
+                на роль Ведущего аналитика в HR Tech
+              </>
+            ) : (
+              <>
+                {candidate.firstName}, мы приглашаем тебя
+                <br />
+                на позицию {position.title}
+              </>
+            )}
           </Typography.Promo.FourM>
-          <Typography.Body.ThreeR as="p" color="inherit" className="offer-banner__subtitle m-0">
-            {position.department}
-          </Typography.Body.ThreeR>
+          {!agile && (
+            <Typography.Body.ThreeR as="p" color="inherit" className="offer-banner__subtitle m-0">
+              {position.department}
+            </Typography.Body.ThreeR>
+          )}
         </div>
       </div>
       <FactsRow />

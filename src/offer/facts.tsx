@@ -6,7 +6,7 @@ import { PlanetLine24Icon } from "@otp/space-ui-kit/icons/planet-line-24";
 import { UsersLine24Icon } from "@otp/space-ui-kit/icons/users-line-24";
 import { Typography } from "@otp/space-ui-kit/typography";
 
-import { facts, massFacts } from "./data";
+import { massFacts } from "./data";
 import type { FactIcon } from "./data";
 import { usePackage } from "./package";
 
@@ -40,7 +40,7 @@ const ICONS: Record<FactIcon, React.ComponentType<React.SVGProps<SVGSVGElement>>
 export function FactsRow() {
   const pkg = usePackage();
   const variant = pkg.facts;
-  const items = pkg.segment !== "it" ? massFacts : facts;
+  const items = massFacts;
   const v2 = variant === "cards2";
   return (
     <ul
@@ -80,7 +80,9 @@ export function FactsRow() {
               <Typography.Caption.TwoR color="disabled">{f.footer}</Typography.Caption.TwoR>
             ) : f.source ? (
               v2 ? (
-                <Typography.Caption.TwoR color="disabled">({f.source})</Typography.Caption.TwoR>
+                <Typography.Caption.TwoR color="disabled">
+                  {pkg.segment === "agile" || pkg.segment === "it" ? f.source : `(${f.source})`}
+                </Typography.Caption.TwoR>
               ) : (
                 <Typography.Caption.OneR color="tertiary">({f.source})</Typography.Caption.OneR>
               )

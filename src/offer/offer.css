@@ -511,34 +511,41 @@ html.dark {
 }
 
 /* Шаблон «Масс», Figma 418:52718. */
-:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__tiles {
+:is(.offer-salary--mass, .offer-salary--ho, .offer-salary--agile, .offer-salary--it)
+  .offer-salary__tiles {
   grid-template-columns: minmax(0, 1fr) 175px;
   align-items: center;
 }
-:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__main {
+:is(.offer-salary--mass, .offer-salary--ho, .offer-salary--agile, .offer-salary--it)
+  .offer-salary__main {
   min-height: 100px;
 }
-:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__bonus {
+:is(.offer-salary--mass, .offer-salary--ho, .offer-salary--agile, .offer-salary--it)
+  .offer-salary__bonus {
   height: 98px;
   gap: var(--ui-spacing-md);
 }
-:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__main-caption {
+:is(.offer-salary--mass, .offer-salary--ho, .offer-salary--agile, .offer-salary--it)
+  .offer-salary__main-caption {
   max-width: 340px;
 }
-:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__money {
+:is(.offer-salary--mass, .offer-salary--ho, .offer-salary--agile, .offer-salary--it)
+  .offer-salary__money {
   width: 138px;
   height: 138px;
   top: auto;
   bottom: -40px;
   right: 0;
 }
-:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__part {
+:is(.offer-salary--mass, .offer-salary--ho, .offer-salary--agile, .offer-salary--it)
+  .offer-salary__part {
   gap: var(--ui-spacing-xs);
 }
-:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__part-note {
+:is(.offer-salary--mass, .offer-salary--ho, .offer-salary--agile, .offer-salary--it)
+  .offer-salary__part-note {
   margin-top: calc(-1 * var(--ui-spacing-xs));
 }
-:is(.offer-salary--mass, .offer-salary--ho) .offer-pill {
+:is(.offer-salary--mass, .offer-salary--ho, .offer-salary--agile, .offer-salary--it) .offer-pill {
   height: 20px;
   padding-block: 0;
 }
@@ -576,17 +583,24 @@ html.dark {
   width: 100%;
   height: 100%;
 }
-:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__note {
+:is(.offer-salary--mass, .offer-salary--ho, .offer-salary--agile, .offer-salary--it)
+  .offer-salary__note {
   margin-top: calc(-1 * var(--ui-spacing-xs));
 }
-:is(.offer-page--mass, .offer-page--ho) .offer-conditions__list {
+:is(.offer-page--mass, .offer-page--ho, .offer-page--agile, .offer-page--it)
+  .offer-conditions__list {
   padding-left: 24px;
 }
-:is(.offer-page--mass, .offer-page--ho) .offer-conditions__list li::marker {
+:is(.offer-page--mass, .offer-page--ho, .offer-page--agile, .offer-page--it)
+  .offer-conditions__list
+  li::marker {
   color: var(--ui-base-border-standard-neutral-normal);
 }
-:is(.offer-page--mass, .offer-page--ho) .offer-conditions__row:has(.offer-conditions__icon),
-:is(.offer-page--mass, .offer-page--ho) .offer-conditions__row:has(.offer-conditions__icon) dd {
+:is(.offer-page--mass, .offer-page--ho, .offer-page--agile, .offer-page--it)
+  .offer-conditions__row:has(.offer-conditions__icon),
+:is(.offer-page--mass, .offer-page--ho, .offer-page--agile, .offer-page--it)
+  .offer-conditions__row:has(.offer-conditions__icon)
+  dd {
   align-items: center;
 }
 .offer-page--mass .offer-culture__small {
@@ -598,13 +612,16 @@ html.dark {
   overflow-y: auto;
 }
 @media (max-width: 767px) {
-  :is(.offer-salary--mass, .offer-salary--ho) .offer-salary__tiles {
+  :is(.offer-salary--mass, .offer-salary--ho, .offer-salary--agile, .offer-salary--it)
+    .offer-salary__tiles {
     grid-template-columns: minmax(0, 1fr);
   }
-  :is(.offer-salary--mass, .offer-salary--ho) .offer-salary__main-caption {
+  :is(.offer-salary--mass, .offer-salary--ho, .offer-salary--agile, .offer-salary--it)
+    .offer-salary__main-caption {
     max-width: calc(100% - 68px);
   }
-  :is(.offer-page--mass, .offer-page--ho) .offer-conditions__row:has(.offer-conditions__icon) {
+  :is(.offer-page--mass, .offer-page--ho, .offer-page--agile, .offer-page--it)
+    .offer-conditions__row:has(.offer-conditions__icon) {
     align-items: start;
   }
 }
@@ -639,4 +656,49 @@ html.dark {
   height: 132.26%;
   left: -27.36%;
   top: -16.13%;
+}
+
+/* Agile: три компактные карточки и две широкие, Figma 418:59138 / 418:52651. */
+.offer-banner__text--agile {
+  width: min(900px, calc(100% - 48px));
+}
+.offer-culture__small--compact {
+  min-height: 128px;
+}
+.offer-culture__small--compact .offer-culture__img {
+  width: 40px;
+  height: 40px;
+}
+.offer-culture__small--compact .offer-culture__art--welcome {
+  width: 30px;
+  height: 34px;
+  left: 5px;
+  top: 3px;
+}
+.offer-culture__small--compact .offer-culture__art--study {
+  width: 27px;
+  height: 36px;
+  left: 7px;
+  top: 2px;
+}
+.offer-culture__small--compact .offer-culture__art--style {
+  width: 40px;
+  height: 31px;
+  left: 0;
+  top: 4px;
+  mask-image: url("../../public/offer/c-agile-style-mask.svg");
+  mask-size: 38.75px 31.323px;
+  mask-position: 1px 0;
+}
+.offer-culture__art--flex {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  left: 2px;
+  top: 2px;
+}
+.offer-culture__art--flex img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
