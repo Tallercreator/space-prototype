@@ -18,10 +18,7 @@ export type OfferKind = "structured" | "pdf";
 
 export const candidate = { firstName: "Елена", fullName: "Елена Иванова" };
 
-export const positions: Record<
-  OfferKind,
-  { title: string; department: string }
-> = {
+export const positions: Record<OfferKind, { title: string; department: string }> = {
   structured: {
     title: "Ведущего аналитика",
     department: "Дирекция управления персоналом и цифровизации HR",
@@ -79,17 +76,44 @@ export const salary = {
   ],
 };
 
+/** Шаблон «Масс non-Agile», Figma 418:55076. Демонстрационные значения из макета. */
+export const massSalary = {
+  ...salary,
+  taxNote: "Все суммы указаны в гросс (до вычета налога)",
+  parts: [
+    { value: "64 108 ₽", caption: "фиксированный\nоклад" },
+    { value: "15 700 ₽", caption: "надбавка\nза объем работ" },
+    { value: "15 700 ₽", caption: "гарант новичка", note: "на первые 3 месяца работы" },
+  ],
+  bonusDetailed: {
+    rate: "Система\nпремирования*",
+    caption: "Ежемесячная премия",
+    formulaTitle: "Как считается премия",
+    parts: [{ value: "64 108 ₽", caption: "фиксированный\nоклад" }],
+    note: "*Фактическая выплата зависит от достигнутых результатов",
+  },
+};
+
 export type ConditionIcon =
-  "pin" | "suitcase" | "clock" | "airplane" | "user" | "document" | "calendar" | "structure";
+  | "pin"
+  | "suitcase"
+  | "clock"
+  | "airplane"
+  | "user"
+  | "document"
+  | "calendar"
+  | "structure";
 
 export type Condition = { label: string; icon?: ConditionIcon } & (
-  { value: string; items?: never } | { items: string[]; value?: never }
+  | { value: string; items?: never }
+  | { items: string[]; value?: never }
 );
 
 export const conditions: Condition[] = [
   {
     label: "Структура",
-    value: "Ведущий аналитик Отдел развития цифровых продуктов Центр развития цифровых продуктов Дирекция организационного развития бизнеса",
+    value:
+      "Ведущий аналитик Отдел развития цифровых продуктов Центр развития цифровых продуктов Дирекция организационного развития бизнеса",
     icon: "structure",
   },
   {
@@ -130,6 +154,17 @@ export const conditions: Condition[] = [
   },
 ];
 
+export const massConditions: Condition[] = conditions.map((row) =>
+  row.label === "Структура"
+    ? {
+        label: row.label,
+        icon: row.icon,
+        value:
+          "Ведущий эксперт; Отдел развития цифровых продуктов; Центр развития цифровых продуктов;\nДирекция организационного развития бизнеса",
+      }
+    : row,
+);
+
 /** «Тебя ждёт в ОТП» (Figma 325-39395): три больших карточки фиксированы, малые — из пакета (см. package.ts). */
 export const culture = {
   title: "Тебя ждёт в ОТП",
@@ -168,6 +203,7 @@ export const facts: Array<{
   headline: string;
   detail?: string;
   source?: string;
+  footer?: string;
 }> = [
   {
     icon: "trophy",
@@ -197,8 +233,14 @@ export const facts: Array<{
   },
 ];
 
-export const legal =
-  "Принятие оффера не является подписанием трудового договора";
+/** Регалии в шаблоне «Масс», Figma 418:55000. */
+export const massFacts: typeof facts = facts.map((fact, index) => ({
+  ...fact,
+  icon: index < 3 ? "trophy" : fact.icon,
+  ...(index === 3 ? { footer: "Широкое присутствие в регионах России" } : {}),
+}));
+
+export const legal = "Принятие оффера не является подписанием трудового договора";
 
 const MONTHS = [
   "января",

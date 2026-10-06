@@ -7,7 +7,7 @@ import { LightbulbLine24Icon } from "@otp/space-ui-kit/icons/lightbulb-line-24";
 import { Typography } from "@otp/space-ui-kit/typography";
 
 import { PackagePopup } from "./package-popup";
-import { FACTS_VARIANTS, setPackage, usePackage } from "./package";
+import { FACTS_VARIANTS, SEGMENTS, selectTemplate, setPackage, usePackage } from "./package";
 import { SCENARIOS } from "./state";
 import type { Scenario } from "./state";
 import type { Theme } from "./theme";
@@ -32,11 +32,25 @@ export function ScenarioPanel({
     <div className="offer-scenarios fixed grid justify-items-end gap-spacing-md">
       {open ? (
         <div className="offer-scenarios__panel grid gap-spacing-lg rounded-radius-lg bg-base-surface-primary-block-normal p-spacing-xl">
+          <div className="grid gap-spacing-md" role="group" aria-label="Шаблон оффера">
+            <Typography.Caption.OneM color="tertiary">Шаблон оффера</Typography.Caption.OneM>
+            <div className="flex flex-wrap gap-spacing-sm">
+              {SEGMENTS.map((segment) => (
+                <Chip
+                  key={segment.id}
+                  size="small"
+                  selected={pkg.segment === segment.id}
+                  aria-pressed={pkg.segment === segment.id}
+                  onClick={() => selectTemplate(segment.id)}
+                >
+                  {segment.label}
+                </Chip>
+              ))}
+            </div>
+          </div>
           {(["А", "Б"] as const).map((group) => (
             <div key={group} className="grid gap-spacing-md">
-              <Typography.Caption.OneM color="tertiary">
-                Сценарий {group}
-              </Typography.Caption.OneM>
+              <Typography.Caption.OneM color="tertiary">Сценарий {group}</Typography.Caption.OneM>
               <div className="flex flex-wrap gap-spacing-sm">
                 {SCENARIOS.filter((s) => s.group === group).map((s) => (
                   <Chip
@@ -52,9 +66,7 @@ export function ScenarioPanel({
             </div>
           ))}
           <div className="grid gap-spacing-md">
-            <Typography.Caption.OneM color="tertiary">
-              Содержимое
-            </Typography.Caption.OneM>
+            <Typography.Caption.OneM color="tertiary">Содержимое</Typography.Caption.OneM>
             <div className="flex flex-wrap gap-spacing-sm">
               <Chip size="small" onClick={() => setPkgOpen(true)}>
                 {`Пакет льгот · ${pkg.benefits.length}`}
@@ -81,9 +93,7 @@ export function ScenarioPanel({
           variant="secondary"
           tone="specialBlack"
           size="small"
-          aria-label={
-            theme === "dark" ? "Включить светлую тему" : "Включить тёмную тему"
-          }
+          aria-label={theme === "dark" ? "Включить светлую тему" : "Включить тёмную тему"}
           aria-pressed={theme === "dark"}
           onClick={onToggleTheme}
         >

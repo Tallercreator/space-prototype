@@ -3,7 +3,7 @@ import { Typography } from "@otp/space-ui-kit/typography";
 
 import { asset, culture } from "./data";
 import { cultureCards, usePackage } from "./package";
-import type { CultureCard } from "./package";
+import type { CultureCard, Segment } from "./package";
 
 /** Раскладка малых карточек по числу (Figma «Бенефиты»: 2 и 3 — в ряд, 4 — 2×2, дальше по 3). */
 function chunk(n: number): number[] {
@@ -14,18 +14,23 @@ function chunk(n: number): number[] {
 }
 
 /** Малая карточка (Figma «Карточка», Size=Vertical, 336×136): картинка 48 сверху, текст снизу. */
-function SmallCard({ card }: { card: CultureCard }) {
+function SmallCard({ card, segment }: { card: CultureCard; segment: Segment }) {
   return (
     <li className="offer-culture__small grid content-between gap-spacing-lg rounded-radius-md bg-base-surface-tertiary-neutral-normal p-spacing-lg">
-      <img className="offer-culture__img" src={asset(card.image)} alt="" />
+      {segment === "mass" && (card.id === "sport" || card.id === "style") ? (
+        <span className="offer-culture__img offer-culture__mass-image" aria-hidden="true">
+          <span className={`offer-culture__mass-image--${card.id}`}>
+            <img src={asset(`c-mass-${card.id}`, "png")} alt="" />
+          </span>
+        </span>
+      ) : (
+        <img className="offer-culture__img" src={asset(card.image)} alt="" />
+      )}
       <span className="grid gap-spacing-sm">
         <Typography.Body.ThreeM className="whitespace-pre-line">
           {card.title}
         </Typography.Body.ThreeM>
-        <Typography.Caption.OneR
-          color="secondary"
-          className="whitespace-pre-line"
-        >
+        <Typography.Caption.OneR color="secondary" className="whitespace-pre-line">
           {card.caption}
         </Typography.Caption.OneR>
       </span>
@@ -35,7 +40,9 @@ function SmallCard({ card }: { card: CultureCard }) {
 
 /** «Тебя ждёт в ОТП» (Figma 325-39395): три больших карточки-иллюстрации и малые карточки из пакета. */
 export function Culture() {
-  const cards = cultureCards(usePackage());
+  const pkg = usePackage();
+  const mass = pkg.segment === "mass";
+  const cards = cultureCards(pkg);
   const rows: CultureCard[][] = [];
   let i = 0;
   for (const n of chunk(cards.length)) {
@@ -43,10 +50,7 @@ export function Culture() {
     i += n;
   }
   return (
-    <section
-      className="grid gap-spacing-exxxxs"
-      aria-labelledby="culture-title"
-    >
+    <section className="grid gap-spacing-exxxxs" aria-labelledby="culture-title">
       <div className="grid gap-spacing-md">
         <Typography.Title.TwoM
           as="h2"
@@ -54,16 +58,13 @@ export function Culture() {
           className="m-0 flex items-center gap-spacing-md"
         >
           {culture.title}
-          <HeartFill16Icon
-            aria-hidden="true"
-            className="offer-culture__heart"
-          />
+          <HeartFill16Icon aria-hidden="true" className="offer-culture__heart" />
         </Typography.Title.TwoM>
         <Typography.Body.ThreeR as="p" color="tertiary" className="m-0">
           {culture.subtitle}
         </Typography.Body.ThreeR>
       </div>
-      <div className="grid gap-spacing-md">
+      <div className={`grid ${mass ? "gap-spacing-lg" : "gap-spacing-md"}`}>
         <ul className="offer-culture__row m-0 grid list-none gap-spacing-lg p-0">
           {culture.big.map((c) => (
             // Фон — экспорт карточки из Figma (градиент + иллюстрация запечены в растр), текст — живой, всегда тёмный
@@ -72,10 +73,7 @@ export function Culture() {
               className="offer-culture__big flex flex-col justify-end gap-spacing-md overflow-hidden rounded-radius-md p-spacing-lg text-universal-neutral-dark"
               style={{ backgroundImage: `url(${asset(c.image)})` }}
             >
-              <Typography.Body.ThreeM
-                color="inherit"
-                className="whitespace-pre-line"
-              >
+              <Typography.Body.ThreeM color="inherit" className="whitespace-pre-line">
                 {c.title}
               </Typography.Body.ThreeM>
               <Typography.Caption.OneR
@@ -90,10 +88,10 @@ export function Culture() {
         {rows.map((row, r) => (
           <ul
             key={r}
-            className={`offer-culture__row offer-culture__row--${row.length} m-0 grid list-none gap-spacing-md p-0`}
+            className={`offer-culture__row offer-culture__row--${row.length} m-0 grid list-none ${mass ? "gap-spacing-lg" : "gap-spacing-md"} p-0`}
           >
             {row.map((card) => (
-              <SmallCard key={card.id} card={card} />
+              <SmallCard key={card.id} card={card} segment={pkg.segment} />
             ))}
           </ul>
         ))}

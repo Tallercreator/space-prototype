@@ -7,6 +7,7 @@ import { Benefits } from "./benefits";
 import { Conditions } from "./conditions";
 import { Culture } from "./culture";
 import { DeclinePopup } from "./decline-popup";
+import { usePackage } from "./package";
 import { PdfView } from "./pdf-view";
 import { Salary } from "./salary";
 import { ScenarioPanel } from "./scenario-panel";
@@ -19,6 +20,7 @@ import { useTheme } from "./theme";
 export function OfferPage() {
   const { state, actions } = useOfferState();
   const [theme, toggleTheme] = useTheme();
+  const { segment } = usePackage();
   const [declineOpen, setDeclineOpen] = React.useState(false);
   const kind = offerKind(state.scenario);
 
@@ -34,26 +36,22 @@ export function OfferPage() {
             <PdfView />
           ) : (
             <>
-              <Salary
-                mode={state.scenario === "formula" ? "formula" : "default"}
-              />
+              <Salary mode={state.scenario === "formula" ? "formula" : "default"} />
               <Benefits />
               <Conditions />
             </>
           )}
           <Culture />
         </div>
-        <Actions
-          state={state}
-          actions={actions}
-          onDecline={() => setDeclineOpen(true)}
-        />
+        <Actions state={state} actions={actions} onDecline={() => setDeclineOpen(true)} />
       </>
     );
   }
 
   return (
-    <div className="offer-page min-h-screen bg-base-surface-primary-background font-primary text-base-texticons-primary">
+    <div
+      className={`offer-page offer-page--${segment} min-h-screen bg-base-surface-primary-background font-primary text-base-texticons-primary`}
+    >
       <div className="offer-shell mx-auto grid gap-spacing-md">
         <Banner kind={kind} />
         <div className="offer-columns grid items-start gap-spacing-md">

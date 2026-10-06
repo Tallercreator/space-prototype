@@ -8,13 +8,11 @@ import { SuitcaseLine16Icon } from "@otp/space-ui-kit/icons/suitcase-line-16";
 import { UserLine16Icon } from "@otp/space-ui-kit/icons/user-line-16";
 import { Typography } from "@otp/space-ui-kit/typography";
 
-import { conditions } from "./data";
+import { usePackage } from "./package";
+import { conditions, massConditions } from "./data";
 import type { ConditionIcon } from "./data";
 
-const ICONS: Record<
-  ConditionIcon,
-  React.ComponentType<React.SVGProps<SVGSVGElement>>
-> = {
+const ICONS: Record<ConditionIcon, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
   pin: PinMapLine16Icon,
   suitcase: SuitcaseLine16Icon,
   clock: ClockLine16Icon,
@@ -27,11 +25,10 @@ const ICONS: Record<
 
 /** Список условий: подпись слева, значение с иконкой справа, разделители между строками. */
 export function Conditions() {
+  const mass = usePackage().segment === "mass";
+  const rows = mass ? massConditions : conditions;
   return (
-    <section
-      className="grid gap-spacing-exxxxs"
-      aria-labelledby="conditions-title"
-    >
+    <section className="grid gap-spacing-exxxxs" aria-labelledby="conditions-title">
       <div className="grid gap-spacing-md">
         <Typography.Title.TwoM as="h2" id="conditions-title" className="m-0">
           Условия работы
@@ -41,7 +38,7 @@ export function Conditions() {
         </Typography.Body.ThreeR>
       </div>
       <dl className="offer-conditions m-0 grid gap-spacing-xxxl">
-        {conditions.map((row, i) => {
+        {rows.map((row, i) => {
           const Icon = row.icon ? ICONS[row.icon] : null;
           return (
             <div key={row.label} className="grid gap-spacing-xxxl">
@@ -67,7 +64,9 @@ export function Conditions() {
                     />
                   ) : null}
                   {row.items ? (
-                    <ul className="offer-conditions__list m-0 grid gap-spacing-xs">
+                    <ul
+                      className={`offer-conditions__list m-0 grid ${mass ? "gap-spacing-lg" : "gap-spacing-xs"}`}
+                    >
                       {row.items.map((item) => (
                         <Typography.Body.ThreeR as="li" key={item}>
                           {item}
@@ -75,7 +74,9 @@ export function Conditions() {
                       ))}
                     </ul>
                   ) : (
-                    <Typography.Body.ThreeR>{row.value}</Typography.Body.ThreeR>
+                    <Typography.Body.ThreeR className="whitespace-pre-line">
+                      {row.value}
+                    </Typography.Body.ThreeR>
                   )}
                 </dd>
               </div>

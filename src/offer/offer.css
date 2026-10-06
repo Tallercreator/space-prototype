@@ -172,16 +172,7 @@ html.dark {
   width: 10px;
   height: 10px;
   background: var(--ui-universal-brand-lime);
-  clip-path: polygon(
-    50% 0,
-    62% 38%,
-    100% 50%,
-    62% 62%,
-    50% 100%,
-    38% 62%,
-    0 50%,
-    38% 38%
-  );
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
   opacity: 0;
   transform: scale(0);
   pointer-events: none;
@@ -227,8 +218,7 @@ html.dark {
 @media (hover: hover) {
   .offer-facts__item:hover .offer-facts__icon {
     color: var(--ui-base-texticons-lime-intense);
-    animation: offer-facts-cheer 600ms cubic-bezier(0.34, 1.56, 0.64, 1)
-      forwards;
+    animation: offer-facts-cheer 600ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
   .offer-facts__item:hover .offer-facts__badge::before {
     animation: offer-facts-sparkle 700ms ease-out 80ms forwards;
@@ -374,8 +364,7 @@ html.dark {
   transition: opacity 0.2s ease;
 }
 .offer-actions--stuck {
-  margin: 0 calc(-1 * var(--ui-spacing-exxxs))
-    calc(-1 * var(--ui-spacing-exxxs));
+  margin: 0 calc(-1 * var(--ui-spacing-exxxs)) calc(-1 * var(--ui-spacing-exxxs));
   padding: var(--ui-spacing-xxxl) var(--ui-spacing-exxxs);
   border-radius: 0 0 var(--ui-radius-lg) var(--ui-radius-lg);
 }
@@ -518,5 +507,104 @@ html.dark {
   }
   .offer-culture__card--tall {
     min-height: 200px;
+  }
+}
+
+/* Шаблон «Масс», Figma 418:52718. */
+.offer-salary--mass .offer-salary__tiles {
+  grid-template-columns: minmax(0, 1fr) 175px;
+  align-items: center;
+}
+.offer-salary--mass .offer-salary__main {
+  min-height: 100px;
+}
+.offer-salary--mass .offer-salary__bonus {
+  height: 98px;
+  gap: var(--ui-spacing-md);
+}
+.offer-salary--mass .offer-salary__main-caption {
+  max-width: 340px;
+}
+.offer-salary--mass .offer-salary__money {
+  width: 138px;
+  height: 138px;
+  top: auto;
+  bottom: -40px;
+  right: 0;
+}
+.offer-salary--mass .offer-salary__part {
+  gap: var(--ui-spacing-xs);
+}
+.offer-salary--mass .offer-salary__part-note {
+  margin-top: calc(-1 * var(--ui-spacing-xs));
+}
+.offer-salary--mass .offer-pill {
+  height: 20px;
+  padding-block: 0;
+}
+.offer-culture__mass-image {
+  position: relative;
+  display: block;
+}
+.offer-culture__mass-image--sport {
+  position: absolute;
+  overflow: hidden;
+  width: 28px;
+  height: 40px;
+  left: 10px;
+  top: 4px;
+}
+.offer-culture__mass-image--sport img {
+  position: absolute;
+  width: 158.62%;
+  height: 187.93%;
+  left: -34.48%;
+  top: -45.18%;
+}
+.offer-culture__mass-image--style {
+  position: absolute;
+  width: 47.647px;
+  height: 37.188px;
+  left: 1.636px;
+  top: 6.626px;
+  mask-image: url("../../public/offer/c-mass-style-mask.svg");
+  mask-size: 47px 45px;
+  mask-position: -0.638px -5.628px;
+  mask-repeat: no-repeat;
+}
+.offer-culture__mass-image--style img {
+  width: 100%;
+  height: 100%;
+}
+.offer-salary--mass .offer-salary__note {
+  margin-top: calc(-1 * var(--ui-spacing-xs));
+}
+.offer-page--mass .offer-conditions__list {
+  padding-left: 24px;
+}
+.offer-page--mass .offer-conditions__list li::marker {
+  color: var(--ui-base-border-standard-neutral-normal);
+}
+.offer-page--mass .offer-conditions__row:has(.offer-conditions__icon),
+.offer-page--mass .offer-conditions__row:has(.offer-conditions__icon) dd {
+  align-items: center;
+}
+.offer-page--mass .offer-culture__small {
+  min-height: 150px;
+}
+.offer-scenarios__panel {
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 96px);
+  overflow-y: auto;
+}
+@media (max-width: 767px) {
+  .offer-salary--mass .offer-salary__tiles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .offer-salary--mass .offer-salary__main-caption {
+    max-width: calc(100% - 68px);
+  }
+  .offer-page--mass .offer-conditions__row:has(.offer-conditions__icon) {
+    align-items: start;
   }
 }

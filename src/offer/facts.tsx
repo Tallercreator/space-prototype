@@ -6,7 +6,7 @@ import { PlanetLine24Icon } from "@otp/space-ui-kit/icons/planet-line-24";
 import { UsersLine24Icon } from "@otp/space-ui-kit/icons/users-line-24";
 import { Typography } from "@otp/space-ui-kit/typography";
 
-import { facts } from "./data";
+import { facts, massFacts } from "./data";
 import type { FactIcon } from "./data";
 import { usePackage } from "./package";
 
@@ -25,10 +25,7 @@ function TrophyLine24Icon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-const ICONS: Record<
-  FactIcon,
-  React.ComponentType<React.SVGProps<SVGSVGElement>>
-> = {
+const ICONS: Record<FactIcon, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
   trophy: TrophyLine24Icon,
   bank: BankLine24Icon,
   planet: PlanetLine24Icon,
@@ -41,14 +38,16 @@ const ICONS: Record<
  * Появляются каскадом слева направо, затем один раз проходит блик; при reduced-motion — статично.
  */
 export function FactsRow() {
-  const variant = usePackage().facts;
+  const pkg = usePackage();
+  const variant = pkg.facts;
+  const items = pkg.segment === "mass" ? massFacts : facts;
   const v2 = variant === "cards2";
   return (
     <ul
       className={`offer-facts offer-facts--${variant} m-0 grid list-none p-0`}
       aria-label="О банке"
     >
-      {facts.map((f, i) => {
+      {items.map((f, i) => {
         const Icon = ICONS[f.icon];
         return (
           <li
@@ -66,10 +65,7 @@ export function FactsRow() {
                     {f.headline}
                   </Typography.Body.TwoM>
                   {f.detail ? (
-                    <Typography.Caption.OneR
-                      color="secondary"
-                      className="whitespace-pre-line"
-                    >
+                    <Typography.Caption.OneR color="secondary" className="whitespace-pre-line">
                       {f.detail}
                     </Typography.Caption.OneR>
                   ) : null}
@@ -80,15 +76,13 @@ export function FactsRow() {
                 </Typography.Body.ThreeM>
               )}
             </span>
-            {f.source ? (
+            {f.footer ? (
+              <Typography.Caption.TwoR color="disabled">{f.footer}</Typography.Caption.TwoR>
+            ) : f.source ? (
               v2 ? (
-                <Typography.Caption.TwoR color="disabled">
-                  ({f.source})
-                </Typography.Caption.TwoR>
+                <Typography.Caption.TwoR color="disabled">({f.source})</Typography.Caption.TwoR>
               ) : (
-                <Typography.Caption.OneR color="tertiary">
-                  ({f.source})
-                </Typography.Caption.OneR>
+                <Typography.Caption.OneR color="tertiary">({f.source})</Typography.Caption.OneR>
               )
             ) : null}
           </li>

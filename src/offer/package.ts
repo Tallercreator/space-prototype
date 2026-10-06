@@ -185,16 +185,28 @@ export const CULTURE_PRESETS: Record<Segment, string[]> = {
 
 /** Карточки с учётом шаблона: подставляет заголовок обучения по сегменту. */
 export function cultureCards(pkg: BenefitsPackage): CultureCard[] {
-  return CULTURE_CARDS.filter((c) => pkg.culture.includes(c.id)).map((c) =>
-    c.id === "study" ? { ...c, title: STUDY_TITLE[pkg.segment] } : c,
-  );
+  return CULTURE_CARDS.filter((c) => pkg.culture.includes(c.id)).map((c) => {
+    if (c.id === "study") return { ...c, title: STUDY_TITLE[pkg.segment] };
+    if (pkg.segment === "mass" && c.id === "sport")
+      return {
+        ...c,
+        caption:
+          "По интересам, профессиональные и спортивные — мы за здоровый образ жизни, поддержим твое хобби и твои профессиональные амбиции",
+      };
+    if (pkg.segment === "mass" && c.id === "style")
+      return {
+        ...c,
+        caption: "Любим худи и удобные джинсы",
+      };
+    return c;
+  });
 }
 
 export const DEFAULT_PACKAGE: BenefitsPackage = {
-  segment: "ho",
+  segment: "mass",
   benefits: ["dms", "fitness-alt", "mobile", "insurance", "card"],
-  culture: CULTURE_PRESETS.ho,
-  facts: "cards",
+  culture: CULTURE_PRESETS.mass,
+  facts: "cards2",
 };
 
 const KEY = "offer-package";
@@ -249,6 +261,16 @@ export function setPackage(next: BenefitsPackage): void {
     /* приватный режим — пакет живёт до перезагрузки */
   }
   listeners.forEach((fn) => fn());
+}
+
+/** Быстрое переключение шаблона; выбранные льготы остаются до следующего этапа. */
+export function selectTemplate(segment: Segment): void {
+  setPackage({
+    ...current,
+    segment,
+    culture: CULTURE_PRESETS[segment],
+    facts: segment === "mass" ? "cards2" : current.facts,
+  });
 }
 
 export function usePackage(): BenefitsPackage {
