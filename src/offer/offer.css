@@ -702,3 +702,11 @@ html.dark {
   height: 100%;
   object-fit: cover;
 }
+
+@media (max-width: 767px) {
+  .offer-banner__text--agile .offer-banner__title {
+    font-size: var(--ui-font-size-24);
+    line-height: var(--ui-line-height-26);
+    letter-spacing: var(--ui-tracking-normal);
+  }
+}
