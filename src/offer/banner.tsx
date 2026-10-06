@@ -10,7 +10,11 @@ import type { OfferKind } from "./data";
 
 /** Баннер-приглашение: фон — экспорт из Figma без текста, поверх — лого, тост и заголовок. */
 export function Banner({ kind }: { kind: OfferKind }) {
-  const { segment } = usePackage();
+  const { segment, variedBannerColors } = usePackage();
+  const bannerImage =
+    variedBannerColors && (segment === "mass" || segment === "ho")
+      ? asset(segment === "mass" ? "banner-blue" : "banner-purple", "png")
+      : asset("banner-bg");
   const agile = (segment === "agile" || segment === "it") && kind === "structured";
   const position =
     segment === "ho" && kind === "structured"
@@ -38,7 +42,7 @@ export function Banner({ kind }: { kind: OfferKind }) {
       aria-label="Приглашение в команду"
     >
       <div className="offer-banner" onClick={onClick}>
-        <img className="offer-banner__bg" src={asset("banner-bg")} alt="" />
+        <img className="offer-banner__bg" src={bannerImage} alt="" />
         <canvas ref={canvasRef} className="offer-confetti-layer" aria-hidden="true" />
         <img className="offer-banner__logo" src={asset("otp-logo", "svg")} alt="ОТП Банк" />
         <div className="offer-banner__toast rounded-radius-sm bg-universal-neutral-white px-spacing-md py-spacing-xs">

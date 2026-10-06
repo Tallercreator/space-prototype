@@ -127,6 +127,7 @@ export type BenefitsPackage = {
   benefits: string[];
   culture: string[];
   facts: FactsVariant;
+  variedBannerColors: boolean;
 };
 
 /** Малые карточки «Тебя ждёт в ОТП» (Figma «Карточка», Size=Vertical). */
@@ -220,6 +221,7 @@ export const DEFAULT_PACKAGE: BenefitsPackage = {
   benefits: ["dms", "fitness-alt", "mobile", "insurance", "card"],
   culture: CULTURE_PRESETS.mass,
   facts: "cards2",
+  variedBannerColors: false,
 };
 
 const KEY = "offer-package";
@@ -239,6 +241,7 @@ function sanitize(raw: unknown): BenefitsPackage {
       : fallback;
   return {
     segment,
+    variedBannerColors: p.variedBannerColors === true,
     benefits: pick(p.benefits, IDS, DEFAULT_PACKAGE.benefits),
     culture: pick(p.culture, CULTURE_IDS, CULTURE_PRESETS[segment]),
     facts: FACTS_VARIANTS.some((v) => v.id === p.facts)

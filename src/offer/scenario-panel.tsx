@@ -4,6 +4,7 @@ import { Button } from "@otp/space-ui-kit/button";
 import { Chip } from "@otp/space-ui-kit/chip";
 import { IconButton } from "@otp/space-ui-kit/icon-button";
 import { LightbulbLine24Icon } from "@otp/space-ui-kit/icons/lightbulb-line-24";
+import { Toggle } from "@otp/space-ui-kit/toggle";
 import { Typography } from "@otp/space-ui-kit/typography";
 
 import { PackagePopup } from "./package-popup";
@@ -48,6 +49,14 @@ export function ScenarioPanel({
               ))}
             </div>
           </div>
+          <label className="flex cursor-pointer items-center justify-between gap-spacing-lg">
+            <Typography.Body.ThreeM>Разный цвет оффера</Typography.Body.ThreeM>
+            <Toggle
+              tone="lime"
+              checked={pkg.variedBannerColors}
+              onCheckedChange={(checked) => setPackage({ ...pkg, variedBannerColors: checked })}
+            />
+          </label>
           {(["А", "Б"] as const).map((group) => (
             <div key={group} className="grid gap-spacing-md">
               <Typography.Caption.OneM color="tertiary">Сценарий {group}</Typography.Caption.OneM>
