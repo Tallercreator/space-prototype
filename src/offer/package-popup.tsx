@@ -112,9 +112,11 @@ export function PackagePopup({ onClose }: { onClose: () => void }) {
                   tone="lime"
                   checked={draft.benefits.includes(b.id)}
                   onCheckedChange={(checked) => toggle(b.id, checked)}
-                  description={b.caption}
                 >
-                  {b.title}
+                  <span className="grid gap-spacing-xs">
+                    <span>{b.title}</span>
+                    <Typography.Caption.OneR color="tertiary">{b.caption}</Typography.Caption.OneR>
+                  </span>
                 </CheckboxCell>
               ))}
             </div>
