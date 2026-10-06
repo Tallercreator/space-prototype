@@ -40,7 +40,7 @@ const ICONS: Record<FactIcon, React.ComponentType<React.SVGProps<SVGSVGElement>>
 export function FactsRow() {
   const pkg = usePackage();
   const variant = pkg.facts;
-  const items = pkg.segment === "mass" ? massFacts : facts;
+  const items = pkg.segment !== "it" ? massFacts : facts;
   const v2 = variant === "cards2";
   return (
     <ul

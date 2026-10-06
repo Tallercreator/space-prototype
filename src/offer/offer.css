@@ -511,42 +511,42 @@ html.dark {
 }
 
 /* Шаблон «Масс», Figma 418:52718. */
-.offer-salary--mass .offer-salary__tiles {
+:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__tiles {
   grid-template-columns: minmax(0, 1fr) 175px;
   align-items: center;
 }
-.offer-salary--mass .offer-salary__main {
+:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__main {
   min-height: 100px;
 }
-.offer-salary--mass .offer-salary__bonus {
+:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__bonus {
   height: 98px;
   gap: var(--ui-spacing-md);
 }
-.offer-salary--mass .offer-salary__main-caption {
+:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__main-caption {
   max-width: 340px;
 }
-.offer-salary--mass .offer-salary__money {
+:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__money {
   width: 138px;
   height: 138px;
   top: auto;
   bottom: -40px;
   right: 0;
 }
-.offer-salary--mass .offer-salary__part {
+:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__part {
   gap: var(--ui-spacing-xs);
 }
-.offer-salary--mass .offer-salary__part-note {
+:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__part-note {
   margin-top: calc(-1 * var(--ui-spacing-xs));
 }
-.offer-salary--mass .offer-pill {
+:is(.offer-salary--mass, .offer-salary--ho) .offer-pill {
   height: 20px;
   padding-block: 0;
 }
-.offer-culture__mass-image {
+.offer-culture__art {
   position: relative;
   display: block;
 }
-.offer-culture__mass-image--sport {
+.offer-culture__art--sport {
   position: absolute;
   overflow: hidden;
   width: 28px;
@@ -554,14 +554,14 @@ html.dark {
   left: 10px;
   top: 4px;
 }
-.offer-culture__mass-image--sport img {
+.offer-culture__art--sport img {
   position: absolute;
   width: 158.62%;
   height: 187.93%;
   left: -34.48%;
   top: -45.18%;
 }
-.offer-culture__mass-image--style {
+.offer-culture__art--style {
   position: absolute;
   width: 47.647px;
   height: 37.188px;
@@ -572,21 +572,21 @@ html.dark {
   mask-position: -0.638px -5.628px;
   mask-repeat: no-repeat;
 }
-.offer-culture__mass-image--style img {
+.offer-culture__art--style img {
   width: 100%;
   height: 100%;
 }
-.offer-salary--mass .offer-salary__note {
+:is(.offer-salary--mass, .offer-salary--ho) .offer-salary__note {
   margin-top: calc(-1 * var(--ui-spacing-xs));
 }
-.offer-page--mass .offer-conditions__list {
+:is(.offer-page--mass, .offer-page--ho) .offer-conditions__list {
   padding-left: 24px;
 }
-.offer-page--mass .offer-conditions__list li::marker {
+:is(.offer-page--mass, .offer-page--ho) .offer-conditions__list li::marker {
   color: var(--ui-base-border-standard-neutral-normal);
 }
-.offer-page--mass .offer-conditions__row:has(.offer-conditions__icon),
-.offer-page--mass .offer-conditions__row:has(.offer-conditions__icon) dd {
+:is(.offer-page--mass, .offer-page--ho) .offer-conditions__row:has(.offer-conditions__icon),
+:is(.offer-page--mass, .offer-page--ho) .offer-conditions__row:has(.offer-conditions__icon) dd {
   align-items: center;
 }
 .offer-page--mass .offer-culture__small {
@@ -598,13 +598,45 @@ html.dark {
   overflow-y: auto;
 }
 @media (max-width: 767px) {
-  .offer-salary--mass .offer-salary__tiles {
+  :is(.offer-salary--mass, .offer-salary--ho) .offer-salary__tiles {
     grid-template-columns: minmax(0, 1fr);
   }
-  .offer-salary--mass .offer-salary__main-caption {
+  :is(.offer-salary--mass, .offer-salary--ho) .offer-salary__main-caption {
     max-width: calc(100% - 68px);
   }
-  .offer-page--mass .offer-conditions__row:has(.offer-conditions__icon) {
+  :is(.offer-page--mass, .offer-page--ho) .offer-conditions__row:has(.offer-conditions__icon) {
     align-items: start;
   }
+}
+
+/* ГО: дополнительные иллюстрации в слоте 48×48, Figma 418:58298. */
+.offer-culture__art--study {
+  position: absolute;
+  overflow: hidden;
+  width: 29px;
+  height: 38px;
+  left: 10px;
+  top: 5px;
+}
+.offer-culture__art--study img {
+  position: absolute;
+  width: 139.39%;
+  height: 105.26%;
+  left: -22.73%;
+  top: 0;
+}
+.offer-culture__art--welcome {
+  position: absolute;
+  overflow: hidden;
+  width: 35px;
+  height: 40px;
+  left: 7px;
+  top: 4px;
+}
+.offer-culture__art--welcome img {
+  position: absolute;
+  width: 154.72%;
+  height: 132.26%;
+  left: -27.36%;
+  top: -16.13%;
 }

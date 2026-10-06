@@ -4,12 +4,17 @@ import { Typography } from "@otp/space-ui-kit/typography";
 
 import { brandColors, burst } from "./confetti";
 import { asset, candidate, positions } from "./data";
+import { usePackage } from "./package";
 import { FactsRow } from "./facts";
 import type { OfferKind } from "./data";
 
 /** Баннер-приглашение: фон — экспорт из Figma без текста, поверх — лого, тост и заголовок. */
 export function Banner({ kind }: { kind: OfferKind }) {
-  const position = positions[kind];
+  const { segment } = usePackage();
+  const position =
+    segment === "ho" && kind === "structured"
+      ? { ...positions[kind], title: "Ведущего эксперта" }
+      : positions[kind];
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const stopRef = React.useRef<() => void>(() => {});
 
@@ -21,11 +26,7 @@ export function Banner({ kind }: { kind: OfferKind }) {
    */
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
     const canvas = canvasRef.current;
-    if (
-      !canvas ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    )
-      return;
+    if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     stopRef.current();
     stopRef.current = burst(canvas, e.clientX, e.clientY, brandColors(canvas));
   };
@@ -37,36 +38,18 @@ export function Banner({ kind }: { kind: OfferKind }) {
     >
       <div className="offer-banner" onClick={onClick}>
         <img className="offer-banner__bg" src={asset("banner-bg")} alt="" />
-        <canvas
-          ref={canvasRef}
-          className="offer-confetti-layer"
-          aria-hidden="true"
-        />
-        <img
-          className="offer-banner__logo"
-          src={asset("otp-logo", "svg")}
-          alt="ОТП Банк"
-        />
+        <canvas ref={canvasRef} className="offer-confetti-layer" aria-hidden="true" />
+        <img className="offer-banner__logo" src={asset("otp-logo", "svg")} alt="ОТП Банк" />
         <div className="offer-banner__toast rounded-radius-sm bg-universal-neutral-white px-spacing-md py-spacing-xs">
-          <Typography.Body.ThreeM color="inherit">
-            Все будет ОТП
-          </Typography.Body.ThreeM>
+          <Typography.Body.ThreeM color="inherit">Все будет ОТП</Typography.Body.ThreeM>
         </div>
         <div className="offer-banner__text grid gap-spacing-lg justify-items-center text-center">
-          <Typography.Promo.FourM
-            as="h1"
-            color="inherit"
-            className="offer-banner__title m-0"
-          >
+          <Typography.Promo.FourM as="h1" color="inherit" className="offer-banner__title m-0">
             {candidate.firstName}, мы приглашаем тебя
             <br />
             на позицию {position.title}
           </Typography.Promo.FourM>
-          <Typography.Body.ThreeR
-            as="p"
-            color="inherit"
-            className="offer-banner__subtitle m-0"
-          >
+          <Typography.Body.ThreeR as="p" color="inherit" className="offer-banner__subtitle m-0">
             {position.department}
           </Typography.Body.ThreeR>
         </div>

@@ -1,6 +1,6 @@
 import { Typography } from "@otp/space-ui-kit/typography";
 
-import { asset, salary, massSalary } from "./data";
+import { asset, salary, massSalary, hoSalary } from "./data";
 import { usePackage } from "./package";
 
 function Part({ value, caption, note }: { value: string; caption: string; note?: string }) {
@@ -55,12 +55,12 @@ function Formula({
   parts: FormulaPart[];
   op: "+" | "×";
   note?: string;
-  variant?: "standard" | "mass";
+  variant?: "standard" | "detailed";
 }) {
-  const Title = variant === "mass" ? Typography.Caption.OneM : Typography.Caption.OneR;
+  const Title = variant === "detailed" ? Typography.Caption.OneM : Typography.Caption.OneR;
   return (
     <div
-      className={`offer-salary__breakdown grid ${variant === "mass" ? "gap-spacing-lg" : "gap-spacing-md"}`}
+      className={`offer-salary__breakdown grid ${variant === "detailed" ? "gap-spacing-lg" : "gap-spacing-md"}`}
     >
       <Title as="div" color="tertiary">
         {title}
@@ -98,16 +98,17 @@ export type SalaryMode = "default" | "formula";
 
 /** Блок дохода: плитки суммы/премии и формула «из чего складывается». */
 export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
-  const mass = usePackage().segment === "mass";
-  const content = mass ? massSalary : salary;
+  const { segment } = usePackage();
+  const detailed = segment === "mass" || segment === "ho";
+  const content = segment === "ho" ? hoSalary : segment === "mass" ? massSalary : salary;
   const bonus = content.bonusDetailed;
-  const Caption = mass ? Typography.Caption.OneM : Typography.Caption.OneR;
+  const Caption = detailed ? Typography.Caption.OneM : Typography.Caption.OneR;
   return (
     <section
-      className={`offer-salary grid gap-spacing-xxxl ${mass ? "offer-salary--mass" : ""}`}
+      className={`offer-salary grid gap-spacing-xxxl ${detailed ? `offer-salary--${segment}` : ""}`}
       aria-label="Доход"
     >
-      <div className={`grid ${mass ? "gap-spacing-lg" : "gap-spacing-md"}`}>
+      <div className={`grid ${detailed ? "gap-spacing-lg" : "gap-spacing-md"}`}>
         <Caption as="p" color="tertiary" className="m-0">
           {content.taxNote}
         </Caption>
@@ -119,7 +120,7 @@ export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
               color="tertiary"
               className="offer-salary__main-caption whitespace-pre-line"
             >
-              {mass || mode === "formula" ? content.totalCaption : content.plainCaption}
+              {detailed || mode === "formula" ? content.totalCaption : content.plainCaption}
             </Caption>
             <img className="offer-salary__money" src={asset("money")} alt="" />
           </div>
@@ -133,12 +134,12 @@ export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
           </div>
         </div>
       </div>
-      {mass || mode === "formula" ? (
+      {detailed || mode === "formula" ? (
         <Formula
           title={content.breakdownTitle}
           parts={content.parts}
-          op={mass ? "×" : "+"}
-          variant={mass ? "mass" : "standard"}
+          op={detailed ? "×" : "+"}
+          variant={detailed ? "detailed" : "standard"}
         />
       ) : null}
       <Formula
@@ -146,7 +147,7 @@ export function Salary({ mode = "default" }: { mode?: SalaryMode }) {
         parts={bonus.parts}
         op="×"
         note={bonus.note}
-        variant={mass ? "mass" : "standard"}
+        variant={detailed ? "detailed" : "standard"}
       />
     </section>
   );

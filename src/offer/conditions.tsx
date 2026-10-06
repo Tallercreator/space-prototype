@@ -25,8 +25,8 @@ const ICONS: Record<ConditionIcon, React.ComponentType<React.SVGProps<SVGSVGElem
 
 /** Список условий: подпись слева, значение с иконкой справа, разделители между строками. */
 export function Conditions() {
-  const mass = usePackage().segment === "mass";
-  const rows = mass ? massConditions : conditions;
+  const detailed = usePackage().segment !== "it";
+  const rows = detailed ? massConditions : conditions;
   return (
     <section className="grid gap-spacing-exxxxs" aria-labelledby="conditions-title">
       <div className="grid gap-spacing-md">
@@ -65,7 +65,7 @@ export function Conditions() {
                   ) : null}
                   {row.items ? (
                     <ul
-                      className={`offer-conditions__list m-0 grid ${mass ? "gap-spacing-lg" : "gap-spacing-xs"}`}
+                      className={`offer-conditions__list m-0 grid ${detailed ? "gap-spacing-lg" : "gap-spacing-xs"}`}
                     >
                       {row.items.map((item) => (
                         <Typography.Body.ThreeR as="li" key={item}>

@@ -13,14 +13,22 @@ function chunk(n: number): number[] {
   return [3, 3, ...chunk(n - 6)];
 }
 
+const DETAIL_IMAGES: Record<string, string> = {
+  sport: "c-mass-sport",
+  style: "c-mass-style",
+  study: "c-ho-study",
+  welcome: "c-ho-welcome",
+};
+
 /** Малая карточка (Figma «Карточка», Size=Vertical, 336×136): картинка 48 сверху, текст снизу. */
 function SmallCard({ card, segment }: { card: CultureCard; segment: Segment }) {
+  const detailImage = segment !== "it" ? DETAIL_IMAGES[card.id] : undefined;
   return (
     <li className="offer-culture__small grid content-between gap-spacing-lg rounded-radius-md bg-base-surface-tertiary-neutral-normal p-spacing-lg">
-      {segment === "mass" && (card.id === "sport" || card.id === "style") ? (
-        <span className="offer-culture__img offer-culture__mass-image" aria-hidden="true">
-          <span className={`offer-culture__mass-image--${card.id}`}>
-            <img src={asset(`c-mass-${card.id}`, "png")} alt="" />
+      {detailImage ? (
+        <span className="offer-culture__img offer-culture__art" aria-hidden="true">
+          <span className={`offer-culture__art--${card.id}`}>
+            <img src={asset(detailImage, "png")} alt="" />
           </span>
         </span>
       ) : (
@@ -41,7 +49,7 @@ function SmallCard({ card, segment }: { card: CultureCard; segment: Segment }) {
 /** «Тебя ждёт в ОТП» (Figma 325-39395): три больших карточки-иллюстрации и малые карточки из пакета. */
 export function Culture() {
   const pkg = usePackage();
-  const mass = pkg.segment === "mass";
+  const detailed = pkg.segment !== "it";
   const cards = cultureCards(pkg);
   const rows: CultureCard[][] = [];
   let i = 0;
@@ -64,7 +72,7 @@ export function Culture() {
           {culture.subtitle}
         </Typography.Body.ThreeR>
       </div>
-      <div className={`grid ${mass ? "gap-spacing-lg" : "gap-spacing-md"}`}>
+      <div className={`grid ${detailed ? "gap-spacing-lg" : "gap-spacing-md"}`}>
         <ul className="offer-culture__row m-0 grid list-none gap-spacing-lg p-0">
           {culture.big.map((c) => (
             // Фон — экспорт карточки из Figma (градиент + иллюстрация запечены в растр), текст — живой, всегда тёмный
@@ -88,7 +96,7 @@ export function Culture() {
         {rows.map((row, r) => (
           <ul
             key={r}
-            className={`offer-culture__row offer-culture__row--${row.length} m-0 grid list-none ${mass ? "gap-spacing-lg" : "gap-spacing-md"} p-0`}
+            className={`offer-culture__row offer-culture__row--${row.length} m-0 grid list-none ${detailed ? "gap-spacing-lg" : "gap-spacing-md"} p-0`}
           >
             {row.map((card) => (
               <SmallCard key={card.id} card={card} segment={pkg.segment} />

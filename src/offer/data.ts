@@ -94,6 +94,21 @@ export const massSalary = {
   },
 };
 
+/** ГО non-Agile, Figma 418:57893: годовая премия за 12 месяцев. */
+export const hoSalary = {
+  ...massSalary,
+  bonusDetailed: {
+    rate: "Годовая\nпремия",
+    caption: "Ежегодная премия",
+    formulaTitle: "Как считается годовая премия",
+    parts: [
+      { value: "64 108 ₽", caption: "фиксированный\nоклад" },
+      { value: "12", caption: "месяцев" },
+    ],
+    note: "",
+  },
+};
+
 export type ConditionIcon =
   | "pin"
   | "suitcase"
