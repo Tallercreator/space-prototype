@@ -3,7 +3,7 @@ import * as React from "react";
 import { Typography } from "@otp/space-ui-kit/typography";
 
 import { brandColors, burst } from "./confetti";
-import { asset, candidate, positions } from "./data";
+import { asset, candidate, positions, offerRoles } from "./data";
 import { usePackage } from "./package";
 import { FactsRow } from "./facts";
 import type { OfferKind } from "./data";
@@ -15,11 +15,9 @@ export function Banner({ kind }: { kind: OfferKind }) {
     variedBannerColors && (segment === "mass" || segment === "ho")
       ? asset(segment === "mass" ? "banner-blue" : "banner-purple", "png")
       : asset("banner-bg");
-  const agile = (segment === "agile" || segment === "it") && kind === "structured";
-  const position =
-    segment === "ho" && kind === "structured"
-      ? { ...positions[kind], title: "Ведущего эксперта" }
-      : positions[kind];
+  const agile = segment === "agile" || segment === "it";
+  const role = agile ? offerRoles.agile : offerRoles.nonAgile;
+  const position = positions[kind];
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const stopRef = React.useRef<() => void>(() => {});
 
@@ -56,13 +54,13 @@ export function Banner({ kind }: { kind: OfferKind }) {
               <>
                 {candidate.firstName}, приглашаем тебя
                 <br />
-                на роль Ведущего аналитика в HR Tech
+                на роль {role.invitation}
               </>
             ) : (
               <>
                 {candidate.firstName}, мы приглашаем тебя
                 <br />
-                на позицию {position.title}
+                на роль {role.invitation}
               </>
             )}
           </Typography.Promo.FourM>

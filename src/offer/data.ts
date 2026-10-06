@@ -18,6 +18,12 @@ export type OfferKind = "structured" | "pdf";
 
 export const candidate = { firstName: "Елена", fullName: "Елена Иванова" };
 
+/** Agile допускает любую роль; non-Agile — экспертные позиции. */
+export const offerRoles = {
+  agile: { name: "Ведущий аналитик", invitation: "Ведущего аналитика в HR Tech" },
+  nonAgile: { name: "Ведущий эксперт", invitation: "Ведущего эксперта" },
+};
+
 export const positions: Record<OfferKind, { title: string; department: string }> = {
   structured: {
     title: "Ведущего аналитика",
@@ -178,16 +184,17 @@ export const conditions: Condition[] = [
   },
 ];
 
-export const massConditions: Condition[] = conditions.map((row) =>
-  row.label === "Структура"
-    ? {
-        label: row.label,
-        icon: row.icon,
-        value:
-          "Ведущий эксперт; Отдел развития цифровых продуктов; Центр развития цифровых продуктов;\nДирекция организационного развития бизнеса",
-      }
-    : row,
-);
+export function conditionsForRole(roleName: string): Condition[] {
+  return conditions.map((row) =>
+    row.label === "Структура"
+      ? {
+          label: row.label,
+          icon: row.icon,
+          value: `${roleName}; Отдел развития цифровых продуктов; Центр развития цифровых продуктов;\nДирекция организационного развития бизнеса`,
+        }
+      : row,
+  );
+}
 
 /** «Тебя ждёт в ОТП» (Figma 325-39395): три больших карточки фиксированы, малые — из пакета (см. package.ts). */
 export const culture = {
