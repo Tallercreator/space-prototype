@@ -25,7 +25,8 @@ export type BenefitImage =
   | "insurance-silver"
   | "car-compensation"
   | "dms-family"
-  | "checkup";
+  | "checkup"
+  | "parking";
 export type InsuranceArtwork = "blue" | "silver";
 
 export type CatalogBenefit = {
@@ -105,7 +106,7 @@ export const BENEFIT_CATALOG: CatalogBenefit[] = [
     caption: "За счёт компании",
     image: "checkup",
   },
-  { id: "parking", title: "Парковка", caption: "Парковочное место у офиса", image: "checkup" },
+  { id: "parking", title: "Парковка", caption: "Парковочное место у офиса", image: "parking" },
 ];
 
 /** Как показать регалии банка под баннером: карточки V1 или V2 (Figma 355-123184 до и после правки). */
@@ -212,7 +213,7 @@ export function cultureCards(pkg: BenefitsPackage): CultureCard[] {
 
 export const DEFAULT_PACKAGE: BenefitsPackage = {
   segment: "mass",
-  benefits: ["dms", "fitness-alt", "mobile", "insurance", "card"],
+  benefits: ["dms", "fitness-alt", "mobile", "insurance", "card", "parking"],
   culture: CULTURE_PRESETS.mass,
   facts: "cards2",
   variedBannerColors: false,
