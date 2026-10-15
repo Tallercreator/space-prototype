@@ -13,9 +13,10 @@ export type Scenario =
   | "gone" // срок истёк
   | "no" // кандидат отклонил
   | "ok" // принял — экран «оффер принят» с оценкой
+  | "parking"
   | "pdf"; // сценарий Б: PDF-оффер на всю высоту
 
-export type View = "offer" | "accepted";
+export type View = "offer" | "accepted" | "parking";
 
 export type OfferState = {
   scenario: Scenario;
@@ -31,6 +32,7 @@ export const SCENARIOS: Array<{
   { id: "formula", label: "Формула для оклада", group: "А" },
   { id: "last", label: "Оффер — последний день", group: "А" },
   { id: "ok", label: "Оффер принят", group: "А" },
+  { id: "parking", label: "Парковка — документы", group: "А" },
   { id: "gone", label: "Срок истёк", group: "А" },
   { id: "no", label: "Отклонён", group: "А" },
   { id: "pdf", label: "Оффер как PDF", group: "Б" },
@@ -40,7 +42,7 @@ const IDS = new Set<string>(SCENARIOS.map((s) => s.id));
 
 /** Сценарий «принят» открывается сразу экраном подтверждения. */
 function initialView(scenario: Scenario): View {
-  return scenario === "ok" ? "accepted" : "offer";
+  return scenario === "parking" ? "parking" : scenario === "ok" ? "accepted" : "offer";
 }
 
 export function scenarioFromHash(): Scenario {

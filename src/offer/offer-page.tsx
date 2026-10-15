@@ -8,6 +8,7 @@ import { Conditions } from "./conditions";
 import { Culture } from "./culture";
 import { DeclinePopup } from "./decline-popup";
 import { usePackage } from "./package";
+import { ParkingView } from "./parking-view";
 import { PdfView } from "./pdf-view";
 import { Salary } from "./salary";
 import { ScenarioPanel } from "./scenario-panel";
@@ -25,7 +26,9 @@ export function OfferPage() {
   const kind = offerKind(state.scenario);
 
   let content: React.ReactNode;
-  if (state.view === "accepted") {
+  if (state.view === "parking") {
+    content = <ParkingView />;
+  } else if (state.view === "accepted") {
     content = <AcceptedView />;
   } else {
     content = (
