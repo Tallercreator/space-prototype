@@ -95,7 +95,21 @@ html.dark {
 /* Парковка: фон до нижней границы сайдбара, форма остаётся сверху. */
 .offer-content--parking {
   align-self: stretch;
-  align-content: start;
+  display: flex;
+  flex-direction: column;
+}
+.offer-parking {
+  flex: 1;
+  min-width: 0;
+}
+.offer-parking__actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  margin-top: auto;
+  margin-bottom: calc(-1 * var(--ui-spacing-exxxs));
+  padding-block: var(--ui-spacing-xxxl);
+  padding-bottom: max(var(--ui-spacing-xxxl), env(safe-area-inset-bottom));
 }
 .offer-parking__submit {
   justify-self: start;
@@ -486,6 +500,9 @@ html.dark {
   }
 }
 @media (max-width: 767px) {
+  .offer-parking__actions {
+    margin-bottom: calc(-1 * var(--ui-spacing-xl));
+  }
   .offer-page {
     padding: var(--ui-spacing-md);
   }
@@ -655,6 +672,9 @@ html.dark {
   overflow-y: auto;
 }
 @media (max-width: 767px) {
+  .offer-parking__actions {
+    margin-bottom: calc(-1 * var(--ui-spacing-xl));
+  }
   :is(.offer-salary--mass, .offer-salary--ho, .offer-salary--agile, .offer-salary--it)
     .offer-salary__tiles {
     grid-template-columns: minmax(0, 1fr);
@@ -747,6 +767,9 @@ html.dark {
 }
 
 @media (max-width: 767px) {
+  .offer-parking__actions {
+    margin-bottom: calc(-1 * var(--ui-spacing-xl));
+  }
   .offer-banner__text--agile .offer-banner__title {
     font-size: var(--ui-font-size-24);
     line-height: var(--ui-line-height-26);
