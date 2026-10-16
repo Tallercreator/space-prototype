@@ -92,6 +92,17 @@ html.dark {
   min-width: 0;
 }
 
+/* Парковка: фон до нижней границы сайдбара, форма остаётся сверху. */
+.offer-content--parking {
+  align-self: stretch;
+  align-content: start;
+}
+.offer-parking__submit {
+  justify-self: start;
+  max-width: 100%;
+  white-space: normal;
+}
+
 /* статус-сообщение: высота 56 */
 .offer-status {
   min-height: 56px;

@@ -60,7 +60,7 @@ export function OfferPage() {
         <div className="offer-columns grid items-start gap-spacing-md">
           <Sidebar state={state} />
           <main
-            className={`offer-content grid gap-spacing-exxxs rounded-radius-lg bg-base-surface-primary-block-normal ${state.view === "accepted" ? "offer-content--centered" : ""}`}
+            className={`offer-content grid gap-spacing-exxxs rounded-radius-lg bg-base-surface-primary-block-normal ${state.view === "accepted" ? "offer-content--centered" : state.view === "parking" ? "offer-content--parking" : ""}`}
           >
             {content}
           </main>
