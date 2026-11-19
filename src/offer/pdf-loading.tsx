@@ -1,13 +1,11 @@
 import * as React from "react";
 
 import { Button } from "@otp/space-ui-kit/button";
-import { CheckLine24Icon } from "@otp/space-ui-kit/icons/check-line-24";
-import { DocumentCrossLine24Icon } from "@otp/space-ui-kit/icons/document-cross-line-24";
-import { DocumentLine24Icon } from "@otp/space-ui-kit/icons/document-line-24";
 import { Link } from "@otp/space-ui-kit/link";
 import { Typography } from "@otp/space-ui-kit/typography";
 
 import { recruiter } from "./data";
+import { Mascot } from "./mascot";
 
 /** Фразы сменяют друг друга, пока документ грузится; первая — из макета. */
 const PHRASES = [
@@ -98,9 +96,9 @@ function RecruiterLink() {
 }
 
 /**
- * Загрузка PDF-оффера: кольцо прогресса с иконкой документа и фразы,
- * которые перелистываются по словам. В конце кольцо замыкается,
- * иконка сменяется галочкой, и открывается документ.
+ * Загрузка PDF-оффера: персонаж следит глазами за курсором, под ним полоска
+ * прогресса, ниже фразы перелистываются по словам. В конце полоска доходит
+ * до конца, персонаж подпрыгивает, и открывается документ.
  */
 export function PdfLoading({
   mode = "normal",
@@ -139,28 +137,11 @@ export function PdfLoading({
         {SR_TEXT[phase]}
       </span>
 
-      <div className="offer-loading__badge" aria-hidden="true">
-        <svg className="offer-loading__ring" viewBox="0 0 88 88">
-          <circle className="offer-loading__track" cx="44" cy="44" r="40" />
-          <circle
-            className="offer-loading__progress"
-            cx="44"
-            cy="44"
-            r="40"
-            pathLength="100"
-          />
-        </svg>
-        <span className="offer-loading__tile flex items-center justify-center rounded-radius-lg">
-          <span className="offer-loading__icon offer-loading__icon--doc">
-            <DocumentLine24Icon />
-          </span>
-          <span className="offer-loading__icon offer-loading__icon--check">
-            <CheckLine24Icon />
-          </span>
-          <span className="offer-loading__icon offer-loading__icon--error">
-            <DocumentCrossLine24Icon />
-          </span>
-        </span>
+      <div className="grid justify-items-center gap-spacing-xl">
+        <Mascot mood={phase === "done" ? "happy" : phase === "error" ? "sad" : "watching"} />
+        <div className="offer-loading__bar" aria-hidden="true">
+          <span className="offer-loading__progress" />
+        </div>
       </div>
 
       <div className="grid justify-items-center gap-spacing-md">

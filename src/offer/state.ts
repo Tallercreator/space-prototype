@@ -74,7 +74,7 @@ export function useOfferState() {
   const [state, setState] = React.useState<OfferState>(fromHash);
 
   React.useEffect(() => {
-    const onHash = () => setState(fromHash());
+    const onHash = () => setState((s) => ({ ...fromHash(), run: s.run + 1 }));
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
