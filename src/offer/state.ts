@@ -14,6 +14,9 @@ export type Scenario =
   | "no" // кандидат отклонил
   | "ok" // принял — экран «оффер принят» с оценкой
   | "parking"
+  | "pdf-loading" // сценарий Б: PDF ещё грузится — лоадер со сменой фраз, затем pdf
+  | "pdf-slow" // сценарий Б: загрузка затянулась — просим подождать, затем pdf
+  | "pdf-error" // сценарий Б: PDF не загрузился — объяснение и повтор
   | "pdf"; // сценарий Б: PDF-оффер на всю высоту
 
 export type View = "offer" | "accepted" | "parking";
@@ -21,6 +24,8 @@ export type View = "offer" | "accepted" | "parking";
 export type OfferState = {
   scenario: Scenario;
   view: View;
+  /** Растёт при каждом выборе сценария — повторный клик перезапускает загрузку. */
+  run: number;
 };
 
 export const SCENARIOS: Array<{
@@ -35,6 +40,9 @@ export const SCENARIOS: Array<{
   { id: "parking", label: "Парковка — документы", group: "А" },
   { id: "gone", label: "Срок истёк", group: "А" },
   { id: "no", label: "Отклонён", group: "А" },
+  { id: "pdf-loading", label: "PDF — загрузка", group: "Б" },
+  { id: "pdf-slow", label: "PDF — долгая загрузка", group: "Б" },
+  { id: "pdf-error", label: "PDF — ошибка", group: "Б" },
   { id: "pdf", label: "Оффер как PDF", group: "Б" },
 ];
 
@@ -51,7 +59,7 @@ export function scenarioFromHash(): Scenario {
 }
 
 export function offerKind(scenario: Scenario): OfferKind {
-  return scenario === "pdf" ? "pdf" : "structured";
+  return scenario.startsWith("pdf") ? "pdf" : "structured";
 }
 
 export function isAccepted(scenario: Scenario): boolean {
@@ -61,7 +69,7 @@ export function isAccepted(scenario: Scenario): boolean {
 export function useOfferState() {
   const fromHash = (): OfferState => {
     const requested = scenarioFromHash();
-    return { scenario: requested, view: initialView(requested) };
+    return { scenario: requested, view: initialView(requested), run: 0 };
   };
   const [state, setState] = React.useState<OfferState>(fromHash);
 
@@ -81,8 +89,13 @@ export function useOfferState() {
           "",
           scenario === "due" ? window.location.pathname : `#${scenario}`,
         );
-        setState({ scenario, view: initialView(scenario) });
+        setState((s) => ({ scenario, view: initialView(scenario), run: s.run + 1 }));
         scrollTop();
+      },
+      /** PDF догрузился: показываем документ, страницу не прокручиваем. */
+      pdfLoaded() {
+        history.replaceState(null, "", "#pdf");
+        setState((s) => ({ ...s, scenario: "pdf", view: "offer" }));
       },
       accept() {
         setState((s) => ({ ...s, scenario: "ok", view: "accepted" }));

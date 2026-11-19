@@ -6,7 +6,7 @@ import { asset } from "./data";
  */
 export function PdfView() {
   return (
-    <section aria-label="Предложение о работе">
+    <section className="offer-pdf" aria-label="Предложение о работе">
       <img
         className="offer-pdf__page"
         src={asset("pdf-page")}

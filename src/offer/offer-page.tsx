@@ -9,6 +9,7 @@ import { Culture } from "./culture";
 import { DeclinePopup } from "./decline-popup";
 import { usePackage } from "./package";
 import { ParkingView } from "./parking-view";
+import { PdfLoading } from "./pdf-loading";
 import { PdfView } from "./pdf-view";
 import { Salary } from "./salary";
 import { ScenarioPanel } from "./scenario-panel";
@@ -25,8 +26,27 @@ export function OfferPage() {
   const [declineOpen, setDeclineOpen] = React.useState(false);
   const kind = offerKind(state.scenario);
 
+  const loadingMode =
+    state.scenario === "pdf-loading"
+      ? "normal"
+      : state.scenario === "pdf-slow"
+        ? "slow"
+        : state.scenario === "pdf-error"
+          ? "error"
+          : null;
+  const loading = loadingMode !== null;
+
   let content: React.ReactNode;
-  if (state.view === "parking") {
+  if (loading) {
+    content = (
+      <PdfLoading
+        key={state.run}
+        mode={loadingMode}
+        onDone={actions.pdfLoaded}
+        onRetry={() => actions.setScenario("pdf-loading")}
+      />
+    );
+  } else if (state.view === "parking") {
     content = <ParkingView />;
   } else if (state.view === "accepted") {
     content = <AcceptedView />;
@@ -56,11 +76,13 @@ export function OfferPage() {
       className={`offer-page offer-page--${segment} min-h-screen bg-base-surface-primary-background font-primary text-base-texticons-primary`}
     >
       <div className="offer-shell mx-auto grid gap-spacing-md">
-        <Banner kind={kind} />
-        <div className="offer-columns grid items-start gap-spacing-md">
+        {loading ? null : <Banner kind={kind} />}
+        <div
+          className={`offer-columns grid items-start gap-spacing-md ${loading ? "offer-columns--loading" : ""}`}
+        >
           <Sidebar state={state} />
           <main
-            className={`offer-content grid gap-spacing-exxxs rounded-radius-lg bg-base-surface-primary-block-normal ${state.view === "accepted" ? "offer-content--centered" : state.view === "parking" ? "offer-content--parking" : ""}`}
+            className={`offer-content grid gap-spacing-exxxs rounded-radius-lg bg-base-surface-primary-block-normal ${loading || state.view === "accepted" ? "offer-content--centered" : state.view === "parking" ? "offer-content--parking" : ""}`}
           >
             {content}
           </main>
