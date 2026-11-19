@@ -144,7 +144,7 @@ export function PdfLoading({
         </div>
       </div>
 
-      <div className="grid justify-items-center gap-spacing-md">
+      <div className="grid justify-items-center gap-spacing-lg">
         <Typography.Title.OneM as="div" className="offer-loading__stage" aria-hidden="true">
           {step > start ? (
             <Phrase key={`out-${step}`} text={titleAt(step - 1, mode)} leaving />

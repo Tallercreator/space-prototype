@@ -618,14 +618,19 @@ html.dark {
     transform: scaleY(1);
   }
 }
-/* Сцена держит высоту двух строк — смена фраз не двигает вёрстку. */
+/* На десктопе фразы однострочные — подпись стоит вплотную к фразе. */
 .offer-loading__stage {
   position: relative;
   display: grid;
-  align-items: center;
-  min-height: 2.4em;
+  align-items: end;
   margin: 0;
   text-wrap: balance;
+}
+/* На узком экране фразы переносятся: держим высоту двух строк, чтобы смена фраз не двигала вёрстку. */
+@media (max-width: 767px) {
+  .offer-loading__stage {
+    min-height: 2.4em;
+  }
 }
 .offer-loading__phrase {
   grid-area: 1 / 1;
